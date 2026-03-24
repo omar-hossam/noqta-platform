@@ -64,8 +64,19 @@ What are the user's activities?
   friends,
   monthly_bills,
   friend_requests_get,
-  friend_requests_send
+  friend_requests_send,
+  
+  // social 
+  bio,
+  facebook_link,
+  whatsapp_number,
+  job_title,
+  family_members_number
 )
+
+#### Monthly Leaderboard
+
+1. monthly leaderboard ranks people in each city and motivates them with prizes, coupons and redems
 
 #### Bill collectors
 
