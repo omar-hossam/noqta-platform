@@ -65,3 +65,32 @@ What are the user's activities?
   friend_requests_get,
   friend_requests_send
 )
+
+#### Bill collectors
+
+1. Those people are hired by the government/company and they are responsible to collect bills from users **and add their bill cost to their database so it's saved in their database to use later**
+2. They are just for collecting bills nothing else!
+
+- collectors (
+  collector_id,
+  name,
+  gender,
+  email,
+  phone_number,
+  password,
+  is_verified, -> verified from the government* **must be true to do actions on users** 
+  verified_id,
+  city,
+  provience,(ميدان العمل)
+  monthly_issued_bills FOREIGN KEY
+)
+
+#### monthly_issued_bills
+
+- monthly_issued_bills (
+  bill_id,
+  user_id,
+  collector_id,
+  date,
+  bill_cost
+)
