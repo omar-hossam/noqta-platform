@@ -94,3 +94,16 @@ What are the user's activities?
   date,
   bill_cost
 )
+
+#### Admins
+
+- Admins can update any data in the app in a very easy way
+
+- admins (
+  admin_id,
+  username,
+  email,
+  gender,
+  password,
+  privilages (read only, read + edit)
+)
