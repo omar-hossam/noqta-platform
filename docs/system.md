@@ -47,6 +47,7 @@ What are the user's activities?
 
 - users (
   user_id, 
+  profile_id (random unique number),
   name, 
   gender,
   city, 
@@ -82,16 +83,16 @@ What are the user's activities?
   verified_id,
   city,
   provience,(ميدان العمل)
-  monthly_issued_bills FOREIGN KEY
+  issued_bills FOREIGN KEY
 )
 
-#### monthly_issued_bills
+#### issued_bills
 
-- monthly_issued_bills (
+- issued_bills (
   bill_id,
   user_id,
   collector_id,
-  date,
+  month_year, (ex. March 2026)
   bill_cost
 )
 
