@@ -1,0 +1,46 @@
+@font-face {
+  font-family: "Tajawal";
+  src: url("./assets/fonts/Tajawal/Tajawal-Regular.ttf");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Tajawal";
+  src: url("./assets/fonts/Tajawal/Tajawal-Bold.ttf");
+  font-weight: 700;
+}
+@font-face {
+  font-family: "Zain";
+  src: url("./assets/fonts/Zain/Zain-Regular.ttf");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Zain";
+  src: url("./assets/fonts/Zain/Zain-Bold.ttf");
+  font-weight: 700;
+}
+@font-face {
+  font-family: "Zain";
+  src: url("./assets/fonts/Zain/Zain-Italic.ttf");
+  font-weight: 400;
+  font-style: italic;
+}
+
+:root {
+  --main-bg: #f5f5f5;
+  --main-text: #000;
+  --main-primary: #3b82f6;
+}
+
+/* This class is usually toggled on the html element */
+.dark {
+  --brand-bg: #114;
+  --brand-text: #f5f5f5;
+  --brand-primary: #60a5fa;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
