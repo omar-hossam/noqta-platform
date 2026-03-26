@@ -14,7 +14,7 @@ def get_db():
 
 def new_profile_id():
     db = get_db()
-    rand_id = randint(111111111, 999999999)
+    rand_id = randint(11111111, 99999999)
     
     db_profile_ids = db.execute('SELECT profile_id FROM users').fetchall() 
     profile_ids = [row[0] for row in db_profile_ids]
