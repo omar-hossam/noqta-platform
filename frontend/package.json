@@ -1,5 +1,4 @@
-{       
-        "name": "web",
+{
 	"private": true,
 	"type": "module",
 	"scripts": {
@@ -9,18 +8,11 @@
 	},
 	"dependencies": {
 		"preact": "^10.26.9",
-		"wouter": "^3.9.0",
-		"@noqta/types": "workspace:*"
+		"wouter": "^3.9.0"
 	},
 	"devDependencies": {
 		"@preact/preset-vite": "^2.10.2",
-		"eslint": "^10.1.0",
-		"eslint-config-preact": "^2.0.0",
-		"typescript": "^6.0.2",
 		"unocss": "^66.6.7",
 		"vite": "^7.0.4"
-	},
-	"eslintConfig": {
-		"extends": "preact"
 	}
 }

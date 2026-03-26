@@ -7,7 +7,7 @@ import path from 'path';
 export default defineConfig({
 	plugins: [
 		UnoCSS({
-			configFile: './uno.config.ts',
+			configFile: './uno.config.js',
 		}),
 		preact(),
 	],
@@ -15,7 +15,6 @@ export default defineConfig({
 		alias: {
 			'@': path.resolve(__dirname, './src'),
 			'@comps': path.resolve(__dirname, './src/components'),
-			'@types': path.resolve(__dirname, './src/types'),
 			'@hooks': path.resolve(__dirname, './src/hooks'),
 			'@assets': path.resolve(__dirname, './src/assets'),
 			'@images': path.resolve(__dirname, './src/assets/images'),
