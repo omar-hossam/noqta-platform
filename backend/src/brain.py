@@ -1,0 +1,112 @@
+import sqlite3
+import os
+from random import randint
+
+
+DB_PATH = 'database.db'
+
+
+def get_db():
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    return conn
+
+
+def generate_profile_id():
+    db = get_db()
+    rand_id = randint(11111111, 999999999)
+    
+    db_profile_ids = db.execute('SELECT profile_id FROM users').fetchall() 
+    profile_ids = [row[0] for row in db_profile_ids]
+    
+    while True:
+        if rand_id in profile_ids:
+            rand_id = randint(11111111, 999999999)
+        else:
+            break
+    
+    db.close()
+    return rand_id
+
+
+def init_db():
+    conn = get_db()
+    new_profile_id = generate_profile_id()
+    
+    
+    # Users Table
+    conn.execute(```
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            profile_id INT UNIQUE,
+            name TEXT NOT NULL,
+            email TEXT UNIQUE,
+            joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            gender TEXT NOT NULL,
+            city TEXT NOT NULL, 
+            street TEXT,
+            password_hash TEXT NOT NULL,
+            building_type TEXT NOT NULL, 
+            xp INT, 
+            streak INT
+        );
+    ```)
+    
+    
+    # Collectors
+    conn.execute(```
+        CREATE TABLE IF NOT EXISTS collectors(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            username TEXT NOT NULL,
+            gender TEXT NOT NULL,
+            password_hash TEXT NOT NULL,
+            city TEXT NOT NULL,
+            provience TEXT NOT NULL,
+            joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        );
+    ```)
+    
+    
+    # Issued bills
+    conn.execute(```
+        CREATE TABLE IF NOT EXISTS issued_bills(
+            user_id INTEGER,
+            collector_id INTEGER,
+            month TEXT DEFAULT strftime('%B', 'now'),
+            year TEXT DEFAULT strftime('%Y', 'now')
+            cost INTEGER,
+            FOREIGN KEY(user_id) REFERENCES users(id)
+            FOREIGN KEY(bill_collector_id) REFERENCES collectors(id)
+        )
+    ```)
+    
+    
+    # Friendships 
+    conn.execute(```
+        CREATE TABLE IF NOT EXISTS friends(
+            user_id INTEGER,
+            friend_id INTEGER,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(user_id) REFERENCES users(id),
+            FOREIGN KEY(friend_id) REFERENCES users(id),
+            PRIMARY KEY (user_id, friend_id)
+        );
+    ```)
+    
+    
+    # Friend Requests 
+    conn.execute(```
+        CREATE TABLE IF NOT EXISTS friend_requests(
+            reciever_id INTEGER,
+            sender_id INTEGER,
+            sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(reciever_id) REFERENCES users(id),
+            FOREIGN KEY(sender_id) REFERENCES users(id),
+            PRIMARY KEY (reciever_id, sender_id)
+        );
+    ```)
+    
+    
+    conn.commit()
+    conn.close()
