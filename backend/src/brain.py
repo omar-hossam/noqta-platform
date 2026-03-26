@@ -31,14 +31,11 @@ def generate_profile_id():
 
 def init_db():
     conn = get_db()
-    new_profile_id = generate_profile_id()
     
-    
-    # Users Table
-    conn.execute(```
+    conn.execute('''
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            profile_id INT UNIQUE,
+            profile_id INTEGER UNIQUE,
             name TEXT NOT NULL,
             email TEXT UNIQUE,
             joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -47,14 +44,12 @@ def init_db():
             street TEXT,
             password_hash TEXT NOT NULL,
             building_type TEXT NOT NULL, 
-            xp INT, 
-            streak INT
-        );
-    ```)
+            xp INTEGER, 
+            streak INTEGER
+        )
+    ''')
     
-    
-    # Collectors
-    conn.execute(```
+    conn.execute('''
         CREATE TABLE IF NOT EXISTS collectors(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
@@ -62,28 +57,24 @@ def init_db():
             gender TEXT NOT NULL,
             password_hash TEXT NOT NULL,
             city TEXT NOT NULL,
-            provience TEXT NOT NULL,
-            joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        );
-    ```)
+            province TEXT NOT NULL,
+            joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
     
-    
-    # Issued bills
-    conn.execute(```
+    conn.execute('''
         CREATE TABLE IF NOT EXISTS issued_bills(
             user_id INTEGER,
             collector_id INTEGER,
-            month TEXT DEFAULT strftime('%B', 'now'),
-            year TEXT DEFAULT strftime('%Y', 'now')
+            month TEXT DEFAULT (strftime('%B', 'now')),
+            year TEXT DEFAULT (strftime('%Y', 'now')),
             cost INTEGER,
-            FOREIGN KEY(user_id) REFERENCES users(id)
-            FOREIGN KEY(bill_collector_id) REFERENCES collectors(id)
+            FOREIGN KEY(user_id) REFERENCES users(id),
+            FOREIGN KEY(collector_id) REFERENCES collectors(id)
         )
-    ```)
+    ''')
     
-    
-    # Friendships 
-    conn.execute(```
+    conn.execute('''
         CREATE TABLE IF NOT EXISTS friends(
             user_id INTEGER,
             friend_id INTEGER,
@@ -92,21 +83,29 @@ def init_db():
             FOREIGN KEY(friend_id) REFERENCES users(id),
             PRIMARY KEY (user_id, friend_id)
         );
-    ```)
+    ''')
     
-    
-    # Friend Requests 
-    conn.execute(```
+    conn.execute('''
         CREATE TABLE IF NOT EXISTS friend_requests(
-            reciever_id INTEGER,
+            receiver_id INTEGER,
             sender_id INTEGER,
             sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY(reciever_id) REFERENCES users(id),
+            FOREIGN KEY(receiver_id) REFERENCES users(id),
             FOREIGN KEY(sender_id) REFERENCES users(id),
-            PRIMARY KEY (reciever_id, sender_id)
+            PRIMARY KEY (receiver_id, sender_id)
         );
-    ```)
+    ''')
     
+    conn.execute('''
+        CREATE TABLE IF NOT EXISTS admins(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT NOT NULL,
+            gender TEXT NOT NULL,
+            email TEXT NOT NULL,
+            password_hash TEXT NOT NULL,
+            privilege TEXT NOT NULL
+        )
+    ''')
     
     conn.commit()
     conn.close()

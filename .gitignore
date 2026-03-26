@@ -28,6 +28,7 @@ frontend/*.sw?
 # BACK END
 #---------
 backend/__pycache__/
+backend/src/__pycache__/
 backend/*.py[cod]
 backend/*$py.class
 backend/.venv
