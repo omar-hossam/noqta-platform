@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    <!-- Example HTMX button -->
+    <button 
+        hx-get="/api/hello" 
+        hx-target="#message"
+    >
+        احضر البيانات
+    </button>
+    
+    <div id="message"></div>
+</div>
+{% endblock %}
