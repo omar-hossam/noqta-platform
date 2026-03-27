@@ -21,6 +21,31 @@
   object-fit: cover; /* Ensures video covers entire area */
   z-index: 9;
 }
+#hero-container {
+  position: absolute;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(28, 28, 124, 0.5); 
+  z-index: 12;
+}
+
+#hero-container * { color: white; }
+
+#badge {
+  border: 2px solid #f5f5f5;
+  padding: 10px;
+  display: inline-block;
+  border-radius: 18px;
+  background-color: #AA6C39;
+}
+
 </style>
 
 {% endblock %}
@@ -32,6 +57,25 @@
     <video id='vid' autoplay loop muted>
       <source src="{{ url_for('static', filename='videos/pixelbin-video.mp4') }}" type="video/mp4">
     </video>
+    
+    <div id="hero-container">
+      <div>
+        <h1 class="font-header">قطّرة… بتفرق و نقطة بتغير</h1>
+        
+        <p>كل نقطة مية بتوفرها مش بس بتقلل الفاتورة… بتتحول لنقاط بتكسبها، ومكافآت بتاخدها.</p>
+        <p style="font-weight: bold;">وفر. اكسب. كرّر.</p>
+        
+        <p class="font-header" id="badge">انضم لأكثر من <strong><u>100 مليون</u></strong> مصرى بيوفر و بيكسب مجاناً
+          <svg xmlns="http://www.w3.org/2000/svg" style="width: 20px;" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M104,147.43l98.34-97.09a8,8,0,0,1,11.32,0l24,23.6a8,8,0,0,1,0,11.32l-128.4,128.4a8,8,0,0,1-11.32,0l-71.6-72a8,8,0,0,1,0-11.31l24-24a8,8,0,0,1,11.32,0Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
+        </p>
+        
+        <br />
+        
+        <a href='/login' role="button" class='primary' style="border: 2px solid #f5f5f5; margin-top: 14px;">ابدأ الآن – مجاناً
+          <svg xmlns="http://www.w3.org/2000/svg" style="width: 20px;" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M191.11,112.89c24-24,25.5-52.55,24.75-65.28a8,8,0,0,0-7.47-7.47c-12.73-.75-41.26.73-65.28,24.75L80,128l48,48Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M136,72H74.35a8,8,0,0,0-5.65,2.34L34.35,108.69a8,8,0,0,0,4.53,13.57L80,128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M184,120v61.65a8,8,0,0,1-2.34,5.65l-34.35,34.35a8,8,0,0,1-13.57-4.53L128,176" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M94.56,187.82C90.69,196.31,77.65,216,40,216c0-37.65,19.69-50.69,28.18-54.56" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
+        </a>
+      </div>
+    </div>
     
   </section>
 </div>
