@@ -13,3 +13,7 @@ def hello():
 @front_bp.route('/login', methods=['GET'])
 def login():
     return render_template('login.html')
+
+@front_bp.route('/signup', methods=['GET'])
+def signup():
+    return render_template('signup.html')

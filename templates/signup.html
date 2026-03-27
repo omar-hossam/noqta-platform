@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block title %}منصة نقطة - إنشاء حساب جديد{% endblock %}
+
+{% block content %}
+
+<hgroup style="text-align: center; padding-top: 10px;">
+  <h1 class="font-header">
+  إنشاء حساب جديد
+  </h1>
+  <p>أنشئ حساب خاص بك و بأسرتك و ابدأ بتوفير الماء و الفوز بجوائز عديدة!</p>
+</hgroup>
+
+<section class="container">
+  <form style="padding: 14px 0;">
+    <fieldset >
+      <label>
+        الاسم ثنائى
+        <input
+          type="text"
+          name="name"
+          placeholder="أحمد محسن"
+          autocomplete=""
+          required
+          aria-required="true"
+        />
+      </label>
+      <label>
+        البريد الإلكتروني
+        <input
+          type="email"
+          name="email"
+          placeholder="someone@gmail.com"
+          autocomplete="email"
+          dir="ltr"
+          required
+          aria-required="true"
+        />
+      </label>
+      <label>
+        كلمة مرور جديدة
+        <input
+          type="password"
+          name="password"
+          placeholder="******"
+          autocomplete="current-password"
+          required
+          aria-required="true"
+          dir="ltr"
+        />
+      </label>
+      
+      <select name="government" aria-label="اختر المحافظة…" required>
+        <option selected disabled value="">اختر المحافظة…</option>
+        <option value="alexandria">الإسكندرية</option>
+        <option value="aswan">أسوان</option>
+        <option value="asyut">أسيوط</option>
+        <option value="beheira">البحيرة</option>
+        <option value="beni-suef">بني سويف</option>
+        <option value="cairo">القاهرة</option>
+        <option value="dakahlia">الدقهلية</option>
+        <option value="damietta">دمياط</option>
+        <option value="faiyum">الفيوم</option>
+        <option value="gharbia">الغربية</option>
+        <option value="giza">الجيزة</option>
+        <option value="ismailia">الإسماعيلية</option>
+        <option value="kafr-el-sheikh">كفر الشيخ</option>
+        <option value="luxor">الأقصر</option>
+        <option value="matrouh">مطروح</option>
+        <option value="minya">المنيا</option>
+        <option value="monufia">المنوفية</option>
+        <option value="new-valley">الوادي الجديد</option>
+        <option value="north-sinai">شمال سيناء</option>
+        <option value="port-said">بورسعيد</option>
+        <option value="qalyubia">القليوبية</option>
+        <option value="qena">قنا</option>
+        <option value="red-sea">البحر الأحمر</option>
+        <option value="sharqia">الشرقية</option>
+        <option value="sohag">سوهاج</option>
+        <option value="south-sinai">جنوب سيناء</option>
+        <option value="suez">السويس</option>
+      </select>
+      
+      <label>
+        اسم الشارع
+        <input
+          type="text"
+          name="street"
+          placeholder="مثال… محرم بك"
+          autocomplete="current-password"
+          required
+          aria-required="true"
+        />
+      </label>
+      
+      <div style="display: flex; justify-content: space-between;">
+        <span>النوع: </span>
+        <div>
+          <input type="radio" id="male" name="gender" value="male" />
+          <label for="male">مذكر</label>
+          <input type="radio" id="female" name="gender" value="female" />
+          <label for="female">مؤنث</label>
+        </div>
+      </div>
+      
+      <br />
+      
+      <label>
+        <input type="checkbox" id="terms" name="terms" />
+  اوافق على <a href='/terms-policies'>الشروط و الأحكام</a>
+      </label>
+      
+    </fieldset>
+    
+    
+    
+    <input
+      type="submit"
+      value="إنشاء الحساب"
+    />
+  </form>
+  <div style="display: flex; justify-content: space-between;">
+    <a href="/login">لديك حساب بالفعل؟</a>
+    <a href="/">الصفحة الرئيسية</a>
+  </div>
+</section>
+
+{% endblock %}
