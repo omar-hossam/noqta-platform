@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<script>
+    const user_id = window.location.pathname.split('/')[2];
+    
+    const postUrl = `/api/users/${user_id}/building-type`;
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        form.setAttribute('hx-post', postUrl);
+    });
+</script>
+
+<h1>Welcome in Building Type</h1>
+
+<form hx-post="">
+  <fieldset>
+    <legend>Building Type:</legend>
+    <label for="houses">
+      <input type="radio" name="building-type" value="houses" required aria-required="true" id="houses" />
+      المنازل و الشقق (سكني)
+    </label>
+    <label for="religion">
+      <input type="radio" name="building-type" value="religion" required aria-required="true" id="religion" />
+      دور العبادة
+    </label>
+    <label for="commercial">
+      <input type="radio" name="building-type" value="commercial" required aria-required="true" id="commercial" />
+      النشاط التجاري
+    </label>
+    <label for="industry">
+      <input type="radio" name="building-type" value="industry" required aria-required="true" id="industry" />
+      النشاط الصناعي
+    </label>
+    <label for="hotels">
+      <input type="radio" name="building-type" value="hotels" required aria-required="true" id="hotels" />
+      الفنادق و القرى السياحية
+    </label>
+    <label for="clubs">
+      <input type="radio" name="building-type" value="clubs" required aria-required="true" id="clubs" />
+      الأندية الرياضية
+    </label>
+    <label for="gas-stations">
+      <input type="radio" name="building-type" value="gas-stations" required aria-required="true" id="gas-stations" />
+      محطات الوقود
+    </label>
+    <label for="charities">
+      <input type="radio" name="building-type" value="charities" required aria-required="true" id="charities" />
+    الجمعيات الخيرية و التعاونية  
+    </label>
+  </fieldset>
+  
+  <input type="submit" value="اختيار المبني">
+</form>
+
+{% endblock %}

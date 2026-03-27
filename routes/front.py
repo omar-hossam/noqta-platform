@@ -14,6 +14,6 @@ def hello():
 def login():
     return render_template('login.html')
 
-@front_bp.route('/signup', methods=['GET'])
-def signup():
-    return render_template('signup.html')
+@front_bp.route('/register', methods=['GET'])
+def register():
+    return render_template('register.html')

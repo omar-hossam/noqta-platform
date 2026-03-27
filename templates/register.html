@@ -12,7 +12,7 @@
 </hgroup>
 
 <section class="container">
-  <form style="padding: 14px 10px; border: 2px solid #ddd; border-radius: 12px; margin: 13px 0 10px 0;">
+  <form style="padding: 14px 10px; border: 2px solid #ddd; border-radius: 12px; margin: 13px 0 10px 0;" hx-post="/api/users/register" hx-indicator="#submit-progress" hx-disabled-elt="#submit-btn">
     <fieldset >
       <label>
         الاسم ثنائى
@@ -20,7 +20,7 @@
           type="text"
           name="name"
           placeholder="أحمد محسن"
-          autocomplete=""
+          autocomplete="name"
           required
           aria-required="true"
         />
@@ -43,14 +43,14 @@
           type="password"
           name="password"
           placeholder="******"
-          autocomplete="current-password"
+          autocomplete="new-password"
           required
           aria-required="true"
           dir="ltr"
         />
       </label>
       
-      <select name="government" aria-label="اختر المحافظة…" required>
+      <select name="city" aria-label="اختر المحافظة…" required aria-required="true" autocomplete="address-level2">
         <option selected disabled value="">اختر المحافظة…</option>
         <option value="alexandria">الإسكندرية</option>
         <option value="aswan">أسوان</option>
@@ -87,7 +87,7 @@
           type="text"
           name="street"
           placeholder="مثال… محرم بك"
-          autocomplete="current-password"
+          autocomplete="street-address"
           required
           aria-required="true"
         />
@@ -112,12 +112,13 @@
       
     </fieldset>
     
-    
-    
     <input
       type="submit"
       value="إنشاء الحساب"
+      id="submit-btn"
     />
+    
+    <progress id="submit-progress" class="htmx-indicator"></progress>
   </form>
   <div style="display: flex; justify-content: space-between;">
     <a href="/login">لديك حساب بالفعل؟</a>
