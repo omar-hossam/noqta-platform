@@ -4,7 +4,7 @@ from utils.auth import hash_password, verify_password, validate_email_address
 
 users_bp = Blueprint('users', __name__)
 
-@users_bp.route('/api/register', methods=['POST'])
+@users_bp.route('/register', methods=['POST'])
 def register():
     data = request.json
     
@@ -44,7 +44,7 @@ def register():
     db.close()
     return jsonify({'message': 'user created'}), 201
 
-@users_bp.route('/api/login', methods=['POST'])
+@users_bp.route('/login', methods=['POST'])
 def login():
     data = request.json
     db = get_db()
@@ -56,3 +56,18 @@ def login():
         return jsonify({'message': 'login success', 'user_id': user['id']})
     
     return jsonify({'message': 'Invalid credentials'}), 401
+
+@users_bp.route('/<int:user_id>/building-type', methods=['POST'])
+def building_type(user_id):
+    db = get_db()
+    data = request.json
+    user = db.execute('SELECT * FROM users WHERE id = ?', (user_id,)).fetchone()
+    
+    if not property_type:
+        return jsonify({'error': 'Building type required'}), 400
+    
+    db.execute('UPDATE users SET building_type = ? WHERE id = ?', (data['building-type'], user_id))
+    
+    db.commit()
+    db.close()
+    return jsonify({'message': 'Building type updated'}), 200

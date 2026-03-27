@@ -10,7 +10,7 @@ CORS(app, supports_credentials=True)
 
 init_db()
 
-app.register_blueprint(users_bp)
+app.register_blueprint(users_bp, url_prefix='/api/users')
 app.register_blueprint(front_bp)
 
 if __name__ == '__main__':
