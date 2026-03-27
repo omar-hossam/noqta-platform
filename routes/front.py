@@ -17,3 +17,7 @@ def login():
 @front_bp.route('/register', methods=['GET'])
 def register():
     return render_template('register.html')
+
+@front_bp.route('/building-type/<int:user_id>')
+def building_type(user_id):
+    return render_template('building_type.html', user_id=user_id)

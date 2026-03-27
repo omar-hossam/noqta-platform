@@ -1,23 +1,12 @@
 {% extends 'base.html' %}
 
+{% block title %}منصة نقطة - إنشاء حساب جديد{% endblock %}
+
 {% block content %}
 
-<script>
-    const user_id = window.location.pathname.split('/')[2];
-    
-    const postUrl = `/api/users/${user_id}/building-type`;
-    
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.querySelector('form');
-        form.setAttribute('hx-post', postUrl);
-    });
-</script>
-
-<h1>Welcome in Building Type</h1>
-
-<form hx-post="">
+<form hx-post="/api/users/{{ user_id }}/building-type" hx-indicator="#submit-progress" hx-disabled-elt="#submit-btn">
   <fieldset>
-    <legend>Building Type:</legend>
+    <legend class="font-header">اختر نوع المبني:</legend>
     <label for="houses">
       <input type="radio" name="building-type" value="houses" required aria-required="true" id="houses" />
       المنازل و الشقق (سكني)
@@ -52,7 +41,8 @@
     </label>
   </fieldset>
   
-  <input type="submit" value="اختيار المبني">
+  <input type="submit" value="اختيار المبني" id="submit-btn">
+  <progress id="submit-progress" class="htmx-indicator"></progress>
 </form>
 
 {% endblock %}

@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request, redirect
+from flask import Blueprint, jsonify, request, redirect, url_for
 from utils.db import get_db, new_profile_id
 from utils.auth import hash_password, verify_password, validate_email_address
 
@@ -44,7 +44,7 @@ def register():
     user_id = db.execute('SELECT id FROM users WHERE email = ?', (email,)).fetchone()[0]
     
     db.close()
-    return redirect(f'/building-type/{user_id}')
+    return redirect(url_for('front.building_type', user_id=user_id))
 
 @users_bp.route('/login', methods=['POST'])
 def login():
@@ -62,21 +62,17 @@ def login():
 @users_bp.route('/<int:user_id>/building-type', methods=['POST'])
 def building_type(user_id):
     db = get_db()
-    data = request.json
     user = db.execute('SELECT * FROM users WHERE id = ?', (user_id,)).fetchone()
     
-    if not data['building-type']:
+    if not request.form.get('building-type'):
         return jsonify({'error': 'Building type required'}), 400
     
-    db.execute('UPDATE users SET building_type = ? WHERE id = ?', (data['building-type'], user_id))
+    db.execute('UPDATE users SET building_type = ? WHERE id = ?', (request.form.get('building-type'), user_id))
     
     db.commit()
     db.close()
     
-    response = jsonify({'message': 'Building type updated'})
-    response.headers['HX-Redirect'] = '/'
-     
-    return response, 200
+    return redirect(url_for('front.home'))
 
 @users_bp.route('/get-all', methods=['GET'])
 def get_all():

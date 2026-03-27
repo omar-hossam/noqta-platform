@@ -16,7 +16,7 @@
   <form style="padding: 14px 10px; border: 2px solid #ddd; border-radius: 12px; margin: 13px 0 10px 0;">
     <fieldset >
       <label>
-        البريد الإلكتروني *
+        البريد الإلكتروني
         <input
           type="email"
           name="email"
@@ -28,7 +28,7 @@
         />
       </label>
       <label>
-        كلمة المرور *
+        كلمة المرور
         <input
           type="password"
           name="password"
@@ -37,6 +37,8 @@
           required
           aria-required="true"
           dir="ltr"
+          min="3"
+          max="30"
         />
       </label>
     </fieldset>
