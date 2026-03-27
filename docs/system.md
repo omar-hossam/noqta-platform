@@ -29,6 +29,28 @@ That's a simple blueprint of how the system works
 - gas stations = محطات الوقود
 - Service/Charity = الجمعيات الخيرية والخدمية 
 
+## Pages
+
+### Logged Out
+1. / -> when !logged_in contains website intro for the first time 
+2. /login -> contains both user and collector 
+3. /register -> creates new user account
+4. /admin -> for admin
+5. /leaderboard -> redirects to /login
+
+### Logged in
+
+1. / -> when logged_in contains dashboard content
+2. /leaderboard -> shows leaderboard
+3. /profile 
+4. /friends
+5. /preferences 
+6. /dashboard 
+
+### Shows only once 
+
+- AFTER /register DONE SHOW /building-type
+
 ## Database
 
 ### Tables
