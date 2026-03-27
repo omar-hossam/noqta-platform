@@ -16,7 +16,6 @@ That's a simple blueprint of how the system works
 
 - Houses, Apartments = المنازل والشقق (السكني)
 - Religious places = دور العبادة
-- Government places = الجهات الحكومية
 - Commercial = النشاط التجاري 
   - stores
   - restaurants

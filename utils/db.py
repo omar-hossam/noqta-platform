@@ -37,13 +37,13 @@ def init_db():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             profile_id INTEGER UNIQUE,
             name TEXT NOT NULL,
-            email TEXT UNIQUE,
+            email TEXT NOT NULL UNIQUE,
             joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             gender TEXT NOT NULL,
             city TEXT NOT NULL, 
-            street TEXT,
+            street TEXT NOT NULL,
             password_hash TEXT NOT NULL,
-            building_type TEXT NOT NULL, 
+            building_type TEXT, 
             xp INTEGER, 
             streak INTEGER
         )
