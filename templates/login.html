@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}منصة نقطة - تسجيل الدخول{% endblock %}
+
+{% block content %}
+
+<h1 class="font-header" style="text-align: center;">
+  تسجيل الدخول
+</h1>
+
+<section class="container">
+  <div style="display: grid; grid-template-columns: 1fr 1fr;">
+    <button class="secondary" style="border-radius: 0">مستخدم</button>
+    <button class="secondary outline" style="border-radius: 0">محصل</button>
+  </div>
+  <form style="padding: 14px 0;">
+    <fieldset >
+      <label>
+        البريد الإلكتروني *
+        <input
+          type="email"
+          name="email"
+          placeholder="example.. ahmed@gmail.com"
+          autocomplete="email"
+          dir="ltr"
+          required
+          aria-required="true"
+        />
+      </label>
+      <label>
+        كلمة المرور *
+        <input
+          type="password"
+          name="password"
+          placeholder="******"
+          autocomplete="current-password"
+          required
+          aria-required="true"
+          dir="ltr"
+        />
+      </label>
+    </fieldset>
+    
+    <input
+      type="submit"
+      value="تسجيل الدخول"
+    />
+  </form>
+  <a href="/signup">ليس لديك حساب بعد؟</a>
+</section>
+
+{% endblock %}
