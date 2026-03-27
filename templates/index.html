@@ -1,15 +1,46 @@
 {% extends "base.html" %}
 
+{% block style %}
+
+<style>
+#hero {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+#vid {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: cover; /* Ensures video covers entire area */
+  z-index: 9;
+}
+</style>
+
+{% endblock %}
+
 {% block content %}
 <div>
-    <!-- Example HTMX button -->
-    <button 
-        hx-get="/api/hello" 
-        hx-target="#message"
-    >
-        احضر البيانات
-    </button>
+  <section id="hero">
     
-    <div id="message"></div>
+    <video id='vid' autoplay loop muted>
+      <source src="{{ url_for('static', filename='videos/pixelbin-video.mp4') }}" type="video/mp4">
+    </video>
+    
+  </section>
 </div>
+{% endblock %}
+
+{% block script %}
+
+<script>
+    document.getElementById('vid').play();
+</script>
+
 {% endblock %}

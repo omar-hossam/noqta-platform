@@ -26,6 +26,16 @@
 
 * { box-sizing: border-box; }
 
-body { font-family: Zain; }
+body { font-family: Zain; overflow-x: hidden; }
 
-h1, h2, h3, h4, h5, h6 { font-family: Tajawal; }
+.font-header { font-family: Tajawal; }
+.font-body { font-family: Zain; }
+
+nav {
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 90;
+  padding: 0 10px;
+}
