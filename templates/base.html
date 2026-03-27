@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ar_EG" dir="rtl">
+  <head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>{% block title %}منصة نقطة{% endblock %}</title>
+    
+    <!-- Pico CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='pico.min.css') }}">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <!-- HTMX -->
+    <script src="{{ url_for('static', filename='htmx.min.js') }}" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>منصة نقطة <img src="{{ url_for('static', filename='icons/drop.svg') }}"></h1>
+    </header>
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+    
+    {% block scripts %}{% endblock %}
+  </body>
+</html>

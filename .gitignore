@@ -1,43 +1,14 @@
-# FRONT END
-#----------
-# Logs
-frontend/logs
-frontend/*.log
-frontend/npm-debug.log*
-frontend/yarn-debug.log*
-frontend/yarn-error.log*
-frontend/pnpm-debug.log*
-frontend/lerna-debug.log*
+__pycache__/
 
-frontend/node_modules
-frontend/dist
-frontend/dist-ssr
-frontend/*.local
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
 
-# Editor directories and files
-frontend/.vscode/*
-frontend/!.vscode/extensions.json
-frontend/.idea
-frontend/.DS_Store
-frontend/*.suo
-frontend/*.ntvs*
-frontend/*.njsproj
-frontend/*.sln
-frontend/*.sw?
+.env
+.flaskenv
 
-# BACK END
-#---------
-backend/__pycache__/
-backend/src/__pycache__/
-backend/*.py[cod]
-backend/*$py.class
-backend/.venv
-backend/venv/
-backend/env/
-
-backend/.env
-backend/.flaskenv
-
-backend/.DS_Store
-backend/.vscode/
-backend/.idea/
+.DS_Store
+.vscode/
+.idea/
