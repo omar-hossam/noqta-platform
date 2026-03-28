@@ -2,6 +2,20 @@
 
 {% block title %}منصة نقطة - تسجيل الدخول{% endblock %}
 
+{% block style %}
+<style>
+.none {
+  display: none;
+}
+form {
+  padding: 14px 10px;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  margin: 13px 0 10px 0;
+}
+</style>
+{% endblock %}
+
 {% block content %}
 
 <h1 class="font-header" style="text-align: center;">
@@ -10,12 +24,30 @@
 
 <section class="container">
   <div style="display: grid; grid-template-columns: 1fr 1fr;">
-    <button class="secondary" style="border-radius: 0">مستخدم</button>
-    <button class="secondary outline" style="border-radius: 0">محصل</button>
+    <button 
+      class="secondary" 
+      id="users-tab" 
+      style="border-radius: 0" 
+      onclick="
+        remClass('#users-form', 'none');
+        addClass('#collectors-form', 'none');
+        remClass(this, 'outline');
+        addClass('#collectors-tab', 'outline')"
+      >مستخدم</button>
+    <button 
+      class="secondary outline" 
+      id="collectors-tab" 
+      style="border-radius: 0" 
+      onclick="
+        remClass('#collectors-form', 'none'); 
+        addClass('#users-form', 'none'); 
+        remClass(this, 'outline'); 
+        addClass('#users-tab', 'outline') "
+      >محصل</button>
   </div>
-  <form style="padding: 14px 10px; border: 2px solid #ddd; border-radius: 12px; margin: 13px 0 10px 0;">
+  <form hx-post="/api/users/login" hx-indicator="#users-submit-progress" hx-disabled-elt="#users-submit-btn" id="users-form">
     <fieldset >
-      <label>
+      <label for="email">
         البريد الإلكتروني
         <input
           type="email"
@@ -25,9 +57,10 @@
           dir="ltr"
           required
           aria-required="true"
+          id="email"
         />
       </label>
-      <label>
+      <label for="password">
         كلمة المرور
         <input
           type="password"
@@ -39,19 +72,75 @@
           dir="ltr"
           min="3"
           max="30"
+          id="password"
         />
       </label>
+      
+      <a href="/forgot-password">نسيت كلمة المرور؟</a>
+    </fieldset>
+    
+    
+    
+    <input
+      type="submit"
+      value="تسجيل الدخول"
+      id="users-submit-btn"
+    />
+    
+    <progress id="users-submit-progress" class="htmx-indicator"></progress>
+  </form>
+  
+  <!-- Collectors FORM -->
+  <form hx-post="/api/collectors/login" class="none" hx-indicator="#collector-submit-progress" hx-disabled-elt="#collector-submit-btn" id="collectors-form">
+    <fieldset >
+      <label for="code">
+كود العمل
+        <input
+          type="text"
+          name="code"
+          placeholder="00000000"
+          dir="ltr"
+          required
+          aria-required="true"
+          id="code"
+        />
+      </label>
+      <label for="collector-pass">
+        كلمة المرور
+        <input
+          type="password"
+          name="password"
+          placeholder="******"
+          autocomplete="current-password"
+          required
+          aria-required="true"
+          dir="ltr"
+          min="3"
+          max="30"
+          id="collector-pass"
+        />
+      </label>
+      
     </fieldset>
     
     <input
       type="submit"
       value="تسجيل الدخول"
+      id="collector-submit-btn"
     />
+    
+    <progress id="collector-submit-progress" class="htmx-indicator"></progress>
   </form>
+  
+  <!-- Links -->
   <div style="display: flex; justify-content: space-between;">
     <a href="/register">ليس لديك حساب بعد؟</a>
     <a href="/">الصفحة الرئيسية</a>
   </div>
 </section>
 
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='qalam.js') }}"></script>
 {% endblock %}
