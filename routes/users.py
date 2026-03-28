@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request, redirect, url_for
+from flask import Blueprint, jsonify, request, redirect, url_for, make_response
 from utils.db import get_db, new_profile_id
 from utils.auth import hash_password, verify_password, validate_email_address
 
@@ -44,7 +44,12 @@ def register():
     user_id = db.execute('SELECT id FROM users WHERE email = ?', (email,)).fetchone()[0]
     
     db.close()
-    return redirect(url_for('front.building_type', user_id=user_id))
+    
+    redirect_url = url_for('front.building_type', user_id=user_id)
+    response = make_response()
+    response.headers['HX-Redirect'] = redirect_url
+    
+    return response
 
 @users_bp.route('/login', methods=['POST'])
 def login():
@@ -72,7 +77,11 @@ def building_type(user_id):
     db.commit()
     db.close()
     
-    return redirect(url_for('front.home'))
+    redirect_url = url_for('front.home')
+    response = make_response()
+    response.headers['HX-Redirect'] = redirect_url
+    
+    return response
 
 @users_bp.route('/get-all', methods=['GET'])
 def get_all():
