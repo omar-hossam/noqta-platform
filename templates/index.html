@@ -43,8 +43,12 @@
   padding: 10px;
   display: inline-block;
   border-radius: 18px;
+/*
   background-color: #AA6C39;
+*/
+  background-color: rgba(0, 0, 0, 0.2);
 }
+#badge mark { color: #000; }
 
 #rocket {
   position: relative;
@@ -74,8 +78,8 @@
         <p>كل نقطة مية بتوفرها مش بس بتقلل الفاتورة… بتتحول لنقاط بتكسبها، ومكافآت بتاخدها.</p>
         <p style="font-weight: bold;">وفر. اكسب. كرّر.</p>
         
-        <p class="font-header" id="badge">انضم لأكثر من <strong><u>100 مليون</u></strong> مصرى بيوفر و بيكسب مجاناً
-          <img src="{{ url_for('static', filename='icons/check-fat.svg') }}" style="width: 20px;">
+        <p class="font-header" id="badge">انضم لأكثر من <strong><u>100 مليون</u></strong> مصري <mark>بيوفر</mark> و <mark>بيكسب</mark> <mark>مجاناً</mark>
+          <img src="{{ url_for('static', filename='icons/check-fat.svg') }}" style="width: 25px;">
         </p>
         
         <br />
