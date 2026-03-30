@@ -1,26 +1,26 @@
 @font-face {
   font-family: "Zain";
-  src: url("./fonts/Zain/Zain-Regular.ttf");
+  src: url("/static/fonts/Zain/Zain-Regular.ttf");
   font-weight: 400;
 }
 @font-face {
   font-family: "Zain";
-  src: url("./fonts/Zain/Zain-Italic.ttf");
+  src: url("/static/fonts/Zain/Zain-Italic.ttf");
   font-style: italic;
 }
 @font-face {
   font-family: "Zain";
-  src: url("./fonts/Zain/Zain-Bold.ttf");
+  src: url("/static/fonts/Zain/Zain-Bold.ttf");
   font-weight: 600
 }
 @font-face {
   font-family: "Tajawal";
-  src: url("./fonts/Tajawal/Tajawal-Medium.ttf");
+  src: url("/static/fonts/Tajawal/Tajawal-Medium.ttf");
   font-weight: 500;
 }
 @font-face {
   font-family: "Tajawal";
-  src: url("./fonts/Tajawal/Tajawal-Bold.ttf");
+  src: url("/static/fonts/Tajawal/Tajawal-Bold.ttf");
   font-weight: 600;
 }
 
@@ -31,11 +31,7 @@ body { font-family: Zain; overflow-x: hidden; }
 .font-header { font-family: Tajawal; }
 .font-body { font-family: Zain; }
 
-nav {
-  position: fixed;
-  top: 0;
-  width: 100vw;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 90;
-  padding: 0 10px;
+*[data-tooltip] {
+  border-bottom: 0!important;
+  outline: 0!important;
 }
