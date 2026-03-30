@@ -1,0 +1,35 @@
+{% macro user_nav() %}
+<nav>
+  <ul>
+    <li data-tooltip="الملف الشخصي" data-placement="left">
+      <a href="/profile" class="rounded"><img src="{{ url_for('static', filename='icons/user(1).svg') }}"></a>
+    </li>
+    <li class="font-header" style="font-weight: 600">
+      <a href="/">منصة نقطة</a>
+    </li>
+  </ul>
+
+  <ul class='right'>
+    <li data-tooltip="الأصدقاء" data-placement="bottom">
+      <a href="/friends" class="rounded"><img src="{{ url_for('static', filename='icons/users.svg') }}"></a>
+    </li>
+    <li data-tooltip="لائحة الصدارة" data-placement="bottom">
+      <a href="/leaderboard" class="rounded"><img src="{{ url_for('static', filename='icons/ranking.svg') }}"></a>
+    </li>
+    <li data-tooltip="الإعدادات" data-placement="bottom"><a href="/settings" class="rounded"><img src="{{ url_for('static', filename='icons/gear.svg') }}" alt="gear icon"></a></li>
+    
+    <div>
+      <li>
+        <span class="xp-text">XP</span>
+        <br />
+        <span class="num" id="xp">3560</span>
+      </li>
+      <li>
+        <img style="width: 36px;" src="{{ url_for('static', filename='icons/fire(1).svg') }}">
+        <br />
+        <span class="num" id="streak">8</span>
+      </li>
+    </div>
+  </ul>
+</nav>
+{% endmacro %}

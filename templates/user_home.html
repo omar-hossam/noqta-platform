@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/components/users_nav.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<section>
+  <hgroup style="text-align: center;">
+    <h1 class="font-header">المهام اليومية</h1>
+    <p class="font-header">اختار اللي عملته النهاردة… كل مهمة = نقاط إضافية</p>
+  </hgroup>
+  <ul>
+    {% for todo in todos %}
+      <li>{{ todo }}</li>
+    {% endfor %}
+  </ul>
+</section>
+
+{% endblock %}

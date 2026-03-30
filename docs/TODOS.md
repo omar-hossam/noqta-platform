@@ -48,3 +48,10 @@ Shows ONLY when logged in
 3. Leaderboard
 4. Preferences
 
+## Dasbhard (USER)
+
+1. Prizes for this month card 
+
+2. Daily Todo list
+
+3. read latest news 

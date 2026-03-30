@@ -6,35 +6,27 @@
     <title>{% block title %}منصة نقطة{% endblock %}</title>
     
     <!-- Pico CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='pico.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='pico.colors.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pico.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pico.colors.min.css') }}">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     
     <!-- HTMX -->
-    <script src="{{ url_for('static', filename='htmx.min.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/htmx.min.js') }}" defer></script>
     
     {% block style %}{% endblock %}
   </head>
   <body>
+    {% from 'components/HomeNav.html' import home_nav %}
+    {% from 'components/UserNav.html' import user_nav %}
+
     {% if is_home_page %}
-    <nav class="pico-background-slate-50">
-      <ul>
-        <li class="font-header" style="font-weight: 600">منصة نقطة <img src="{{ url_for('static', filename='icons/drop.svg') }}"></li>
-      </ul>
-      <ul>
-        <li><a href="/#hero">رئيسية</a></li>
-        <li><a href="/#about">عن نقطة</a></li>
-        <li><a href="/leaderboard">قائمة الصدارة</a></li>
-        <li><a href="/login" class="pico-background-green-500" style="flex">تسجيل الدخول 
-            
-            <img src="{{ url_for('static', filename='icons/user.svg') }}" style="width: 23px;" stroke="red" stroke-width="3" fill="currentColor">
-        
-        </a></li>
-        
-      </ul>
-    </nav>
+      {{ home_nav() }}
+    {% endif %}
+    
+    {% if is_user_logged and not is_home_page %}
+      {{ user_nav() }}
     {% endif %}
     
     <main>

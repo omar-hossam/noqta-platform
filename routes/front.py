@@ -6,6 +6,12 @@ front_bp = Blueprint('front', __name__)
 def home():
     return render_template('index.html', is_home_page=True)
 
+@front_bp.route('/dashboard', methods=['GET'])
+def dashboard():
+    todos = ['hello', 'bla', 'ajksjdk']
+    
+    return render_template('user_home.html', is_home_page=False, is_user_logged=True, todos=todos)
+
 @front_bp.route('/api/hello', methods=['GET'])
 def hello():
     return '<div>تم احضار البيانات بنجاح 🎉</div>'

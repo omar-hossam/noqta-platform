@@ -1,0 +1,27 @@
+{% macro home_nav() %}
+<style>
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 90;
+    padding: 0 10px;
+  }
+</style>
+
+<nav class="pico-background-slate-50">
+  <ul>
+    <li class="font-header" style="font-weight: 600">منصة نقطة <img src="{{ url_for('static', filename='icons/drop.svg') }}"></li>
+  </ul>
+  <ul>
+    <li><a href="/#hero">رئيسية</a></li>
+    <li><a href="/#about">عن نقطة</a></li>
+    <li><a href="/leaderboard">قائمة الصدارة</a></li>
+    <li><a href="/login" class="pico-background-green-500" style="flex">تسجيل الدخول 
+      <img src="{{ url_for('static', filename='icons/user.svg') }}" style="width: 23px;" stroke="red" stroke-width="3" fill="currentColor">
+    </a></li>
+    
+  </ul>
+</nav>
+{% endmacro %}
