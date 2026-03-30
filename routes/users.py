@@ -53,16 +53,26 @@ def register():
 
 @users_bp.route('/login', methods=['POST'])
 def login():
-    data = request.json
-    db = get_db()
-    
-    user = db.execute('SELECT * FROM users WHERE email = ?', (data['email'])).fetchone()
-    db.close()
-    
-    if user and verify_password(data['password'], user['password']):
-        return jsonify({'message': 'login success', 'user_id': user['id']})
-    
-    return jsonify({'message': 'Invalid credentials'}), 401
+    try:
+        db = get_db()
+        
+        form_email = request.form.get('email').strip()
+        if not form_email:
+            return '<div>Email required!</div>' # change input border color to red when warning!
+        
+        form_password = request.form.get('password').strip()
+        if not form_password:
+            return '<div>Password required!</div>'
+        
+        user = db.execute('SELECT * FROM users WHERE email = ?', (form_email,)).fetchone()
+        db.close()
+        
+        if user and verify_password(form_password, user['password']):
+            return jsonify({'message': 'login success', 'user_id': user['id']})
+        
+        return jsonify({'message': 'Invalid credentials'}), 401
+    except:
+        return '<div>Something went wrong.</div>'
 
 @users_bp.route('/<int:user_id>/building-type', methods=['POST'])
 def building_type(user_id):
