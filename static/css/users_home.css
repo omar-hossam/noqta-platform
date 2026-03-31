@@ -1,7 +1,15 @@
-#bills-a {
+section {
   width: 95%;
-  max-width: 850px; 
+  max-width: 850px;
   margin: 0 auto;
+}
+
+#daily-todos > button {
+  margin: 0 auto;
+  display: block;
+}
+
+#bills-a { 
   border: 0.15rem double #ddd;
   display: flex;
   justify-content: space-between;

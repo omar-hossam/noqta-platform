@@ -14,10 +14,12 @@
     <p class="font-header">اختار اللي عملته النهاردة… كل مهمة = نقاط إضافية</p>
   </hgroup>
   <ul id="daily-todos">
+    <button onclick="setAttr('#todos-dialog', 'open', 'true')">اختر مهام اليوم 🗒️</button>
+        
     <dialog id="todos-dialog">
       <article>
         <header>
-          <button aria-label="Close" rel="prev"></button>
+          <button aria-label="Close" rel="prev" onclick="setAttr('#todos-dialog', 'open', 'false')"></button>
           <p>
             <strong>اختر مهام اليوم 🗓️ </strong>
           </p>
@@ -48,4 +50,7 @@
 
 </section>
 
+{% endblock %}
+{% block script %}
+<script src="{{ url_for('static', filename='js/qalam.js') }}"></script>
 {% endblock %}
