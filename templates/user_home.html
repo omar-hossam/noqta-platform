@@ -2,6 +2,8 @@
 
 {% block style %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/components/users_nav.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/users_home.css') }}">
+
 {% endblock %}
 
 {% block content %}
@@ -11,11 +13,39 @@
     <h1 class="font-header">المهام اليومية</h1>
     <p class="font-header">اختار اللي عملته النهاردة… كل مهمة = نقاط إضافية</p>
   </hgroup>
-  <ul>
-    {% for todo in todos %}
-      <li>{{ todo }}</li>
-    {% endfor %}
+  <ul id="daily-todos">
+    <dialog id="todos-dialog">
+      <article>
+        <header>
+          <button aria-label="Close" rel="prev"></button>
+          <p>
+            <strong>اختر مهام اليوم 🗓️ </strong>
+          </p>
+        </header>
+        <form>
+          {% for todo in todos %}
+            <label for="todo-checkbox-{{ todo.id }}">
+              <input type="checkbox" id="todo-checkbox-{{ todo.id }}" name="todo-checkbox-{{ todo.id }}">
+              {{ todo.name }}
+              
+              <span class="todo-checkbox-score" dir="ltr">+{{ todo.score }}XP</span>
+            </label>
+          {% endfor %}
+          <hr />
+          <button>اختيار</button>
+        </form>
+      </article>
+    </dialog>
   </ul>
+</section>
+
+<section>
+  
+  <a id="bills-a" href="/bills" class="pico-background-slate-50">
+    <h2 class="font-header">فاتورة شهر <span id="bill-month" class="font-body pico-color-blue-600">فبراير</span></h2>
+    <p style="font-weight: bold; font-size: 2rem;" class="pico-color-green-600"><span id="bill-cost">0</span>ج </p>
+  </a>
+
 </section>
 
 {% endblock %}
