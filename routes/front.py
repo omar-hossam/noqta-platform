@@ -4,7 +4,7 @@ front_bp = Blueprint('front', __name__)
 
 @front_bp.route('/', methods=['GET'])
 def home():
-    return render_template('index.html', is_home_page=True)
+    return render_template('index.html', show_home_nav=True)
 
 @front_bp.route('/dashboard', methods=['GET'])
 def dashboard():
@@ -23,7 +23,12 @@ def dashboard():
         {"id": 12, "name": "ملّيت كاسات الميه في البيت على قد الإحتياج", "score": 10}
     ]
     
-    return render_template('user_home.html', is_home_page=False, is_user_logged=True, todos=todos)
+    return render_template('user_home.html', show_user_nav=True, todos=todos)
+
+@front_bp.route('/profile', methods=['GET'])
+def profile():
+    # we should also send user_id
+    return render_template('profile.html')
 
 @front_bp.route('/api/hello', methods=['GET'])
 def hello():

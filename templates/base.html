@@ -21,11 +21,11 @@
     {% from 'components/HomeNav.html' import home_nav %}
     {% from 'components/UserNav.html' import user_nav %}
 
-    {% if is_home_page %}
+    {% if show_home_nav %}
       {{ home_nav() }}
     {% endif %}
     
-    {% if is_user_logged and not is_home_page %}
+    {% if show_user_nav %}
       {{ user_nav() }}
     {% endif %}
     
