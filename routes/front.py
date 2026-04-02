@@ -23,7 +23,7 @@ def dashboard():
         {"id": 12, "name": "ملّيت كاسات الميه في البيت على قد الإحتياج", "score": 10}
     ]
     
-    return render_template('user_home.html', show_user_nav=True, todos=todos)
+    return render_template('dashboard.html', show_user_nav=True, todos=todos)
 
 @front_bp.route('/profile', methods=['GET'])
 def profile():
@@ -57,6 +57,8 @@ def login():
 def register():
     return render_template('register.html')
 
-@front_bp.route('/building-type/<int:user_id>')
-def building_type(user_id):
-    return render_template('building_type.html', user_id=user_id)
+#@front_bp.route('/building-type/<int:user_id>')
+#def building_type(user_id):
+ #   return render_template('building_type.html', user_id=user_id)
+
+
