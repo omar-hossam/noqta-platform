@@ -1,8 +1,11 @@
 from flask import Blueprint, jsonify, request, redirect, url_for, make_response
 from utils.db import get_db, new_profile_id
-from utils.auth import hash_password, verify_password, validate_email_address
+from werkzeug.security import generate_password_hash, check_password_hash
+from utils.form import validate_email_address
+
 
 users_bp = Blueprint('users', __name__)
+
 
 @users_bp.route('/register', methods=['POST'])
 def register():    
@@ -34,7 +37,7 @@ def register():
     if not password or len(password) < 3 or len(password) > 30:
         return jsonify({'error': 'Password must be 3-30 characters'}), 400
     
-    hashed = hash_password(password)
+    hashed = generate_password_hash(password)
      
     db = get_db()
     db.execute('INSERT INTO users (profile_id, name, email, gender, city, street, password_hash, xp, streak) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)', (profile_id, name, email, gender, city, street, hashed, 0, 0))
@@ -50,6 +53,7 @@ def register():
     response.headers['HX-Redirect'] = redirect_url
     
     return response
+
 
 @users_bp.route('/login', methods=['POST'])
 def login():
@@ -74,6 +78,7 @@ def login():
     except:
         return '<div>Something went wrong.</div>'
 
+
 @users_bp.route('/<int:user_id>/building-type', methods=['POST'])
 def building_type(user_id):
     db = get_db()
@@ -92,6 +97,7 @@ def building_type(user_id):
     response.headers['HX-Redirect'] = redirect_url
     
     return response
+
 
 @users_bp.route('/get-all', methods=['GET'])
 def get_all():
