@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/components/users_nav.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<!-- 
+We can update:
+
+1. bio
+2. whatsapp phone number 
+3. facebook page link
+
+Then
+
+Logout Button
+
+Delete Account Button (with confirmation modal)
+
+-->
+
+<section class="container">
+  <form>
+    <fieldset>
+      <label for="bio">
+        نبذه عنك
+        <textarea id="bio" name="bio" autofocus>{{ user.bio }}</textarea>
+      </label>
+      
+      <label for="whatsapp-number">
+        رقم هاتف الواتساب
+        <input type="tel" id="whatsapp-number" name="whatsapp-number" value="{{ user.whatsapp_number }}" dir="ltr">
+      </label>
+      
+      <label for="facebook-link">
+        رابط الفيسبوك
+        <input type="url" id="facebook-link" name="facebook-link" value="{{ user.facebook_link }}" dir="ltr">
+      </label>
+      
+    </fieldset>
+    <input type="submit" value="حفظ">
+  </form>
+</section>
+
+<section class="container">
+
+  <button class="secondary">تسجيل الخروج <img src="{{ url_for('static', filename='icons/door-open.svg') }}"></button>
+  
+</section>
+
+<section class="container">
+  <button class="pico-background-red-600" style="border-color: currentColor;">حذف الحساب <img src="{{ url_for('static', filename='icons/warning.svg') }}"></button>
+</section>
+{% endblock %}
+
+{% block script %}
+<script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+{% endblock %}

@@ -48,7 +48,7 @@ def register():
     
     db.close()
     
-    redirect_url = url_for('front.building_type', user_id=user_id)
+    redirect_url = url_for('front.settings', user_id=user_id)
     response = make_response()
     response.headers['HX-Redirect'] = redirect_url
     
