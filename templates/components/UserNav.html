@@ -1,8 +1,8 @@
 {% macro user_nav() %}
-<nav>
+<nav id="nav">
   <ul>
     <li data-tooltip="الملف الشخصي" data-placement="left">
-      <a href="/profile" class="rounded"><img src="{{ url_for('static', filename='icons/user(1).svg') }}"></a>
+      <a href="/profile" class="rounded"><img src="{{ url_for('static', filename='icons/user(1).svg') }}" id="profile-icon" alt="user icon"></a>
     </li>
     <li class="font-header" style="font-weight: 600">
       <a href="/">منصة نقطة</a>
@@ -11,12 +11,12 @@
 
   <ul class='right'>
     <li data-tooltip="الأصدقاء" data-placement="bottom">
-      <a href="/friends" class="rounded"><img src="{{ url_for('static', filename='icons/users.svg') }}"></a>
+      <a href="/friends" class="rounded"><img src="{{ url_for('static', filename='icons/users.svg') }}" id="friends-icon" alt="users icon"></a>
     </li>
     <li data-tooltip="لائحة الصدارة" data-placement="bottom">
-      <a href="/leaderboard" class="rounded"><img src="{{ url_for('static', filename='icons/ranking.svg') }}"></a>
+      <a href="/leaderboard" class="rounded"><img src="{{ url_for('static', filename='icons/ranking.svg') }}" id="leaderboard-icon" alt="ranking icon"></a>
     </li>
-    <li data-tooltip="الإعدادات" data-placement="bottom"><a href="/settings" class="rounded"><img src="{{ url_for('static', filename='icons/gear.svg') }}" alt="gear icon"></a></li>
+    <li data-tooltip="الإعدادات" data-placement="bottom"><a href="/settings" class="rounded"><img src="{{ url_for('static', filename='icons/gear.svg') }}" alt="gear icon" id="gear-icon"></a></li>
     
     <div>
       <li>
@@ -25,11 +25,26 @@
         <span class="num" id="xp">3560</span>
       </li>
       <li>
-        <img style="width: 36px;" src="{{ url_for('static', filename='icons/fire(1).svg') }}">
+        <img style="width: 36px;" src="{{ url_for('static', filename='icons/fire(1).svg') }}" id="streak-icon" alt="fire icon">
         <br />
         <span class="num" id="streak">8</span>
       </li>
     </div>
   </ul>
 </nav>
+
+<script>
+  const nav = document.getElementById('nav');
+  const html = document.documentElement;
+  
+  const isDark = html.getAttribute('data-theme') === 'light' ? false : true;
+  
+  if (isDark) {
+    document.getElementById('profile-icon').src = "{{ url_for('static', filename='icons/user.svg') }}";
+    document.getElementById('friends-icon').src = "{{ url_for('static', filename='icons/users(1).svg') }}";
+    document.getElementById('leaderboard-icon').src = "{{ url_for('static', filename='icons/ranking(1).svg') }}";
+    document.getElementById('gear-icon').src = "{{ url_for('static', filename='icons/gear(1).svg') }}";
+    document.getElementById('streak-icon').src = "{{ url_for('static', filename='icons/fire.svg') }}";
+  }
+</script>
 {% endmacro %}
