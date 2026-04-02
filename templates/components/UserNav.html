@@ -32,19 +32,4 @@
     </div>
   </ul>
 </nav>
-
-<script>
-  const nav = document.getElementById('nav');
-  const html = document.documentElement;
-  
-  const isDark = html.getAttribute('data-theme') === 'light' ? false : true;
-  
-  if (isDark) {
-    document.getElementById('profile-icon').src = "{{ url_for('static', filename='icons/user.svg') }}";
-    document.getElementById('friends-icon').src = "{{ url_for('static', filename='icons/users(1).svg') }}";
-    document.getElementById('leaderboard-icon').src = "{{ url_for('static', filename='icons/ranking(1).svg') }}";
-    document.getElementById('gear-icon').src = "{{ url_for('static', filename='icons/gear(1).svg') }}";
-    document.getElementById('streak-icon').src = "{{ url_for('static', filename='icons/fire.svg') }}";
-  }
-</script>
 {% endmacro %}
