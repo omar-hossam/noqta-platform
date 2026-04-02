@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/components/users_nav.css') }}">
+<style>
+:root {
+  --border-color: #4267b2;
+}
+.bio {
+  border: 0.2rem solid var(--border-color);
+  padding: 12px 10px;
+  margin: 10px 0;
+  border-radius: 4px;
+  background-color: #f5f5f5;
+  color: #000;
+}
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+<section class="container">
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    
+    <img src="{{ url_for('static', filename='icons/user-circle.svg') }}" alt="user icon" style="width: 8rem; ">
+    
+    
+    <div style="width: 90%;max-width: 530px">
+      <div style="display: flex; justify-content: space-between; text-align: center;">
+        <h1 class="font-header">{{ user.name }}</h1>
+        <p style="color: {{ 'dodgerblue' if user.gender == 'ذكر' else 'hotpink' }}; font-weight: bold; align-content: center;">
+          {{ user.gender }}
+          {% if user.gender == 'ذكر' %}
+          <img src="{{ url_for('static', filename='icons/gender-male.svg') }}">
+          {% else %}
+          <img src="{{ url_for('static', filename='icons/gender-female.svg') }}">
+          {% endif %}
+        </p>
+        <a href="/friends" style="text-decoration: none; padding-top: 5px;" >
+          {{ user.friends }} صديق
+          <img src="{{ url_for('static', filename='icons/users.svg') }}">
+        </a>
+      </div>
+      <div style="text-align: center; display: flex; justify-content: space-between; color: #000;" class="font-header">
+        <div style="display: flex; gap: 5px; align-items: center">
+          <div style="border: 0.2rem dotted var(--border-color); padding: 2px; border-radius: 5px">{{ user.city }} <img src="{{ url_for('static', filename='icons/city.svg') }}"></div>
+          <div style="border: 0.2rem dotted var(--border-color); padding: 2px; border-radius: 5px;">{{ user.street }} <img src="{{ url_for('static', filename='icons/buildings.svg') }}"></div>
+        </div>
+        <div style="align-content: center;">
+          <a href="https://wa.me/2{{ user.whatsapp_phone }}" target="_blank"><img src="{{ url_for('static', filename='icons/whatsapp-logo.svg') }}" style="width: 3rem;"></a>
+          <a href="{{ user.facebook_link }}" target="_blank" style="padding: 0 6px;"><img src="{{ url_for('static', filename='icons/facebook-logo.svg') }}"  style="width: 3rem;"></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <p class="bio font-header">{{ user.bio }}</p>
+  
+</section>
+
+{% endblock %}

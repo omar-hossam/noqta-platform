@@ -28,7 +28,22 @@ def dashboard():
 @front_bp.route('/profile', methods=['GET'])
 def profile():
     # we should also send user_id
-    return render_template('profile.html')
+    fake_user = {
+        "name": "عمر حسام",
+        "bio": "اهلا انا عمر انا مطور مواقع مستقل و طالب ثانوي عام",
+        "city": "الإسكندرية",
+        "street": "محرم بك",
+        "friends": 15,
+        "gender": "ذكر",
+        "whatsapp_phone": "01146641222",
+        "facebook_link": "https://www.facebook.com/omarhossam160",
+        "streak": 5,
+        "xp": 1204,
+        "rank": 8,
+        "last-bill-cost": 320
+    }
+    
+    return render_template('profile.html', show_user_nav=True, user=fake_user)
 
 @front_bp.route('/api/hello', methods=['GET'])
 def hello():
