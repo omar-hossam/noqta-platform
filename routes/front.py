@@ -40,7 +40,7 @@ def profile():
         "streak": 5,
         "xp": 1204,
         "rank": 8,
-        "last-bill-cost": 320
+        "last_bill_cost": 320
     }
     
     return render_template('profile.html', show_user_nav=True, user=fake_user)

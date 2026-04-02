@@ -24,12 +24,17 @@
   font-weight: 600;
 }
 
+:root {
+  --font-header: Tajawal;
+  --font-body: Zain;
+}
+
 * { box-sizing: border-box; }
 
 body { font-family: Zain; overflow-x: hidden; }
 
-.font-header { font-family: Tajawal; }
-.font-body { font-family: Zain; }
+.font-header { font-family: var(--font-header); }
+.font-body { font-family: var(--font-body); }
 
 *[data-tooltip] {
   border-bottom: 0!important;
