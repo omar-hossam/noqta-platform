@@ -5,46 +5,29 @@ That's a simple blueprint of how the system works
 ## Who use it?
 
 1. Normal people
-2. Organizations
-3. Businesses/Shops
-4. Admins (developers, gov)
-5. Bill collectors MUST-HAVE!
+2. Bill collectors MUST-HAVE!
+3. Admins (developers, gov)
 
 - Each bill collector MUST HAS AN ACCOUNT ON THE PLATFORM CORRESPONDED WITH HIS INFO FROM THE OFFICIAL SOURCES FROM THE GOVERNMENT AND FROM WATER COMPANY 
-
-## Categories
-
-- Houses, Apartments = المنازل والشقق (السكني)
-- Religious places = دور العبادة
-- Commercial = النشاط التجاري 
-  - stores
-  - restaurants
-  - cafes
-  - barbers
-  - ...
-- Industries = النشاط الصناعي
-- Hotels / Tourism villages = الفنادق والقرى السياحية
-- Clubs = الأندية الرياضية
-- gas stations = محطات الوقود
-- Service/Charity = الجمعيات الخيرية والخدمية 
 
 ## Pages
 
 ### Logged Out
-1. / -> when !logged_in contains website intro for the first time 
+
+1. / 
 2. /login -> contains both user and collector 
 3. /register -> creates new user account
 4. /admin -> for admin
-5. /leaderboard -> redirects to /login
+
+any other page will redirect to login for security
 
 ### Logged in
 
-1. / -> when logged_in contains dashboard content
-2. /leaderboard -> shows leaderboard
-3. /profile 
-4. /friends
-5. /preferences 
-6. /dashboard 
+- /leaderboard -> shows leaderboard
+- /profile 
+- /friends
+- /preferences 
+- /dashboard 
 
 ### Shows only once 
 
@@ -76,10 +59,8 @@ What are the user's activities?
   password,
   email,
   phone_number,
-  building_type, 
   xp, 
   joined_date,
-  badges,
   streak,
   monthly_rank, 
   friends,
@@ -90,14 +71,12 @@ What are the user's activities?
   // social 
   bio,
   facebook_link,
-  whatsapp_number,
-  job_title,
-  family_members_number
+  whatsapp_number
 )
 
 #### Monthly Leaderboard
 
-1. monthly leaderboard ranks people in each city and motivates them with prizes, coupons and redems
+1. Monthly leaderboard ranks people in each city or the entire country and motivates them with prizes, coupons and redems
 
 #### Bill collectors
 
@@ -111,8 +90,7 @@ What are the user's activities?
   email,
   phone_number,
   password,
-  is_verified, -> verified from the government* **must be true to do actions on users** 
-  verified_id,
+  code,
   city,
   provience,(ميدان العمل)
   issued_bills FOREIGN KEY

@@ -6,7 +6,7 @@
 - [ ] implement theme toggler component
 - [ ] implement app Navbar
 - [ ] implement preferences page with it's functionalities
-- [ ] add daily checklists for each user
+- [ ] add daily checklists for each user, user can add his own todos
 - [ ] implement the dashboard page for user
 - [ ] implement collectors login
 - [ ] implement profile page
