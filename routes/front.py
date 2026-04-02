@@ -4,7 +4,7 @@ front_bp = Blueprint('front', __name__)
 
 @front_bp.route('/', methods=['GET'])
 def home():
-    return render_template('index.html', show_home_nav=True)
+    return render_template('index.html', show_home_nav=True, light_theme_only=True)
 
 @front_bp.route('/dashboard', methods=['GET'])
 def dashboard():
@@ -36,12 +36,12 @@ def hello():
 
 @front_bp.route('/login', methods=['GET'])
 def login():
-    return render_template('login.html')
+    return render_template('login.html', light_theme_only=True)
 
 @front_bp.route('/register', methods=['GET'])
 def register():
-    return render_template('register.html')
+    return render_template('register.html', light_theme_only=True)
 
 @front_bp.route('/building-type/<int:user_id>')
 def building_type(user_id):
-    return render_template('building_type.html', user_id=user_id)
+    return render_template('building_type.html', user_id=user_id, light_theme_only=True)
