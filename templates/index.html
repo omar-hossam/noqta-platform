@@ -84,7 +84,7 @@
         
         <br />
         
-        <a href='/login' role="button" class='primary pico-background-blue-800' style="border: 2px solid #f5f5f5; margin-top: 14px; display: inline-flex; gap: 2px; align-items: center;">ابدأ الآن – مجاناً
+        <a href="{{ '/dashboard' if is_logged else '/login'  }}" role="button" class='primary pico-background-blue-800' style="border: 2px solid #f5f5f5; margin-top: 14px; display: inline-flex; gap: 2px; align-items: center;">ابدأ الآن – مجاناً
           <img src="{{ url_for('static', filename='icons/rocket-launch.svg') }}" style="width: 32px;" stroke="red" id="rocket">
         </a>
       </div>

@@ -8,7 +8,14 @@ front_bp = Blueprint('front', __name__)
 
 @front_bp.route('/')
 def home():
-    return render_template('index.html', show_home_nav=True)
+    is_logged = False
+    try:
+        if session['user_id']:
+            is_logged = True
+    except KeyError:
+        is_logged = False
+    
+    return render_template('index.html', show_home_nav=True, is_logged=is_logged)
 
 
 @front_bp.route('/about')
