@@ -59,3 +59,7 @@ def settings():
     
     db.close()
     return render_template('settings.html', show_user_nav=True, user=user)
+
+@front_bp.route('/about')
+def about():
+    return render_template('about.html')
