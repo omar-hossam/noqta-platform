@@ -37,7 +37,11 @@ def register():
 def dashboard():
     try:
         if session['user_id']:
-            return render_template('dashboard.html', show_user_nav=True, todos=todos)
+            db = get_db()
+            user = db.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
+            db.close()
+            
+            return render_template('dashboard.html', show_user_nav=True, todos=todos, user_streak=user['streak'], user_xp=user['xp'])
     except KeyError:
         return redirect('/login')
 
@@ -50,7 +54,7 @@ def profile():
             user_id = session['user_id']
             user = db.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
 
-            return render_template('profile.html', show_user_nav=True, user=user)
+            return render_template('profile.html', show_user_nav=True, user=user, user_streak=user['streak'], user_xp=user['xp'])
     except KeyError:
         return redirect('/login')
 
@@ -64,7 +68,7 @@ def settings():
             user = db.execute("SELECT id, bio, whatsapp_number, facebook_link FROM users WHERE id = ?", (user_id,)).fetchone()
             
             db.close()
-            return render_template('settings.html', show_user_nav=True, user=user)
+            return render_template('settings.html', show_user_nav=True, user=user, user_streak=user['streak'], user_xp=user['xp'])
     except KeyError:
         return redirect('/login')
 

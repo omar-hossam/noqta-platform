@@ -1,4 +1,4 @@
-{% macro user_nav() %}
+{% macro user_nav(user_streak, user_xp) %}
 <nav id="nav">
   <ul>
     <li data-tooltip="الملف الشخصي" data-placement="left">
@@ -25,12 +25,12 @@
       <li>
         <span class="xp-text">XP</span>
         <br />
-        <span class="num" id="xp">3560</span>
+        <span class="num" id="xp">{{ user_xp or 0 }}</span>
       </li>
       <li>
         <img style="width: 36px;" src="{{ url_for('static', filename='icons/fire(1).svg') }}" id="streak-icon" alt="fire icon">
         <br />
-        <span class="num" id="streak">8</span>
+        <span class="num" id="streak">{{ user_streak or 0 }}</span>
       </li>
     </div>
   </ul>

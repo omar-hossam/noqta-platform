@@ -82,7 +82,7 @@
       <!-- LEFT -->
       <div style="display: flex; flex-direction: column; justify-content: space-between; height: 70%;">
         
-        <button class="outline" style="border: 0;" hx-get="/api/users/{{user['id']}}/friends" hx-target="#friends-list" hx-swap="innerHTML" onclick="setAttr('#friends', 'open', 'true')" >
+        <button class="outline pico-background-slate-50" style="border: 0; padding: 10px 4px;" hx-get="/api/users/{{user['id']}}/friends" hx-target="#friends-list" hx-swap="innerHTML" onclick="setAttr('#friends', 'open', 'true')" >
           <!--  {{ user['friends'] }} صديق  -->
           0
           <img src="{{ url_for('static', filename='icons/users.svg') }}">

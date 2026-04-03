@@ -14,10 +14,6 @@ nav ul li {
   font-weight: bold;
 }
 
-.num, .xp-text {
-  font-family: monospace;
-}
-
 .num {
   font-size: 1.2rem;
 }
