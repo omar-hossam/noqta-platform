@@ -39,6 +39,11 @@ Delete Account Button (with confirmation modal)
         <input type="url" id="facebook-link" name="facebook-link" value="{{ user['facebook_link'] }}" dir="ltr" placeholder="https://www.facebook.com/xxx">
       </label>
       
+      <label for="profile-id">
+        كود الملف الشخصي
+        <input type="text" id="profile-id" value="{{ user['profile_id'] }}" dir="ltr" disabled>
+      </label>
+      
     </fieldset>
     <input type="submit" value="حفظ">
   </form>
