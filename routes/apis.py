@@ -4,10 +4,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from utils.form import validate_email_address
 
 
-users_bp = Blueprint('users', __name__)
+apis_bp = Blueprint('apis', __name__)
 
 
-@users_bp.route('/register', methods=['POST'])
+@apis_bp.route('/api/users/register', methods=['POST'])
 def register():    
     profile_id = new_profile_id()
     db = get_db()
@@ -42,7 +42,7 @@ def register():
     return response
     
 
-@users_bp.route('/<int:user_id>/update-settings', methods=['POST'])
+@apis_bp.route('/api/users/<int:user_id>/update-settings', methods=['POST'])
 def update_settings(user_id):
     db = get_db()
     bio = request.form.get('bio')
@@ -60,7 +60,7 @@ def update_settings(user_id):
     return response
 
 
-@users_bp.route('/login', methods=['POST'])
+@apis_bp.route('/api/users/login', methods=['POST'])
 def login():
     try:
         db = get_db()
@@ -84,26 +84,7 @@ def login():
         return '<div>Something went wrong.</div>'
 
 
-@users_bp.route('/<int:user_id>/building-type', methods=['POST'])
-def building_type(user_id):
-    db = get_db()
-    user = db.execute('SELECT * FROM users WHERE id = ?', (user_id,)).fetchone()
-    
-    if not request.form.get('building-type'):
-        return jsonify({'error': 'Building type required'}), 400
-    
-    db.execute('UPDATE users SET building_type = ? WHERE id = ?', (request.form.get('building-type'), user_id))
-    
-    db.commit()
-    db.close()
-    
-    redirect_url = url_for('front.home')
-    response = make_response()
-    response.headers['HX-Redirect'] = redirect_url
-    
-    return response
-
-@users_bp.route('/<int:user_id>/friends', methods=['GET'])
+@apis_bp.route('/api/users/<int:user_id>/friends', methods=['GET'])
 def get_friends(user_id):
     db = get_db()
     friend_ids = db.execute('SELECT friend_id FROM friends WHERE user_id = ?', (user_id,)).fetchall()
@@ -131,7 +112,8 @@ def get_friends(user_id):
     
     return html_code
 
-@users_bp.route('/get-all', methods=['GET'])
+
+@apis_bp.route('/api/users/get-all', methods=['GET'])
 def get_all():
     try:
         db = get_db()
@@ -150,3 +132,80 @@ def get_all():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     
+
+@apis_bp.route('/api/collector', methods=['GET'], endpoint='get_collector')
+def collector():
+    db = get_db()
+    
+    code = request.form.get('code').strip()
+    password = request.form.get('password').strip()
+    
+    saved_hash_password = db.execute('SELECT password_hash FROM collectors WHERE code = ?', (code,)).fetchone()
+    
+    saved_hash_password = saved_hash_password[0] if saved_hash_password else None
+    
+    if not saved_hash_password:
+        db.close()
+        return 'بيانات إدخال خاطئة'
+    
+    if check_password_hash(saved_hash_password, password):
+        collector = db.execute('SELECT * FROM collectors WHERE code = ?', (code,)).fetchone()
+        
+        session['collector_id'] = collector['id']
+        redirect_url = url_for('front.collector')
+        response = make_response()
+        response.headers['HX-Redirect'] = redirect_url
+        return response
+    
+    return 'بيانات إدخال خاطئة'
+
+
+@apis_bp.route('/api/collector', methods=['POST'], endpoint='post_collector')
+def collector():
+    db = get_db()
+    
+    name = request.form.get('name').strip()
+    code = request.form.get('code').strip()
+    password = request.form.get('password').strip()
+    gender = request.form.get('gender').strip()
+    city = request.form.get('city').strip()
+    street = request.form.get('street').strip()
+    province = request.form.get('province').strip()
+    
+    password_hash = generate_password_hash(password)
+    
+    db.execute('INSERT INTO collectors (name, code, password_hash, city, gender, street, province) VALUES (?, ?, ?, ?, ?, ?, ?)', (name, code, password_hash, gender, city, street, province))
+    
+    db.commit()
+    db.close()
+    
+    return "تم إضافة المحصل بنجاح!"
+
+
+@apis_bp.route('/api/new-bill/<int:profile_id>', methods=['POST'])
+def new_bill(profile_id):
+    from datetime import datetime
+    # get profile_id 
+    # insert the *bill_cost + user_id + collector_id* to monthly bills
+    profile_id = request.form.get('profile_id').strip()
+    bill_cost = request.form.get('bill_cost').strip()
+    collector_id = session['collector_id'] 
+     
+    db = get_db()
+
+    user_id = db.execute('SELECT id FROM users WHERE profile_id = ?', (profile_id,)).fetchone()
+    user_id = user_id[0] if user_id else None
+
+    if not user_id:
+      return "Error!", 400
+
+    now = datetime.now() 
+    month = now.month
+    year = now.year
+
+    db.execute('INSERT INTO bills (user_id, collector_id, cost, month, year) VALUES (?, ?, ?, ?, ?)', (user_id, collector_id, bill_cost, month, year))
+
+    db.commit()
+    db.close()
+
+    return "تم إضافة الفاتورة بنجاح!"

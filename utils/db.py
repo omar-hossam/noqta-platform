@@ -52,32 +52,33 @@ def init_db():
     ''')
     
     conn.execute('''
-        CREATE TABLE IF NOT EXISTS collectors(
+        CREATE TABLE IF NOT EXISTS collectors (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
-            username TEXT NOT NULL,
+            code INTEGER NOT NULL,
             gender TEXT NOT NULL,
             password_hash TEXT NOT NULL,
             city TEXT NOT NULL,
+            street TEXT NOT NULL,
             province TEXT NOT NULL,
             joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     ''')
     
     conn.execute('''
-        CREATE TABLE IF NOT EXISTS issued_bills(
-            user_id INTEGER,
-            collector_id INTEGER,
-            month TEXT DEFAULT (strftime('%B', 'now')),
-            year TEXT DEFAULT (strftime('%Y', 'now')),
-            cost INTEGER,
+        CREATE TABLE IF NOT EXISTS bills (
+            user_id INTEGER NOT NULL,
+            collector_id INTEGER NOT NULL,
+            month INTEGER NOT NULL,
+            year INTEGER NOT NULL,
+            cost INTEGER NOT NULL,
             FOREIGN KEY(user_id) REFERENCES users(id),
             FOREIGN KEY(collector_id) REFERENCES collectors(id)
         )
     ''')
     
     conn.execute('''
-        CREATE TABLE IF NOT EXISTS friends(
+        CREATE TABLE IF NOT EXISTS friends (
             user_id INTEGER,
             friend_id INTEGER,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -88,7 +89,7 @@ def init_db():
     ''')
     
     conn.execute('''
-        CREATE TABLE IF NOT EXISTS friend_requests(
+        CREATE TABLE IF NOT EXISTS friend_requests (
             receiver_id INTEGER,
             sender_id INTEGER,
             sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -99,7 +100,7 @@ def init_db():
     ''')
     
     conn.execute('''
-        CREATE TABLE IF NOT EXISTS admins(
+        CREATE TABLE IF NOT EXISTS admins (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT NOT NULL,
             gender TEXT NOT NULL,
