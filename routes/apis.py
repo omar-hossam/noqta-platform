@@ -134,7 +134,7 @@ def get_all():
     
 
 @apis_bp.route('/api/collector', methods=['GET'], endpoint='get_collector')
-def collector():
+def get_collector():
     db = get_db()
     
     code = request.form.get('code').strip()
@@ -161,7 +161,7 @@ def collector():
 
 
 @apis_bp.route('/api/collector', methods=['POST'], endpoint='post_collector')
-def collector():
+def post_collector():
     db = get_db()
     
     name = request.form.get('name').strip()
