@@ -43,9 +43,11 @@ def init_db():
             city TEXT NOT NULL, 
             street TEXT NOT NULL,
             password_hash TEXT NOT NULL,
-            building_type TEXT, 
             xp INTEGER, 
-            streak INTEGER
+            streak INTEGER,
+            facebook_link TEXT,
+            whatsapp_number TEXT,
+            bio TEXT
         )
     ''')
     

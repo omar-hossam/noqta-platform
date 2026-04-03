@@ -32,6 +32,23 @@
 
 {% block content %}
 
+<dialog id="friends">
+  <article>
+    <header>
+      <button aria-label="Close" rel="prev" onclick="setAttr('#friends', 'open', 'false')"></button>
+      <p>
+        <strong>
+          قائمة أصدقاء
+          {{ user['name'].split(' ')[0] }}
+        </strong>
+      </p>
+    </header>
+    <ul id="friends-list">
+      
+    </ul>
+  </article>
+</dialog>
+
 <section class="container">
   
   
@@ -40,16 +57,15 @@
     
     <img src="{{ url_for('static', filename='icons/user-circle.svg') }}" alt="user icon" style="width: 8rem; ">
     
-    
     <div style="display: flex; justify-content: space-between; align-items: center;">
       
       <!-- RIGHT -->
       <div style="height: 70%;">
         <div style="display: flex; gap: 30px;">
-          <h1 class="font-header">{{ user.name }}</h1>
-          <p style="color: {{ 'dodgerblue' if user.gender == 'ذكر' else 'hotpink' }}; font-weight: bold; align-content: center;">
-            {{ user.gender }}
-            {% if user.gender == 'ذكر' %}
+          <h1 class="font-header">{{ user['name'] }}</h1>
+          <p style="color: {{ 'dodgerblue' if user['gender'] == 'male' else 'hotpink' }}; font-weight: bold; align-content: center;">
+            {{ user['gender'] }}
+            {% if user['gender'] == 'male' %}
             <img src="{{ url_for('static', filename='icons/gender-male.svg') }}">
             {% else %}
             <img src="{{ url_for('static', filename='icons/gender-female.svg') }}">
@@ -58,23 +74,28 @@
         </div>
         
         <div style="display: flex; gap: 5px; align-items: center">
-          <div style="border: 0.2rem dotted var(--border-color); padding: 2px; border-radius: 5px">{{ user.city }} <img src="{{ url_for('static', filename='icons/city.svg') }}"></div>
-          <div style="border: 0.2rem dotted var(--border-color); padding: 2px; border-radius: 5px;">{{ user.street }} <img src="{{ url_for('static', filename='icons/buildings.svg') }}"></div>
+          <div style="border: 0.2rem dotted var(--border-color); padding: 2px; border-radius: 5px">{{ user['city'] }} <img src="{{ url_for('static', filename='icons/city.svg') }}"></div>
+          <div style="border: 0.2rem dotted var(--border-color); padding: 2px; border-radius: 5px;">{{ user['street'] }} <img src="{{ url_for('static', filename='icons/buildings.svg') }}"></div>
         </div>
       </div>
       
       <!-- LEFT -->
       <div style="display: flex; flex-direction: column; justify-content: space-between; height: 70%;">
         
-        <a href="/friends" style="text-decoration: none;" >
-          {{ user.friends }} صديق
+        <button class="outline" style="border: 0;" hx-get="/api/users/{{user['id']}}/friends" hx-target="#friends-list" hx-swap="innerHTML" onclick="setAttr('#friends', 'open', 'true')" >
+          <!--  {{ user['friends'] }} صديق  -->
+          0
           <img src="{{ url_for('static', filename='icons/users.svg') }}">
-        </a>
+        </button>
         
         <!-- SOCIAL LINKS -->
-        <div style="align-content: center; ">
-          <a href="https://wa.me/2{{ user.whatsapp_phone }}" target="_blank"><img src="{{ url_for('static', filename='icons/whatsapp-logo.svg') }}" style="width: 3rem;"></a>
-          <a href="{{ user.facebook_link }}" target="_blank" style="padding: 0 6px;"><img src="{{ url_for('static', filename='icons/facebook-logo.svg') }}"  style="width: 3rem;"></a>
+        <div style="display: flex; justify-content: flex-end;">
+          {% if user['whatsapp_number'] %}
+          <a href="https://wa.me/2{{ user['whatsapp_number'] }}" target="_blank"><img src="{{ url_for('static', filename='icons/whatsapp-logo.svg') }}" style="width: 3rem;"></a>
+          {% endif %}
+          {% if user['facebook_link'] %}
+          <a href="{{ user['facebook_link'] }}" target="_blank" style="padding: 0 6px;"><img src="{{ url_for('static', filename='icons/facebook-logo.svg') }}"  style="width: 3rem;"></a>
+          {% endif %}
         </div>
   
       </div>
@@ -85,8 +106,9 @@
     
   </div>
   
-  
-  <p class="bio font-header">{{ user.bio }}</p>
+  {% if user['bio'] %}
+  <p class="bio font-header">{{ user['bio'] }}</p>
+  {% endif %}
   
 </section>
 <h2 style="text-align: center; padding: 10px 0" class="font-header">الإحصائيات</h2>
@@ -95,26 +117,30 @@
     <header>اخر فاتورة</header>
     <img src="{{ url_for('static', filename='icons/money.svg') }}">
     
-    <footer><strong><u>{{ user.last_bill_cost }}</u></strong> ج.م</footer>
+    <footer><strong><u>0</u></strong> ج.م</footer>
   </article>
   <article>
     <header>النقاط</header>
     <p class="xp-text">XP</p>
     
-    <footer><strong><u>{{ user.xp }}</u></strong> نقطة</footer>
+    <footer><strong><u>{{ user['xp'] }}</u></strong> نقطة</footer>
   </article>
   <article>
     <header>الترتيب</header>
     <img src="{{ url_for('static', filename='icons/ranking.svg') }}">
     
-    <footer><strong><u>{{ user.rank }}</u></strong> علي مصر!</footer>
+    <footer><strong><u>0</u></strong> علي مصر!</footer>
   </article>
   <article>
     <header>ايام نشاط</header>
     <img src="{{ url_for('static', filename='icons/fire(1).svg') }}">
     
-    <footer><strong><u>{{ user.streak }}</u></strong> ايام متواصلة</footer>
+    <footer><strong><u>{{ user['streak'] }}</u></strong> ايام متواصلة</footer>
   </article>
 </section>
 
+{% endblock %}
+
+{% block script %}
+  <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
 {% endblock %}

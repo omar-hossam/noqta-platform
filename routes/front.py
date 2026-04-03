@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, session
+from utils.db import get_db
 
 front_bp = Blueprint('front', __name__)
 
@@ -28,22 +29,11 @@ def dashboard():
 @front_bp.route('/profile', methods=['GET'])
 def profile():
     # we should also send user_id
-    fake_user = {
-        "name": "عمر حسام",
-        "bio": "اهلا انا عمر انا مطور مواقع مستقل و طالب ثانوي عام",
-        "city": "الإسكندرية",
-        "street": "محرم بك",
-        "friends": 15,
-        "gender": "ذكر",
-        "whatsapp_phone": "01146641222",
-        "facebook_link": "https://www.facebook.com/omarhossam160",
-        "streak": 5,
-        "xp": 1204,
-        "rank": 8,
-        "last_bill_cost": 320
-    }
+    db = get_db()
+    user_id = session['user_id']
+    user = db.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
     
-    return render_template('profile.html', show_user_nav=True, user=fake_user)
+    return render_template('profile.html', show_user_nav=True, user=user)
 
 @front_bp.route('/api/hello', methods=['GET'])
 def hello():
@@ -61,4 +51,11 @@ def register():
 #def building_type(user_id):
  #   return render_template('building_type.html', user_id=user_id)
 
-
+@front_bp.route('/settings')
+def settings():
+    db = get_db()
+    user_id = session['user_id']
+    user = db.execute("SELECT id, bio, whatsapp_number, facebook_link FROM users WHERE id = ?", (user_id,)).fetchone()
+    
+    db.close()
+    return render_template('settings.html', show_user_nav=True, user=user)

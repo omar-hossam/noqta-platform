@@ -22,21 +22,21 @@ Delete Account Button (with confirmation modal)
 -->
 
 <section class="container">
-  <form>
+  <form hx-post="/api/users/{{user['id']}}/update-settings">
     <fieldset>
       <label for="bio">
         نبذه عنك
-        <textarea id="bio" name="bio" autofocus>{{ user.bio }}</textarea>
+        <textarea id="bio" name="bio" placeholder="مثال…السلام عليكم انا البشمهندس احمد اعمل في مصنع لتصنيع السيارات في ..." autofocus>{{ user['bio'] }}</textarea>
       </label>
       
       <label for="whatsapp-number">
         رقم هاتف الواتساب
-        <input type="tel" id="whatsapp-number" name="whatsapp-number" value="{{ user.whatsapp_number }}" dir="ltr">
+        <input type="tel" id="whatsapp-number" name="whatsapp-number" value="{{ user['whatsapp_number'] }}" dir="ltr" placeholder="01xxxxxxxxx">
       </label>
       
       <label for="facebook-link">
         رابط الفيسبوك
-        <input type="url" id="facebook-link" name="facebook-link" value="{{ user.facebook_link }}" dir="ltr">
+        <input type="url" id="facebook-link" name="facebook-link" value="{{ user['facebook_link'] }}" dir="ltr" placeholder="https://www.facebook.com/xxx">
       </label>
       
     </fieldset>
