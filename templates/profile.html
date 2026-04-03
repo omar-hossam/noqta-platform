@@ -60,7 +60,7 @@
     <div style="display: flex; justify-content: space-between; align-items: center;">
       
       <!-- RIGHT -->
-      <div style="height: 70%;">
+      <div style="height: 80%;">
         <div style="display: flex; gap: 30px;">
           <h1 class="font-header">{{ user['name'] }}</h1>
           <p style="color: {{ 'dodgerblue' if user['gender'] == 'male' else 'hotpink' }}; font-weight: bold; align-content: center;">
@@ -80,7 +80,7 @@
       </div>
       
       <!-- LEFT -->
-      <div style="display: flex; flex-direction: column; justify-content: space-between; height: 70%;">
+      <div style="display: flex; flex-direction: column; justify-content: space-between; height: 80%;">
         
         <button class="outline pico-background-slate-50" style="border: 0; padding: 10px 4px;" hx-get="/api/users/{{user['id']}}/friends" hx-target="#friends-list" hx-swap="innerHTML" onclick="setAttr('#friends', 'open', 'true')" >
           <!--  {{ user['friends'] }} صديق  -->
@@ -89,13 +89,16 @@
         </button>
         
         <!-- SOCIAL LINKS -->
-        <div style="display: flex; justify-content: flex-end;">
+        <div style="display: flex; justify-content: flex-end; gap: 5px;">
           {% if user['whatsapp_number'] %}
           <a href="https://wa.me/2{{ user['whatsapp_number'] }}" target="_blank"><img src="{{ url_for('static', filename='icons/whatsapp-logo.svg') }}" style="width: 3rem;"></a>
           {% endif %}
           {% if user['facebook_link'] %}
           <a href="{{ user['facebook_link'] }}" target="_blank" style="padding: 0 6px;"><img src="{{ url_for('static', filename='icons/facebook-logo.svg') }}"  style="width: 3rem;"></a>
           {% endif %}
+          <button id="share-btn" class="outline" style="padding: 0; border: 0">
+            <img src="{{ url_for('static', filename='icons/share-fat.svg') }}" alt="share icon" style="width: 3rem;">
+          </button>
         </div>
   
       </div>
@@ -143,4 +146,12 @@
 
 {% block script %}
   <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+  <script>
+    const shareBtn = document.getElementById('share-btn');
+    shareBtn.addEventListener('click', () => {
+      navigator.clipboard.writeText({{ user['profile_id'] }})
+        .then(() => window.alert('تم نسخ كود الملف الشخصي بنجاح أرسله لزميلك و اخبره ان يكتبه في حقل البحث حتي يعثر عليك!'))
+        .catch(err => window.alert('حدث خطأ في نسخ كود الملف الشخصي'))
+    })
+  </script>
 {% endblock %}
