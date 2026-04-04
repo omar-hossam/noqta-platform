@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request, session
+from flask import Flask, jsonify, request, session, render_template
 from flask_cors import CORS
 from utils.db import init_db, get_db
 from routes.front import front_bp
@@ -16,6 +16,11 @@ app.register_blueprint(front_bp)
 app.register_blueprint(user_bp)
 app.register_blueprint(collector_bp)
 app.register_blueprint(shared_bp)
+
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html'), 404
 
 
 @app.before_request
