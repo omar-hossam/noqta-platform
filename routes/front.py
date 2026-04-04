@@ -73,6 +73,14 @@ def settings():
         return redirect('/login')
 
 
+"""
+++++++++++++++++++++
+====================
+     COLLECTOR     |
+====================
+++++++++++++++++++++
+""" 
+
 @front_bp.route('/collector')
 def collector():
     try:
