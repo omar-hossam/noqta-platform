@@ -134,3 +134,18 @@ def get_all():
         
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+
+@user_bp.route('/api/user/<int:user_id>/delete', methods=['POST'], endpoint='user_delete')
+def user_delete(user_id):
+    db = get_db()
+    
+    db.execute("DELETE FROM users WHERE id = ?", (user_id,)).fetchone()
+    db.commit()
+    db.close()
+    session.pop('user_id', None)
+    redirect_url = url_for('front.home')
+    response = make_response()
+    response.headers['HX-Redirect'] = redirect_url
+    return response
+    
