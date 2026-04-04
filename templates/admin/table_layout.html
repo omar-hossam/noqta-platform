@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block style %}
+
+<style>
+  table tr th {
+    font-family: var(--font-header);
+  }
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+{% block dialog %}{% endblock %}
+
+<section style="text-align: center; position: relative;">
+  <a href="/admin" style="position: absolute; left: 10px; top: 10px; text-decoration: none;">
+    صفحة المسئول
+    <img src="{{ url_for('static', filename='icons/arrow-left.svg') }}">
+  </a>
+  <h1 class="font-header">{% block header %}{% endblock %}</h1>
+  {% block dialog_open_btn %}{% endblock %}
+</section>
+
+<section>
+  <table>
+    <thead>
+      <tr>
+        {% block thead %}{% endblock %}
+      </tr>
+    </thead>
+    <tbody>
+      {% block tbody %}{% endblock %}
+    </tbody>
+  </table>
+</section>
+
+{% endblock %}
+{% block script %}
+<script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+{% endblock %}

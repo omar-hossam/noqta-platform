@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block style %}
+
+<style>
+  h1, h2 {
+    font-family: var(--font-header);
+    text-align: center;
+  }
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+{% if not is_logged %}
+<form>
+  <label></label>
+</form>
+{% elif is_logged %}
+<section class="container">
+  <h1>صفحة المسئول</h1>
+  
+  <h2>قائمة التحكم</h2>
+  
+  <div>
+    <a href="/admin/table/users"><article>المستخدمون</article></a>
+    <a href="/admin/table/collectors"><article>المحصلون</article></a>
+  </div>
+  
+  <h2>الروابط</h2>
+  <div class="grid" style="text-align: center">
+    <a href="/">الصفحة الرئيسية</a>
+    <a href="/rankings">لوحة الصدارة</a>
+    <a href="/prizes">الجوائز</a>
+  </div>
+</section>
+
+<section class="container">
+  <h2>زيارة الملف الشخصي لمستخدم</h2>
+  
+  <form>
+    <fieldset role="group" dir="ltr">
+      <input name="profile-id" type="text" placeholder="User profile id" />
+      <input type="submit" value="VISIT" />
+    </fieldset>
+  </form>
+</section>
+
+<hr />
+
+<section style="text-align: center;">
+  <button class="secondary" hx-get="/api/logout">تسجيل الخروج</button>
+</section>
+
+{% endif %}
+
+{% endblock %}

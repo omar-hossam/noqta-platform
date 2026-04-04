@@ -1,0 +1,46 @@
+{% extends 'admin/table_layout.html' %}
+
+{% block header %}المحصلون{% endblock %}
+
+{% block dialog %}
+  <dialog>
+    <article>
+      
+      <header>
+        <button aria-label="Close" rel="prev" onclick="setAttr('dialog', 'open', 'false')"></button>
+        <p>
+          <strong>
+            إضافة
+            {% block who_to_add_dialog %}{% endblock %}
+            جديد
+          </strong>
+        </p>
+      </header>
+      
+      <form>
+        
+      </form>
+      
+      <footer class="grid">
+        <button class="secondary outline" onclick="setAttr('dialog', 'open', 'false')">إلغاء</button>
+        <button>إضافة</button>
+      </footer>
+    </article>
+  </dialog>
+{% endblock %}
+
+{% block dialog_open_btn %} 
+<button onclick="setAttr('dialog', 'open', 'true')">
+    إضافة محصل
+</button>
+{% endblock %}
+
+{% block thead %}
+
+<th scope="col">الاسم ثنائي</th>
+<th scope="col">المحافظة</th>
+<th scope="col">الإدارة/الشارع</th>
+<th scope="col">رقم الهاتف</th>
+<th scope="col">كود المحصل</th>
+
+{% endblock %}

@@ -90,3 +90,27 @@ def collector():
             return render_template('collector.html')
     except KeyError:
         return redirect('/')
+
+
+"""
+++++++++++++++++
+================
+     ADMIN     |
+================
+++++++++++++++++
+""" 
+
+
+@front_bp.route('/admin/table/collectors', endpoint="admin_collectors")
+def admin_collectors():
+    return render_template('admin/collectors.html')
+
+
+@front_bp.route('/admin/table/users', endpoint="admin_users")
+def admin_users():
+    return render_template('admin/users.html')
+
+
+@front_bp.route('/admin', endpoint="admin")
+def admin():
+    return render_template('admin/admin.html', is_logged=True)
