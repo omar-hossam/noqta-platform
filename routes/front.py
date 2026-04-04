@@ -4,7 +4,7 @@ from utils.starter_todos import todos
 
 
 front_bp = Blueprint('front', __name__)
-
+    
 
 @front_bp.route('/')
 def home():
@@ -38,6 +38,7 @@ def dashboard():
     try:
         if session['user_id']:
             db = get_db()
+            
             user = db.execute("SELECT * FROM users WHERE id = ?", (session['user_id'],)).fetchone()
             db.close()
             
@@ -51,6 +52,7 @@ def profile():
     try:
         if session['user_id']: 
             db = get_db()
+
             user_id = session['user_id']
             user = db.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
 

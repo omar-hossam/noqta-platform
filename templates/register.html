@@ -52,7 +52,7 @@
         />
       </label>
       
-      <select name="city" aria-label="اختر المحافظة…" required aria-required="true" autocomplete="address-level2">
+      <select name="city" aria-label="اختر المحافظة…" required aria-required="true" autocomplete="address-level2" id="city-select">
         <option selected disabled value="">اختر المحافظة…</option>
         <option value="alexandria">الإسكندرية</option>
         <option value="aswan">أسوان</option>
@@ -82,6 +82,8 @@
         <option value="south-sinai">جنوب سيناء</option>
         <option value="suez">السويس</option>
       </select>
+      
+      <input type="hidden" name="city_arabic" id="city-arabic">
       
       <label>
         اسم الشارع
@@ -129,5 +131,15 @@
     <a href="/">الصفحة الرئيسية</a>
   </div>
 </section>
+
+{% endblock %}
+{% block script %}
+
+<script>
+document.getElementById('city-select').addEventListener('change', function() {
+  let text = this.options[this.selectedIndex].text;
+  document.getElementById('city-arabic').value = text;
+});
+</script>
 
 {% endblock %}

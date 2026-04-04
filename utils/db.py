@@ -1,6 +1,7 @@
 import sqlite3
 import os
 from random import randint
+from flask import session
 
 
 DB_PATH = 'database.db'
@@ -40,7 +41,8 @@ def init_db():
             email TEXT NOT NULL UNIQUE,
             joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             gender TEXT NOT NULL,
-            city TEXT NOT NULL, 
+            city TEXT NOT NULL,
+            city_arabic TEXT NOT NULL, 
             street TEXT NOT NULL,
             password_hash TEXT NOT NULL,
             xp INTEGER, 
@@ -105,8 +107,7 @@ def init_db():
             username TEXT NOT NULL,
             gender TEXT NOT NULL,
             email TEXT NOT NULL,
-            password_hash TEXT NOT NULL,
-            privilege TEXT NOT NULL
+            password_hash TEXT NOT NULL
         )
     ''')
     

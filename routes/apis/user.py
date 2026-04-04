@@ -24,12 +24,13 @@ def user_register():
     email = request.form.get('email').strip()
     gender = request.form.get('gender').strip()
     city = request.form.get('city').strip()
+    city_arabic = request.form.get('city-arabic').strip()
     street = request.form.get('street').strip()
     password = request.form.get('password').strip()
 
     hashed = generate_password_hash(password)
     
-    db.execute('INSERT INTO users (profile_id, name, email, gender, city, street, password_hash, xp, streak, whatsapp_number, facebook_link, bio) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', (profile_id, name, email, gender, city, street, hashed, 0, 0, '', '', ''))
+    db.execute('INSERT INTO users (profile_id, name, email, gender, city, street, password_hash, xp, streak, whatsapp_number, facebook_link, bio, city_arabic) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', (profile_id, name, email, gender, city, street, hashed, 0, 0, '', '', '', city_arabic))
     
     print("before commit")
     
