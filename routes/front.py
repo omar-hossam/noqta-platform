@@ -38,10 +38,10 @@ def dashboard():
     try:
         if session['user_id']:
             db = get_db()
-            user = db.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
+            user = db.execute("SELECT * FROM users WHERE id = ?", (session['user_id'],)).fetchone()
             db.close()
             
-            return render_template('dashboard.html', show_user_nav=True, todos=todos, user_streak=user['streak'], user_xp=user['xp'])
+            return render_template('dashboard.html', show_user_nav=True, todos=todos, user_streak=user['streak'], user_xp=user['xp'], user_id=user['id'])
     except KeyError:
         return redirect('/login')
 

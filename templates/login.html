@@ -45,7 +45,9 @@ form {
         addClass('#users-tab', 'outline') "
       >محصل</button>
   </div>
-  <form hx-post="/api/users/login" hx-indicator="#users-submit-progress" hx-disabled-elt="#users-submit-btn" id="users-form">
+  
+  <!-- USERS LOGIN -->
+  <form hx-post="/api/user/login" hx-indicator="#users-submit-progress" hx-disabled-elt="#users-submit-btn" id="users-form">
     <fieldset >
       <label for="email">
         البريد الإلكتروني

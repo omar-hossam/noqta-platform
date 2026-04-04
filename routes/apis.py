@@ -7,8 +7,8 @@ from utils.form import validate_email_address
 apis_bp = Blueprint('apis', __name__)
 
 
-@apis_bp.route('/api/users/register', methods=['POST'])
-def register():    
+@apis_bp.route('/api/user/register', methods=['POST'], endpoint="user_register")
+def user_register():    
     profile_id = new_profile_id()
     db = get_db()
     
@@ -42,7 +42,35 @@ def register():
     return response
     
 
-@apis_bp.route('/api/users/<int:user_id>/update-settings', methods=['POST'])
+@apis_bp.route('/api/user/login', methods=['POST'], endpoint='user_login')
+def user_login():
+    db = get_db()
+    
+    form_email = request.form.get('email').strip()
+    form_password = request.form.get('password').strip()
+
+    user = db.execute('SELECT * FROM users WHERE email = ?', (form_email,)).fetchone()
+    db.close()
+    
+    if user and check_password_hash(user['password_hash'], form_password):
+        session['user_id'] = user['id']
+        redirect_url = url_for('front.dashboard')
+        response = make_response()
+        response.headers['HX-Redirect'] = redirect_url
+        
+        return response
+
+
+@apis_bp.route('/api/logout', methods=['GET'])
+def logout():
+    session.clear()
+    redirect_url = url_for('front.home')
+    response = make_response()
+    response.headers['HX-Redirect'] = redirect_url
+    return response
+
+
+@apis_bp.route('/api/user/<int:user_id>/update-settings', methods=['POST'])
 def update_settings(user_id):
     db = get_db()
     bio = request.form.get('bio')
@@ -60,35 +88,10 @@ def update_settings(user_id):
     return response
 
 
-@apis_bp.route('/api/users/login', methods=['POST'])
-def login():
-    try:
-        db = get_db()
-        
-        form_email = request.form.get('email').strip()
-        if not form_email:
-            return '<div>Email required!</div>' # change input border color to red when warning!
-        
-        form_password = request.form.get('password').strip()
-        if not form_password:
-            return '<div>Password required!</div>'
-        
-        user = db.execute('SELECT * FROM users WHERE email = ?', (form_email,)).fetchone()
-        db.close()
-        
-        if user and verify_password(form_password, user['password']):
-            return jsonify({'message': 'login success', 'user_id': user['id']})
-        
-        return jsonify({'message': 'Invalid credentials'}), 401
-    except:
-        return '<div>Something went wrong.</div>'
-
-
-@apis_bp.route('/api/users/<int:user_id>/friends', methods=['GET'])
+@apis_bp.route('/api/user/<int:user_id>/friends', methods=['GET'])
 def get_friends(user_id):
     db = get_db()
     friend_ids = db.execute('SELECT friend_id FROM friends WHERE user_id = ?', (user_id,)).fetchall()
-    
     
     friend_ids = [row['friend_id'] for row in friend_ids]  # list of friend IDs
     
@@ -113,7 +116,7 @@ def get_friends(user_id):
     return html_code
 
 
-@apis_bp.route('/api/users/get-all', methods=['GET'])
+@apis_bp.route('/api/user/get-all', methods=['GET'])
 def get_all():
     try:
         db = get_db()
@@ -182,7 +185,7 @@ def post_collector():
     return "تم إضافة المحصل بنجاح!"
 
 
-@apis_bp.route('/api/new-bill/<int:profile_id>', methods=['POST'])
+@apis_bp.route('/api/collector/new-bill/<int:profile_id>', methods=['POST'])
 def new_bill(profile_id):
     from datetime import datetime
     # get profile_id 

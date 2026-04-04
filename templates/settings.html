@@ -22,7 +22,7 @@ Delete Account Button (with confirmation modal)
 -->
 
 <section class="container">
-  <form hx-post="/api/users/{{user['id']}}/update-settings">
+  <form hx-post="/api/user/{{user['id']}}/update-settings">
     <fieldset>
       <label for="bio">
         نبذه عنك
@@ -51,7 +51,7 @@ Delete Account Button (with confirmation modal)
 
 <section class="container">
 
-  <button class="secondary">تسجيل الخروج <img src="{{ url_for('static', filename='icons/door-open.svg') }}"></button>
+  <button class="secondary" hx-get="/api/logout">تسجيل الخروج <img src="{{ url_for('static', filename='icons/door-open.svg') }}"></button>
   
 </section>
 
