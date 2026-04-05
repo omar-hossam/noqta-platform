@@ -8,16 +8,80 @@
     z-index: 90;
     padding: 0 10px;
   }
+  aside {
+    width: 0;
+    height: 100vh;
+    background: #f2f2f2;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: none;
+    transition: 0.1s ease-out;
+    z-index: 99;
+    text-align: center;
+  }
+  aside ul {
+    margin: 35px auto 16px auto;
+  }
+  aside a {
+    text-decoration: none;
+    padding: 16px 0;
+  }
+  aside.active {
+    width: 100vw;
+  }
+  .phone-ul {
+    display: none;
+  }
+  #aside-close {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    background: transparent;
+    border: 0;
+  }
+  @media only screen and (max-width: 675px) {
+    nav {
+      .left-ul {
+        display: none;
+      }
+      .phone-ul {
+        display: block;
+      }
+    }
+  }
 </style>
+
+<aside>
+    <button onclick='remClass("aside", "active")' id="aside-close">
+      <img src="{{ url_for('static', filename='icons/x.svg') }}">
+    </button>
+    <ul class="container">
+        <li><a href="/#hero">رئيسية</a></li>
+        <li><a href="/about">عن نقطة</a></li>
+        <li><a href="/ranking">قائمة الصدارة</a></li>
+        
+        {% if is_logged %}
+        <li data-tooltip="الملف الشخصي" data-placement="right">
+            <a href="/profile" class="rounded"><img src="{{ url_for('static', filename='icons/user(1).svg') }}" id="profile-icon" alt="user icon"></a>
+        </li>
+        
+        {% else %}
+        <li><a href="/login" class="pico-background-green-500" style="flex">تسجيل الدخول 
+            <img src="{{ url_for('static', filename='icons/user.svg') }}" style="width: 23px;" stroke="red" stroke-width="3" fill="currentColor">
+        </a></li>
+        {% endif %}
+    </ul>
+</aside>
 
 <nav class="pico-background-slate-50">
   <ul>
     <li class="font-header" style="font-weight: 600">منصة نقطة <img src="{{ url_for('static', filename='icons/drop.svg') }}"></li>
   </ul>
-  <ul>
+  <ul class="left-ul">
     <li><a href="/#hero">رئيسية</a></li>
     <li><a href="/about">عن نقطة</a></li>
-    <li><a href="/leaderboard">قائمة الصدارة</a></li>
+    <li><a href="/ranking">قائمة الصدارة</a></li>
     {% if is_logged %}
     <li data-tooltip="الملف الشخصي" data-placement="right">
       <a href="/profile" class="rounded"><img src="{{ url_for('static', filename='icons/user(1).svg') }}" id="profile-icon" alt="user icon"></a>
@@ -28,5 +92,11 @@
     </a></li>
     {% endif %}
   </ul>
+  
+  <ul class="phone-ul">
+    <button class="outline" style="border:0; padding-left: 2px;" onclick="addClass('aside', 'active')"><img src="{{ url_for('static', filename='icons/list.svg') }}"></button>
+  </ul>
 </nav>
+
+<script src="{{ url_for('static', filename='js/custom.js') }}"></script>
 {% endmacro %}
