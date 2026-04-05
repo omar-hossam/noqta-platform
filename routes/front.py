@@ -50,8 +50,10 @@ def dashboard():
 @front_bp.route('/ranking')
 def ranking():
     try:
-        if session['user_id'] or session['admin_id'] or session['collector_id']:
-            return render_template('ranking.html')
+        if session['user_id']:
+            return render_template('ranking.html', show_user_nav=True)
+        elif session['admin_id'] or session['collector_id']:
+            return render_template('ranking.html', show_home_nav=True)
     except KeyError:
         return redirect('/login')
 
@@ -116,11 +118,11 @@ def collector():
 
 @front_bp.route('/admin/table/collectors', endpoint="admin_collectors")
 def admin_collectors():
-    try:
-        if session['admin_id']:
-            return render_template('admin/collectors.html', is_logged=True)
-    except KeyError:
-        return render_template('admin/admin.html', is_logged=False)
+    #try:
+        #if session['admin_id']:
+    return render_template('admin/collectors.html', is_logged=True)
+   # except KeyError:
+        #return render_template('admin/admin.html', is_logged=False)
 
 
 @front_bp.route('/admin/table/users', endpoint="admin_users")

@@ -17,14 +17,53 @@
         </p>
       </header>
       
-      <form>
-        
+      <form hx-post="/api/collector/register">
+        <fieldset>
+          <label>
+            الاسم
+            <input
+              type="text"
+              name="name"
+            />
+          </label>
+          <label>
+المحافظة
+            <input
+              type="text"
+              name="city"
+            />
+          </label>
+          <label> 
+            الشارع/الإدارة
+            <input
+              type="text"
+              name="street"
+            />
+          </label>
+          <label>
+كود المحصل
+            <input
+              type="text"
+              name="code"
+              dir="ltr"
+            />
+          </label>
+          <label>
+كلمة المرور
+            <input
+              type="password"
+              name="password"
+              dir="ltr"
+            />
+          </label>
+        </fieldset>
+
+        <input
+          type="submit"
+          value="إضافة"
+        />
       </form>
       
-      <footer class="grid">
-        <button class="secondary outline" onclick="setAttr('dialog', 'open', 'false')">إلغاء</button>
-        <button>إضافة</button>
-      </footer>
     </article>
   </dialog>
 {% endblock %}
@@ -35,12 +74,15 @@
 </button>
 {% endblock %}
 
+{% block div %}
+<div hx-get="/api/collectors" hx-target="tbody" hx-trigger="load" hx-swap="outerHTML"></div>
+{% endblock %}
+
 {% block thead %}
 
 <th scope="col">الاسم ثنائي</th>
 <th scope="col">المحافظة</th>
 <th scope="col">الإدارة/الشارع</th>
-<th scope="col">رقم الهاتف</th>
 <th scope="col">كود المحصل</th>
 
 {% endblock %}

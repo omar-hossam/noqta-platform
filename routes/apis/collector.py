@@ -26,10 +26,6 @@ def collector_login():
     
     saved_hash_password = saved_hash_password[0] if saved_hash_password else None
     
-    if not saved_hash_password:
-        db.close()
-        return 'بيانات إدخال خاطئة'
-    
     if check_password_hash(saved_hash_password, password):
         collector = db.execute('SELECT * FROM collectors WHERE code = ?', (code,)).fetchone()
         
@@ -39,8 +35,6 @@ def collector_login():
         response = make_response()
         response.headers['HX-Redirect'] = redirect_url
         return response
-    
-    return 'بيانات إدخال خاطئة'
 
 
 @collector_bp.route('/api/collector/register', methods=['POST'], endpoint='collector_register')
@@ -50,14 +44,12 @@ def collector_register():
     name = request.form.get('name').strip()
     code = request.form.get('code').strip()
     password = request.form.get('password').strip()
-    gender = request.form.get('gender').strip()
     city = request.form.get('city').strip()
     street = request.form.get('street').strip()
-    province = request.form.get('province').strip()
     
     password_hash = generate_password_hash(password)
     
-    db.execute('INSERT INTO collectors (name, code, password_hash, city, gender, street, province) VALUES (?, ?, ?, ?, ?, ?, ?)', (name, code, password_hash, gender, city, street, province))
+    db.execute('INSERT INTO collectors (name, code, password_hash, city, street) VALUES (?, ?, ?, ?, ?)', (name, code, password_hash, city, street))
     
     db.commit()
     db.close()
@@ -92,3 +84,28 @@ def new_bill():
     db.close()
 
     return f"<article class='pico-background-green-500'>تم إضافة الفاتورة إلي {name} بنجاح!</article>"
+
+
+@collector_bp.route('/api/collectors')
+def get_collectors():
+    db = get_db()
+    
+    collectors = db.execute("SELECT * FROM collectors")
+    
+    html_code = ""
+    
+    for x in collectors:
+        html_code += f"""
+            <tr>
+                <th scope="row">{x['name']}</th>
+                <td>{x['city']}</td>
+                <td>{x['street']}</td>
+                <td>{x['code']}</td>
+            </tr>
+        """
+    
+    db.close()
+    
+    response = make_response(html_code)
+    response.headers['HX-Trigger'] = 'contentUpdated'  # Trigger client event
+    return response
