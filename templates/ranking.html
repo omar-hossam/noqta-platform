@@ -1,9 +1,29 @@
 {% extends 'base.html' %}
 
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/components/users_nav.css') }}" />
+{% endblock %}
+
 {% block content %}
 
-<section>
-  <h1>لوحة الصدارة</h1>
+<section style="text-align: center;">
+  <h1 class="font-header">لوحة الصدارة</h1>
+  <a href="/prizes">إطلع على جوائز الشهر!</a>
+</section>
+
+<section hx-get="/api/ranking" hx-trigger="load" hx-target="#table" hx-swap="innerHTML">
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">الترتيب</th>
+        <th scope="col">الاسم</th>
+        <th scope="col">فاتورة الشهر</th>
+      </tr>
+    </thead>
+    <tbody id="table">
+      
+    </tbody>
+  </table>
 </section>
 
 {% endblock %}
