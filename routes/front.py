@@ -86,6 +86,21 @@ def settings():
         return redirect('/login')
 
 
+@front_bp.route('/profile/<int:profile_id>', endpoint="public_profile")
+def public_profile(profile_id):
+    try:
+        if session['user_id'] or session['collector_id'] or session['admin_id']:
+            db = get_db()
+
+            user = db.execute("SELECT * FROM users WHERE profile_id = ?", (profile_id,)).fetchone()
+            db.close()
+            
+            return render_template('profile.html', show_user_nav=True, user=user, user_streak=user['streak'], user_xp=user['xp'])
+            
+    except KeyError:
+        return redirect('/')
+
+
 """
 ++++++++++++++++++++
 ====================
@@ -133,6 +148,7 @@ def admin_users():
     except KeyError:
         return render_template('admin/admin.html', is_logged=False)
 
+
 @front_bp.route('/admin', endpoint="admin")
 def admin():
     try:
@@ -140,3 +156,7 @@ def admin():
             return render_template('admin/admin.html', is_logged=True)
     except KeyError:
         return render_template('admin/admin.html', is_logged=False)
+
+
+
+    
