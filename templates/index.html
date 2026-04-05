@@ -10,6 +10,7 @@
   height: 100vh;
   position: relative;
   overflow: hidden;
+  background-color: #0a3d62;
 }
 #vid {
   position: absolute;
@@ -57,8 +58,39 @@
   animation: rockAnime 0.9s linear infinite alternate;
 }
 @keyframes rockAnime {
-  from { left: -17px; bottom: -15px;  }
-  to { left: 0; bottom: 8px; }
+  from { transform: translate(-5px, 5px); }
+  to { transform: translate(5px, -5px); }
+}
+h1, h2, h3 { font-family: var(--font-header); }
+
+#hero-container h1 {
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+}
+#hero-container p {
+  text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+}
+
+article {
+  transition: transform 0.2s ease;
+}
+
+article:hover {
+  transform: translateY(-5px);
+}
+
+button.contrast {
+  transition: all 0.2s ease;
+}
+
+button.contrast:hover {
+  transform: scale(1.02);
+  background-color: #e6a700;
+}
+@media (max-width: 768px) {
+  #badge {
+    font-size: 0.75rem;
+    padding: 6px 12px;
+  }
 }
 
 </style>
@@ -75,7 +107,7 @@
     
     <div id="hero-container">
       <div>
-        <h1 class="font-header">قطّرة… بتفرق و نقطة بتغير</h1>
+        <h1 class="font-header">قطّرة بتفرق… ونقْطة بتغيّر</h1>
         
         <p>كل نقطة مية بتوفرها مش بس بتقلل الفاتورة… بتتحول لنقاط بتكسبها، ومكافآت بتاخدها.</p>
         <p style="font-weight: bold;">وفر. اكسب. كرّر.</p>
@@ -94,6 +126,85 @@
     
   </section>
 </div>
+
+<section class="container" style="padding: 3rem 0;">
+  <div class="grid">
+    <!-- Problem Column -->
+    <div>
+        <article style="background-color: #fef2f0; border-left: 4px solid #dc2626;">
+            <header>
+                <h3 style="text-align: center; padding-top: 15px;">المشكلة</h3>
+            </header>
+            <p><strong>مصر بتعاني من عجز مائي أكتر من ٣٣ مليار متر مكعب سنوياً</strong></p>
+            <p>نصيب الفرد من المياه قل عن ٥٠٠ متر مكعب في السنة – أقل من نص خط الفقر المائي العالمي.</p>
+            <p>كل يوم بنهدر مية بتنقذ حياة.</p>
+        </article>
+    </div>
+
+    <!-- Solution Column -->
+    <div>
+        <article style="background-color: #e6f7f0; border-left: 4px solid #059669;">
+            <header>
+                <h3 style="text-align: center; padding-top: 15px;">الحل</h3>
+            </header>
+            <p><strong>نقْطة بتحول كل نقطة مية بتوفرها لنقاط بتكسبها ومكافآت بتاخدها</strong></p>
+            <p>منصة وطنية بتربط استهلاكك الحقيقي بنظام مكافآت… بدون مجهود منك.</p>
+            <p>المحصل بيسجل واحنا بنحسب.</p>
+        </article>
+    </div>
+  </div>
+</section>
+<section class="container" style="padding: 3rem 0;">
+    <hgroup style="text-align: center; margin-bottom: 2rem;">
+        <h2>ازاي نقْطة بتشتغل؟</h2>
+        <p>٣ خطوات بس… والباقي علينا</p>
+    </hgroup>
+
+    <div class="grid">
+        <!-- Step 1 -->
+        <article style="text-align: center;">
+            <img src="{{ url_for('static', filename='icons/user-plus.svg') }}" alt="Sign up" width="48" height="48" style="margin-bottom: 1rem;">
+            <h3>١. سجل دلوقتي</h3>
+            <p>سجل بياناتك ورقم العداد بتاعك. مش محتاج حاجة غير تليفونك ورقم العداد.</p>
+            <small style="color: #059669;">⏱️ دقيقتين بس</small>
+        </article>
+
+        <!-- Step 2 -->
+        <article style="text-align: center;">
+            <img src="{{ url_for('static', filename='icons/note-pencil.svg') }}" alt="Collector reads" width="48" height="48" style="margin-bottom: 1rem;">
+            <h3>٢. المحصل بيسجل</h3>
+            <p>كل شهر، المحصل بيدخل قراءة العداد بتاعتك على السيرفر. احنا بنحتسب الفرق.</p>
+            <small style="color: #059669;">📊 انت متابع استهلاكك لحظة بلحظة</small>
+        </article>
+
+        <!-- Step 3 -->
+        <article style="text-align: center;">
+            <img src="{{ url_for('static', filename='icons/trophy.svg') }}" alt="Win" width="48" height="48" style="margin-bottom: 1rem;">
+            <h3>٣. أقل فاتورة بتكسب</h3>
+            <p>في آخر كل شهر، الشخص اللي عنده أقل استهلاك (أقل فاتورة) في الدورة بيكسب الجايزة.</p>
+            <small style="color: #059669;">🏆 أنت ضد نفسك… وجيرانك</small>
+        </article>
+    </div>
+    
+    <div style="text-align: center; margin-top: 2rem; padding: 1rem; background-color: #e6f7f0; border-radius: 12px;">
+        <p style="margin: 0;">
+            <strong>💧 نصيحة اليوم:</strong> اعمل المهام اليومية عشان فاتورتك تبقى أقل… وفرصتك تكسب تزيد
+        </p>
+    </div>
+</section>
+
+<section class="container" style="padding: 3rem 0;">
+    <article style="background: linear-gradient(135deg, #0a3d62 0%, #009688 100%); color: white; text-align: center;">
+        <div style="padding: 2rem;">
+            <h2 style="color: white;">جاهز تبدأ؟</h2>
+            <p style="font-size: 1.2rem; color: white;">أكتر من ٢٥٠ ألف أسرة بدأت… ومكاسبهم بتزيد كل شهر</p>
+            <a href="{{ '/dashboard' if session['user_id'] else '/login' }}" role="button" class="contrast" style="background-color: #ffb703; border-color: #ffb703; color: #0a3d62; font-weight: bold; padding: 0.75rem 2rem; font-size: 1.2rem;"> 
+              ابدأ الأن مجاناً
+            </a>
+            <p style="margin-top: 1rem; font-size: 0.8rem; color: white">مش محتاج كرت بنك ولا أي حاجة. مجرد تسجيل دخول</p>
+        </div>
+    </article>
+</section>
 {% endblock %}
 
 {% block script %}
