@@ -47,6 +47,11 @@ def dashboard():
         return redirect('/login')
 
 
+@front_bp.route('/ranking')
+def ranking():
+    return render_template('ranking.html')
+
+
 @front_bp.route('/profile', methods=['GET'])
 def profile():
     try:
@@ -86,8 +91,12 @@ def settings():
 @front_bp.route('/collector')
 def collector():
     try:
+        from datetime import datetime
+        current_month = datetime.now().month
+        current_year = datetime.now().year
+        
         if session['collector_id']:
-            return render_template('collector.html')
+            return render_template('collector.html', current_month=current_month, current_year=current_year)
     except KeyError:
         return redirect('/')
 

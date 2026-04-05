@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="container" style="padding-top: 13px;">
+  <h1 class="font-header" style="text-align: center;">الفواتير</h1>
+</section>
+<form class="container" hx-post="/api/collector/new-bill" hx-target="#output" hx-swap="outerHTML">
+  <fieldset>
+    <label for="profile-id">
+      كود المستخدم
+      <input
+        type="text"
+        name="profile-id"
+        id="profile-id"
+        placeholder="User profile id"
+        required
+        aria-required="true"
+        dir="ltr"
+      />
+    </label>
+    <label for="month">
+الشهر
+      <input
+        type="text"
+        name="month"
+        id="month"
+        placeholder="3"
+        required
+        aria-required="true"
+        value={{ current_month }}
+        disabled
+        dir="ltr"
+      />
+    </label>
+    <label for="year">
+السنة
+      <input
+        type="text"
+        name="year"
+        id="year"
+        placeholder="2026"
+        required
+        aria-required="true"
+        value={{ current_year }}
+        disabled
+        dir="ltr"
+      />
+    </label>
+    <label for="bill-cost">
+      تكلفة الفاتورة (ج.م)
+      <input
+        type="text"
+        name="bill-cost"
+        id="bill-cost"
+        placeholder="450"
+        required
+        aria-required="true"
+        dir="ltr"
+      />
+    </label>
+  </fieldset>
+
+  <input
+    type="submit"
+    value="إضافة الفاتورة"
+  />
+</form>
+<section class="container">
+  <div id="output"></div>
+  
+  <button class="secondary" hx-get="/api/logout">تسجيل الخروج</button>
+</section>
+{% endblock %}

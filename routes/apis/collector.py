@@ -64,13 +64,13 @@ def collector_register():
     return "تم إضافة المحصل بنجاح!"
 
 
-@collector_bp.route('/api/collector/new-bill/<int:profile_id>', methods=['POST'])
-def new_bill(profile_id):
+@collector_bp.route('/api/collector/new-bill', methods=['POST'])
+def new_bill():
     from datetime import datetime
     # get profile_id 
     # insert the *bill_cost + user_id + collector_id* to monthly bills
-    profile_id = request.form.get('profile_id').strip()
-    bill_cost = request.form.get('bill_cost').strip()
+    profile_id = request.form.get('profile-id').strip()
+    bill_cost = request.form.get('bill-cost').strip()
     collector_id = session['collector_id'] 
      
     db = get_db()
@@ -90,4 +90,4 @@ def new_bill(profile_id):
     db.commit()
     db.close()
 
-    return "تم إضافة الفاتورة بنجاح!"
+    return f"<article class='pico-background-green-500'>تم إضافة الفاتورة إلي {name} بنجاح!</article>"
