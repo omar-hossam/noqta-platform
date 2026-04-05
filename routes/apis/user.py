@@ -62,6 +62,7 @@ def user_login():
     db.close()
     
     if user and check_password_hash(user['password_hash'], form_password):
+        session.clear()
         session['user_id'] = user['id']
         redirect_url = url_for('front.dashboard')
         response = make_response()

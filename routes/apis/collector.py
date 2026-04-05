@@ -33,6 +33,7 @@ def collector_login():
     if check_password_hash(saved_hash_password, password):
         collector = db.execute('SELECT * FROM collectors WHERE code = ?', (code,)).fetchone()
         
+        session.clear()
         session['collector_id'] = collector['id']
         redirect_url = url_for('front.collector')
         response = make_response()

@@ -105,8 +105,6 @@ def init_db():
         CREATE TABLE IF NOT EXISTS admins (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT NOT NULL,
-            gender TEXT NOT NULL,
-            email TEXT NOT NULL,
             password_hash TEXT NOT NULL
         )
     ''')

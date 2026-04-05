@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% block title %}منصة نقطة - المسئول{% endblock %}
+
 {% block style %}
 
 <style>
@@ -14,9 +16,41 @@
 {% block content %}
 
 {% if not is_logged %}
-<form>
-  <label></label>
+
+<section class="container" dir="ltr">
+  <h1 class="font-header">Admin Login <img src="{{ url_for('static', filename='icons/lock-key.svg') }}" /></h1>
+</section>
+
+<form class="container" dir="ltr" hx-post="/api/admin/login" hx-indicator="#submit-progress" hx-disabled-elt="#submit-btn" >
+  <fieldset>
+    <label for="username">
+Username *
+      <input
+        type="text"
+        name="username"
+        id="username"
+        required
+        aria-required="true"
+      />
+    </label>
+    <label for="password">
+Password *
+      <input
+        type="password"
+        name="password"
+        id="password"
+        placeholder="******"
+        required
+        aria-required="true"
+      />
+    </label>
+  </fieldset>
+  
+  <input type="submit" value="Login" id="submit-btn" />
+  
+  <progress id="submit-progress" class="htmx-indicator"></progress>
 </form>
+
 {% elif is_logged %}
 <section class="container">
   <h1>صفحة المسئول</h1>

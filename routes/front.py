@@ -49,7 +49,11 @@ def dashboard():
 
 @front_bp.route('/ranking')
 def ranking():
-    return render_template('ranking.html')
+    try:
+        if session['user_id'] or session['admin_id'] or session['collector_id']:
+            return render_template('ranking.html')
+    except KeyError:
+        return redirect('/login')
 
 
 @front_bp.route('/profile', methods=['GET'])
@@ -98,7 +102,7 @@ def collector():
         if session['collector_id']:
             return render_template('collector.html', current_month=current_month, current_year=current_year)
     except KeyError:
-        return redirect('/')
+        return redirect('/login')
 
 
 """
@@ -112,14 +116,25 @@ def collector():
 
 @front_bp.route('/admin/table/collectors', endpoint="admin_collectors")
 def admin_collectors():
-    return render_template('admin/collectors.html')
+    try:
+        if session['admin_id']:
+            return render_template('admin/collectors.html', is_logged=True)
+    except KeyError:
+        return render_template('admin/admin.html', is_logged=False)
 
 
 @front_bp.route('/admin/table/users', endpoint="admin_users")
 def admin_users():
-    return render_template('admin/users.html')
-
+    try:
+        if session['admin_id']:
+            return render_template('admin/users.html', is_logged=True)
+    except KeyError:
+        return render_template('admin/admin.html', is_logged=False)
 
 @front_bp.route('/admin', endpoint="admin")
 def admin():
-    return render_template('admin/admin.html', is_logged=True)
+    try:
+        if session['admin_id']:
+            return render_template('admin/admin.html', is_logged=True)
+    except KeyError:
+        return render_template('admin/admin.html', is_logged=False)
