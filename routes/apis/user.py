@@ -150,3 +150,34 @@ def user_delete(user_id):
     response.headers['HX-Redirect'] = redirect_url
     return response
     
+
+@user_bp.route('/api/ranking')
+def get_ranking():
+    db = get_db()
+    
+    rows = db.execute("SELECT * FROM bills ORDER BY cost DESC")
+    ordered_bills = [dict(row) for row in rows]
+    
+    html_code = ""
+    html_rows = 0
+    
+    for x in ordered_bills:
+        user = db.execute("SELECT * FROM users WHERE id = ?", (x['user_id'],)).fetchone()
+        
+        html_code += f"""
+            <tr>
+                <th scope="row">{html_rows + 1}</th>
+                <td><a href="/profile/{user['profile_id']}">{user['name']}</a></td>
+                <td>{x['cost']}</td>
+            </tr>
+        """
+        
+        html_rows += 1
+    
+    db.close()
+    
+    response = make_response(html_code)
+    response.headers['HX-Trigger'] = 'contentUpdated'  # Trigger client event
+    return response
+    
+    
