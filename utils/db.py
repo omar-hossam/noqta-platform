@@ -58,11 +58,9 @@ def init_db():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             code INTEGER NOT NULL,
-            gender TEXT NOT NULL,
             password_hash TEXT NOT NULL,
             city TEXT NOT NULL,
             street TEXT NOT NULL,
-            province TEXT NOT NULL,
             joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     ''')
