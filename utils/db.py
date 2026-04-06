@@ -78,24 +78,13 @@ def init_db():
     ''')
     
     conn.execute('''
-        CREATE TABLE IF NOT EXISTS friends (
-            user_id INTEGER,
-            friend_id INTEGER,
-            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY(user_id) REFERENCES users(id),
-            FOREIGN KEY(friend_id) REFERENCES users(id),
-            PRIMARY KEY (user_id, friend_id)
-        );
-    ''')
-    
-    conn.execute('''
-        CREATE TABLE IF NOT EXISTS friend_requests (
+        CREATE TABLE IF NOT EXISTS profile_visits (
+            visitor_id INTEGER,
             receiver_id INTEGER,
-            sender_id INTEGER,
-            sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            visited_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(visitor_id) REFERENCES users(id),
             FOREIGN KEY(receiver_id) REFERENCES users(id),
-            FOREIGN KEY(sender_id) REFERENCES users(id),
-            PRIMARY KEY (receiver_id, sender_id)
+            PRIMARY KEY (visitor_id, receiver_id)
         );
     ''')
     

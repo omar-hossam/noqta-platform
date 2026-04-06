@@ -149,7 +149,38 @@ def user_delete(user_id):
     response = make_response()
     response.headers['HX-Redirect'] = redirect_url
     return response
+
+
+@user_bp.route('/api/user/<int:user_id>/searches')
+def get_searches(user_id):
+    db = get_db()
     
+    rows = db.execute("SELECT receiver_id FROM profile_visits WHERE visitor_id = ? ORDER BY visited_at DESC", (user_id,)).fetchall()
+    
+    receiver_ids = [row[0] for row in rows]
+    html_code = ""
+    
+    
+    for receiver_id in receiver_ids:
+        receiver = db.execute("SELECT name, city, profile_id FROM users WHERE id = ?", (receiver_id,)).fetchone()
+        
+        html_code += f"""
+          <a href="/profile/{receiver['profile_id']}" style="text-decoration: none;">
+            <article style="display: flex; flex-direction: column; justify-content: space-between;">
+              <p>{receiver['name']}</p>
+              <div style="align-self: flex-end">
+                <p class="pico-background-yellow-700" style="border-radius: 13px; padding: 10px;">{receiver['city']}</p>
+              </div>
+            </article>
+          </a>  
+        """
+        
+        
+    db.close()
+    response = make_response(html_code)
+    response.headers['HX-Trigger'] = 'contentUpdated'  # Trigger client event
+    return response
+
 
 @user_bp.route('/api/ranking')
 def get_ranking():

@@ -20,25 +20,33 @@
   
   <form>
     <fieldset role="group" dir="ltr">
-      <input name="profile-id" type="text" placeholder="Friend profile code" />
-      <input type="submit" value="Search" />
+      <input name="profile-id" type="text" placeholder="Friend profile code" id="my-input" value="" />
+      <a href="#" role="button" id="search">Search</a>
     </fieldset>
   </form>
 </section>
 
-<section class="container">
-  <h2 class="font-header" style="text-align: center;">احدث عمليات البحث</h2>
-  
-  <a href="/profile" style="text-decoration: none;">
-    <article style="display: flex; flex-direction: column; justify-content: space-between;">
-      <p>احمد محسن</p>
-      <div style="align-self: flex-end">
-        <p class="pico-background-yellow-700" style="border-radius: 13px; padding: 10px;">الإسكندرية</p>
-      </div>
-    </article>
-  </a>  
+<h2 class="font-header" style="text-align: center;">احدث عمليات البحث</h2>
 
+<section class="container" id="output" hx-get="/api/user/{{ session['user_id'] }}/searches" hx-target="#output" hx-swap="innerHTML" hx-trigger="load"></section>
 
-</section>
+{% endblock %}
 
+{% block script %}
+
+<script>
+const myInput = document.getElementById('my-input');  
+const search = document.getElementById('search')
+
+function setSearch() {
+  search.href = myInput.value ? `/profile/${myInput.value}` : '/social#';
+}
+
+setSearch()
+
+myInput.addEventListener('keyup', () => {
+  setSearch()
+})
+
+</script>
 {% endblock %}

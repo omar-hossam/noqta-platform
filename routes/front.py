@@ -103,11 +103,18 @@ def public_profile(profile_id):
     try:
         if session['user_id'] or session['collector_id'] or session['admin_id']:
             db = get_db()
-
-            user = db.execute("SELECT * FROM users WHERE profile_id = ?", (profile_id,)).fetchone()
-            db.close()
             
-            return render_template('profile.html', show_user_nav=True, user=user, user_streak=user['streak'], user_xp=user['xp'])
+            print(f'PROFILE ID: {profile_id}')
+
+            try:
+                user = db.execute("SELECT * FROM users WHERE profile_id = ?", (profile_id,)).fetchone()
+                db.close()
+                
+                return render_template('profile.html', show_user_nav=True, user=user, user_streak=user['streak'], user_xp=user['xp'])
+                
+            except TypeError:   
+                db.close()
+                return render_template('404.html')
             
     except KeyError:
         return redirect('/')
