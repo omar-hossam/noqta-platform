@@ -2,6 +2,7 @@ import sqlite3
 import os
 from random import randint
 from flask import session
+from werkzeug.security import generate_password_hash
 
 
 DB_PATH = 'database.db'
@@ -95,6 +96,10 @@ def init_db():
             password_hash TEXT NOT NULL
         )
     ''')
+    
+    pass_hash = generate_password_hash('this123omar')
+    
+    conn.execute("INSERT INTO admins (username, password_hash) VALUES ('omar123', ?)", (pass_hash,))
     
     conn.commit()
     conn.close()

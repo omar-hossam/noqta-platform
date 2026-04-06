@@ -24,7 +24,9 @@ def collector_login():
     
     saved_hash_password = db.execute('SELECT password_hash FROM collectors WHERE code = ?', (code,)).fetchone()
     
-    saved_hash_password = saved_hash_password[0] if saved_hash_password else None
+    print('we are here!')
+    
+    saved_hash_password = saved_hash_password['password_hash'] 
     
     if check_password_hash(saved_hash_password, password):
         collector = db.execute('SELECT * FROM collectors WHERE code = ?', (code,)).fetchone()
@@ -83,7 +85,11 @@ def new_bill():
     db.commit()
     db.close()
 
-    return f"<article class='pico-background-green-500'>تم إضافة الفاتورة إلي {name} بنجاح!</article>"
+    html_code = f"<article class='pico-background-green-500'>تم إضافة الفاتورة إلي {name} بنجاح!</article>"
+
+    response = make_response(html_code)
+    response.headers['HX-Trigger'] = 'contentUpdated'  # Trigger client event
+    return response 
 
 
 @collector_bp.route('/api/collectors')

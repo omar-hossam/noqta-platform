@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify, request, redirect, url_for, make_response, session
-
+from utils.db import get_db
+from werkzeug.security import check_password_hash
 
 shared_bp = Blueprint('shared', __name__)
 
