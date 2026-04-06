@@ -1,0 +1,20 @@
+{% extends 'base.html' %} 
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/components/users_nav.css') }}">
+
+<style>
+  @media only screen and (max-width: 675px) {
+    body > footer {
+      display: none;
+    }
+  }
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<h1>HI!</h1>
+
+{% endblock %}

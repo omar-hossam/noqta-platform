@@ -72,6 +72,18 @@ def profile():
         return redirect('/login')
 
 
+@front_bp.route('/social', methods=['GET'])
+def social():
+    try:
+        if session['user_id']: 
+            db = get_db()
+
+            user = db.execute("SELECT * FROM users WHERE id = ?", (session['user_id'],)).fetchone()
+
+            return render_template('social.html', show_user_nav=True, user=user, user_streak=user['streak'], user_xp=user['xp'])
+    except KeyError:
+        return redirect('/login')
+
 @front_bp.route('/settings')
 def settings():
     try:
