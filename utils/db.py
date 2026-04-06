@@ -105,21 +105,34 @@ def make_fakes():
     conn = get_db()
     
     # Adding fake admin
-    pass_hash1 = generate_password_hash('this123omar')
+    cursor.execute("SELECT COUNT(*) FROM admins")
+    num_of_admins = cursor.fetchone()[0]
     
-    conn.execute("INSERT INTO admins (username, password_hash) VALUES ('omar123', ?)", (pass_hash1,))
+    if num_of_admins == 0:
+        pass_hash1 = generate_password_hash('this123omar')
+        conn.execute("INSERT INTO admins (username, password_hash) VALUES ('omar123', ?)", (pass_hash1,))
     
     # Adding fake collector
-    pass_hash2 = generate_password_hash('this_is_my_password_95')
+    cursor.execute("SELECT COUNT(*) FROM collectors")
+    num_of_collectors = cursor.fetchone()[0]
     
-    conn.execute("INSERT INTO collectors (name, code, password_hash, city, street) VALUES ('هاني مسعد','123456', ?, 'الإسكندرية', 'محرم بك')", (pass_hash1,))
+    if num_of_collectors == 0:
+        pass_hash2 = generate_password_hash('this_is_my_password_95')
+    
+        conn.execute("INSERT INTO collectors (name, code, password_hash, city, street) VALUES ('هاني مسعد','123456', ?, 'الإسكندرية', 'محرم بك')", (pass_hash1,))
+        
     
     # Adding fake user
-    pass_hash3 = generate_password_hash('fake_pass')
-    fake_profile = new_profile_id()
-    fake_bio = "السلام عليكم 👋 انا عمر حسام مبرمج و مطور مواقع عمري 16 سنة من الإسكندرية!"
     
-    conn.execute("INSERT INTO users (name, email, gender, city, street, city_arabic, xp, streak, password_hash, profile_id, bio, whatsapp_number, facebook_link) VALUES ('عمر حسام','omar@example.com', 'male', 'alexandria', 'محرم بك','الإسكندرية',125,4,?,?,?,'01146641222','https://www.facebook.com/omarhossam160')", (pass_hash3, fake_profile, fake_bio))
+    ursor.execute("SELECT COUNT(*) FROM users")
+    num_of_users = cursor.fetchone()[0]
+    
+    if num_of_users == 0:
+        pass_hash3 = generate_password_hash('fake_pass')
+        fake_profile = new_profile_id()
+        fake_bio = "السلام عليكم 👋 انا عمر حسام مبرمج و مطور مواقع عمري 16 سنة من الإسكندرية!"
+        
+        conn.execute("INSERT INTO users (name, email, gender, city, street, city_arabic, xp, streak, password_hash, profile_id, bio, whatsapp_number, facebook_link) VALUES ('عمر حسام','omar@example.com', 'male', 'alexandria', 'محرم بك','الإسكندرية',125,4,?,?,?,'01146641222','https://www.facebook.com/omarhossam160')", (pass_hash3, fake_profile, fake_bio))
     
     conn.commit()
     conn.close()
