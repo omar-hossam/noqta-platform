@@ -18,6 +18,11 @@ def home():
     return render_template('index.html', show_home_nav=True, is_logged=is_logged)
 
 
+@front_bp.route('/website/pages')
+def website_pages():
+    return render_template('pages.html')
+
+
 @front_bp.route('/about')
 def about():
     return render_template('about.html')

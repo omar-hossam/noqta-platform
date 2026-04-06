@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="container">
+  <h1 class="font-header">صفحات منصة نقطة</h1>
+  <p>بعض الصفحات ستتطلب تسجيل دخول*</p>
+</section>
+
+<section class="container">
+  <ul>
+    <li><a href="/">الصفحة رئيسية</a></li>
+    <li><a href="/register">إنشاء حساب لمستخدم</a></li>
+    <li><a href="/login">تسجيل دخول كمستخدم او مصحل</a></li>
+    <li><a href="/profile">صفحة الملف الشخصي</a></li>
+    <li><a href="/settings">إعدادات المستخدم</a></li>
+    <li><a href="/dashboard">لوحة تحكم المستخدم</a></li>
+    <li><a href="/social">إجتماعي</a></li>
+    <li><a href="/ranking">لائحة الصدارة</a></li>
+    <li><a href="/admin">المسئول</a></li>
+    <li><a href="/collector">المحصل</a></li>
+    <li><a href="/about">عن المنصة</a></li>
+  </ul>
+</section>
+
+<p class="container">اطلع على ملف <code>بيانات_جاهزة.txt</code> ستجد فيه بيانات جاهزة يمكنك استخدامها لتسجيل الدخول و تجربة المنصة كما تشاء و أيضاً يمكنك انشاء مستخدمين او حذفهم و هكذا.. افعل ما تشاء</p>
+
+{% endblock %}
