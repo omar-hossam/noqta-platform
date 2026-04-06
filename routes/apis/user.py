@@ -186,9 +186,12 @@ def get_searches(user_id):
 def last_bill(user_id):
     db = get_db()
     
-    rows = db.execute("SELECT cost FROM bills WHERE user_id = ?", (user_id,)).fetchone()
+    rows = db.execute("SELECT cost FROM bills WHERE user_id = ? ORDER BY month DESC", (user_id,)).fetchone()
+    
+    print(f"COST: {rows['cost']}")
+    
     try:
-        response = make_response(rows['cost'])
+        response = make_response(f"{rows['cost']}")
         response.headers['HX-Trigger'] = 'contentUpdated'  # Trigger client event
         return response
     except TypeError:
@@ -196,12 +199,39 @@ def last_bill(user_id):
         response.headers['HX-Trigger'] = 'contentUpdated'  # Trigger client event
         return response
 
-@user_bp.route('/api/ranking')
-def get_ranking():
+
+@user_bp.route('/api/user/<int:user_id>/rank')
+def get_user_rank(user_id):
+    from datetime import datetime
     db = get_db()
     
-    rows = db.execute("SELECT * FROM bills ORDER BY cost DESC").fetchall()
-    ordered_bills = [dict(row) for row in rows]
+    now = datetime.now()
+    month = now.month
+    rows = db.execute("SELECT user_id FROM bills WHERE month = ? ORDER BY cost DESC", (month,)).fetchall()
+    user_ids = [row["user_id"] for row in rows]
+    
+    indx = user_ids.index(user_id)
+    db.close()
+    
+    response = make_response(f"{indx + 1}")
+    response.headers['HX-Trigger'] = 'contentUpdated'  # Trigger client event
+    return response
+    
+    
+
+@user_bp.route('/api/ranking')
+def get_ranking():
+    from datetime import datetime
+    db = get_db()
+    
+    now = datetime.now()
+    month = now.month
+    
+    rows = db.execute("SELECT * FROM bills WHERE month = ? ORDER BY cost DESC", (month,)).fetchall()
+    list_of_rows = [dict(row) for row in rows]
+    ordered_bills = list({frozenset(d.items()): d for d in list_of_rows}.values()) # from python docs*
+    
+    print(f"Ordered bills: {ordered_bills}")
     
     html_code = ""
     html_rows = 0

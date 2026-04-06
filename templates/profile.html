@@ -177,7 +177,7 @@ section #div {
     <header>اخر فاتورة</header>
     <img src="{{ url_for('static', filename='icons/money.svg') }}">
     
-    <footer><strong><u id="bill-price" hx-get="/api/user/{{ user['id'] }}/last-bill" hx-target="#bill-price" hx-swap="innerHTML" hx-trigger="load"></u></strong> ج.م</footer>
+    <footer><strong><u hx-get="/api/user/{{ user['id'] }}/last-bill" hx-target="this" hx-swap="textContent" hx-trigger="load"></u></strong> ج.م</footer>
   </article>
   <article>
     <header>النقاط</header>
@@ -189,7 +189,7 @@ section #div {
     <header>الترتيب</header>
     <img src="{{ url_for('static', filename='icons/ranking.svg') }}">
     
-    <footer><strong><u>0</u></strong> علي مصر!</footer>
+    <footer><strong><u hx-get="/api/user/{{ user['id' ]}}/rank" hx-target="this" hx-swap="textContent" hx-trigger="load"></u></strong> علي مصر!</footer>
   </article>
   <article>
     <header>ايام نشاط</header>

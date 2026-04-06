@@ -69,22 +69,18 @@ def new_bill():
      
     db = get_db()
 
-    user_id = db.execute('SELECT id FROM users WHERE profile_id = ?', (profile_id,)).fetchone()
-    user_id = user_id[0] if user_id else None
-
-    if not user_id:
-      return "Error!", 400
+    rows = db.execute('SELECT id, name FROM users WHERE profile_id = ?', (profile_id,)).fetchone()
 
     now = datetime.now() 
     month = now.month
     year = now.year
 
-    db.execute('INSERT INTO bills (user_id, collector_id, cost, month, year) VALUES (?, ?, ?, ?, ?)', (user_id, collector_id, bill_cost, month, year))
+    db.execute('INSERT INTO bills (user_id, collector_id, cost, month, year) VALUES (?, ?, ?, ?, ?)', (rows['id'], collector_id, bill_cost, month, year))
 
     db.commit()
     db.close()
 
-    html_code = f"<article class='pico-background-green-500'>تم إضافة الفاتورة إلي {name} بنجاح!</article>"
+    html_code = f"<article class='pico-background-green-500'>تم إضافة الفاتورة إلي {rows['name']} بنجاح!</article>"
 
     response = make_response(html_code)
     response.headers['HX-Trigger'] = 'contentUpdated'  # Trigger client event
