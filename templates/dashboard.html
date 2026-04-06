@@ -5,6 +5,28 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/users_home.css') }}">
 
 <style>
+  .todo-btn {
+    width: 100%; 
+    background-color: transparent;
+    border: 0.15rem solid #ddd; 
+    border-radius: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    color: black;
+  }
+  .line-through {
+    text-decoration: line-through;
+    color: #555;
+    background-color: #eee;
+  }
+  .todo-btn span {
+    color: green;
+  }
+  .todo-btn:hover {
+    background-color: lightyellow
+  }
+  
   @media only screen and (max-width: 675px) {
     body > footer {
       display: none;
@@ -16,6 +38,30 @@
 
 {% block content %}
 
+<dialog id="todos-dialog">
+  <article>
+    <header>
+      <button aria-label="Close" rel="prev" onclick="setAttr('#todos-dialog', 'open', 'false')"></button>
+      <p>
+        <strong>اختر مهام اليوم 🗓️ </strong>
+      </p>
+    </header>
+    <div>
+      {% for todo in todos %}
+        <div class="div">
+          <label for="todo-checkbox-{{ todo.id }}">
+            <input type="checkbox" id="todo-checkbox-{{ todo.id }}" name="todo-checkbox-{{ todo.id }}" class="form-todo-checkbox">
+            {{ todo.name }}
+          </label>
+          <span class="todo-checkbox-score" dir="ltr">+{{ todo.score }}XP</span>
+        </div>
+      {% endfor %}
+      <hr />
+      <button id="formBtn">اختيار</button>
+    </div>
+  </article>
+</dialog>
+
 <section>
   <hgroup style="text-align: center;">
     <h1 class="font-header">المهام اليومية</h1>
@@ -23,29 +69,8 @@
   </hgroup>
   <ul id="daily-todos">
     <button onclick="setAttr('#todos-dialog', 'open', 'true')">اختر مهام اليوم 🗒️</button>
-        
-    <dialog id="todos-dialog">
-      <article>
-        <header>
-          <button aria-label="Close" rel="prev" onclick="setAttr('#todos-dialog', 'open', 'false')"></button>
-          <p>
-            <strong>اختر مهام اليوم 🗓️ </strong>
-          </p>
-        </header>
-        <form>
-          {% for todo in todos %}
-            <label for="todo-checkbox-{{ todo.id }}">
-              <input type="checkbox" id="todo-checkbox-{{ todo.id }}" name="todo-checkbox-{{ todo.id }}">
-              {{ todo.name }}
-              
-              <span class="todo-checkbox-score" dir="ltr">+{{ todo.score }}XP</span>
-            </label>
-          {% endfor %}
-          <hr />
-          <button>اختيار</button>
-        </form>
-      </article>
-    </dialog>
+    
+    <div id="todos-container" style="padding: 12px 0; display: flex; flex-direction: column; gap: 8px;"></div>
   </ul>
 </section>
 
@@ -65,4 +90,55 @@
 {% endblock %}
 {% block script %}
 <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+<script>
+  const formBtn = document.getElementById('formBtn')
+  const todosContainer = document.getElementById('todos-container')
+  
+  if (localStorage.getItem('todos')) {
+    todosContainer.innerHTML = localStorage.getItem('todos')
+  }
+  
+  const finishedTodos = [...document.getElementsByClassName('line-through')]
+
+
+  formBtn.addEventListener('click', e => {
+    e.preventDefault()
+    
+    todosContainer.innerHTML = ''
+    setAttr('#todos-dialog', 'open', 'false')
+    
+    const formTodoCheckboxes = [...document.querySelectorAll('.form-todo-checkbox')]
+    
+    const checkedBoxes = formTodoCheckboxes.filter(checkbox => checkbox.checked)
+    
+    checkedBoxes.forEach(inputBox => {
+      const label = inputBox.parentElement;
+      const todoText = label.innerText.trim();
+      const score = Number(label.nextElementSibling.innerText.replace('+', '').replace('XP', ''));
+      
+      let todosHTML;
+      
+      todosHTML = `<button class="todo-btn" onclick="togClass(this, 'line-through')" hx-post="/api/user/{{ session['user_id'] }}/increase/xp/${score}">
+        ${todoText}
+        <span>+${score}XP</span>
+      </button>`;
+      
+      todosContainer.innerHTML += todosHTML
+      
+      
+    })
+  })
+  
+  function myFunction() {
+    const finishedTodos = [...document.getElementsByClassName('line-through')]
+    finishedTodos.forEach(btn => btn.remove())
+    
+    
+    if (todosContainer.innerHTML !== localStorage.getItem('todos')) {
+      localStorage.setItem('todos', todosContainer.innerHTML)
+    }
+  }
+  
+  setInterval(myFunction, 1000);
+</script>
 {% endblock %}

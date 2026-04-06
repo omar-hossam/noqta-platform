@@ -212,3 +212,25 @@ def get_ranking():
     return response
     
     
+@user_bp.route('/api/user/<int:user_id>/increase/xp/<int:value>', methods=['POST'], endpoint="increase_xp")
+def increase_xp(user_id, value):
+    from datetime import datetime, timedelta
+    db = get_db()
+    db.execute("UPDATE users SET xp = xp + ? WHERE id = ?", (value, user_id,))
+    
+    today = datetime.now()
+    today = datetime.today()
+    today = datetime.now().date()
+    
+    try:
+        if session['last_finished_todo_date']:
+            if session['last_finished_todo_date'] == today + timedelta(days=1):
+                db.execute("UPDATE users SET streak = streak + 1 WHERE id = ?", (user_id,))
+            else:
+                db.execute("UPDATE users SET streak = 0 WHERE id = ?", (user_id,))
+    except KeyError:
+        session['last_finished_todo_date'] = today
+        db.execute("UPDATE users SET streak = 1 WHERE id = ?", (user_id,))
+    
+    db.commit()
+    db.close()
