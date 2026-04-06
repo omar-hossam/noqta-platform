@@ -39,7 +39,7 @@ def init_db():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             profile_id INTEGER UNIQUE,
             name TEXT NOT NULL,
-            email TEXT NOT NULL UNIQUE,
+            email TEXT NOT NULL,
             joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             gender TEXT NOT NULL,
             city TEXT NOT NULL,
@@ -97,6 +97,12 @@ def init_db():
         )
     ''')
     
+    conn.commit()
+    conn.close()
+
+
+def make_fakes():
+    conn = get_db()
     
     # Adding fake admin
     pass_hash1 = generate_password_hash('this123omar')
@@ -113,21 +119,7 @@ def init_db():
     fake_profile = new_profile_id()
     fake_bio = "السلام عليكم 👋 انا عمر حسام مبرمج و مطور مواقع عمري 16 سنة من الإسكندرية!"
     
-    conn.execute("""
-        INSERT INTO users (name, email, gender, city, street, city_arabic, xp, streak, password_hash, profile_id, bio, whatsapp_number, facebook_link) VALUES (
-            'عمر حسام',
-            'omar@example.com', 'male', 'alexandria', 
-            'محرم بك',
-            'الإسكندرية',
-            125,
-            4,
-            ?,
-            ?,
-            ?,
-            '01146641222',
-            'https://www.facebook.com/omarhossam160'
-        )
-    """, (pass_hash3, fake_profile, fake_bio))
+    conn.execute("INSERT INTO users (name, email, gender, city, street, city_arabic, xp, streak, password_hash, profile_id, bio, whatsapp_number, facebook_link) VALUES ('عمر حسام','omar@example.com', 'male', 'alexandria', 'محرم بك','الإسكندرية',125,4,?,?,?,'01146641222','https://www.facebook.com/omarhossam160')", (pass_hash3, fake_profile, fake_bio))
     
     conn.commit()
     conn.close()

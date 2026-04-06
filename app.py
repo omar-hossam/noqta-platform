@@ -1,11 +1,13 @@
 from flask import Flask, jsonify, request, session, render_template
 from flask_cors import CORS
-from utils.db import init_db, get_db
+from utils.db import init_db, get_db, make_fakes
 from routes.front import front_bp
 from routes.apis.shared import shared_bp
 from routes.apis.user import user_bp
 from routes.apis.collector import collector_bp
 
+init_db()
+make_fakes()
 
 app = Flask(__name__)
 app.secret_key = 'super-secret-ultra-safe-key'
@@ -25,8 +27,6 @@ def page_not_found(error):
 
 @app.before_request
 def before_every_request():
-    init_db()
-    
     conn = get_db()
     cursor = conn.cursor()
     

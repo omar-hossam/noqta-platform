@@ -182,11 +182,25 @@ def get_searches(user_id):
     return response
 
 
+@user_bp.route('/api/user/<int:user_id>/last-bill', endpoint="last_bill")
+def last_bill(user_id):
+    db = get_db()
+    
+    rows = db.execute("SELECT cost FROM bills WHERE user_id = ?", (user_id,)).fetchone()
+    try:
+        response = make_response(rows['cost'])
+        response.headers['HX-Trigger'] = 'contentUpdated'  # Trigger client event
+        return response
+    except TypeError:
+        response = make_response("0")
+        response.headers['HX-Trigger'] = 'contentUpdated'  # Trigger client event
+        return response
+
 @user_bp.route('/api/ranking')
 def get_ranking():
     db = get_db()
     
-    rows = db.execute("SELECT * FROM bills ORDER BY cost DESC")
+    rows = db.execute("SELECT * FROM bills ORDER BY cost DESC").fetchall()
     ordered_bills = [dict(row) for row in rows]
     
     html_code = ""
