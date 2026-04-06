@@ -26,10 +26,6 @@
   </form>
 </section>
 
-<h2 class="font-header" style="text-align: center;">احدث عمليات البحث</h2>
-
-<section class="container" id="output" hx-get="/api/user/{{ session['user_id'] }}/searches" hx-target="#output" hx-swap="innerHTML" hx-trigger="load"></section>
-
 {% endblock %}
 
 {% block script %}
