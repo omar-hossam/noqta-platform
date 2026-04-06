@@ -120,7 +120,7 @@ def make_fakes():
     if num_of_collectors == 0:
         pass_hash2 = generate_password_hash('this_is_my_password_95')
     
-        conn.execute("INSERT INTO collectors (name, code, password_hash, city, street) VALUES ('هاني مسعد','123456', ?, 'الإسكندرية', 'محرم بك')", (pass_hash1,))
+        conn.execute("INSERT INTO collectors (name, code, password_hash, city, street) VALUES ('هاني مسعد','123456', ?, 'الإسكندرية', 'محرم بك')", (pass_hash2,))
         
     
     # Adding fake user

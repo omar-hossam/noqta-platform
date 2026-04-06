@@ -24,8 +24,6 @@ def collector_login():
     
     saved_hash_password = db.execute('SELECT password_hash FROM collectors WHERE code = ?', (code,)).fetchone()
     
-    print('we are here!')
-    
     saved_hash_password = saved_hash_password['password_hash'] 
     
     if check_password_hash(saved_hash_password, password):
@@ -34,10 +32,11 @@ def collector_login():
         session.clear()
         session['collector_id'] = collector['id']
         redirect_url = url_for('front.collector')
-        response = make_response()
+        response = make_response("Done")
         response.headers['HX-Redirect'] = redirect_url
         return response
-
+    
+    return 'Invalid Credintals!'
 
 @collector_bp.route('/api/collector/register', methods=['POST'], endpoint='collector_register')
 def collector_register():
