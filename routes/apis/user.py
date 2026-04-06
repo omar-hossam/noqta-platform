@@ -248,3 +248,30 @@ def increase_xp(user_id, value):
     
     db.commit()
     db.close()
+
+
+@user_bp.route('/api/users')
+def get_users():
+    db = get_db()
+    
+    users = db.execute("SELECT * FROM users")
+    
+    html_code = ""
+    
+    for x in users:
+        html_code += f"""
+            <tr>
+                <th scope="row">{x['name']}</th>
+                <td>{x['gender']}</td>
+                <td>{x['city']}</td>
+                <td>{x['street']}</td>
+                <td>{x['email']}</td>
+                <td>{x['profile_id']}</td>
+            </tr>
+        """
+    
+    db.close()
+    
+    response = make_response(html_code)
+    response.headers['HX-Trigger'] = 'contentUpdated'  # Trigger client event
+    return response

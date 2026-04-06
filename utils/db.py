@@ -103,6 +103,7 @@ def init_db():
 
 def make_fakes():
     conn = get_db()
+    cursor = conn.cursor()
     
     # Adding fake admin
     cursor.execute("SELECT COUNT(*) FROM admins")
@@ -124,7 +125,7 @@ def make_fakes():
     
     # Adding fake user
     
-    ursor.execute("SELECT COUNT(*) FROM users")
+    cursor.execute("SELECT COUNT(*) FROM users")
     num_of_users = cursor.fetchone()[0]
     
     if num_of_users == 0:

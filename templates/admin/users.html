@@ -12,3 +12,7 @@
 <th scope="col">كود الملف الشخصي</th>
 
 {% endblock %}
+
+{% block div %}
+<div hx-get="/api/users" hx-target="tbody" hx-trigger="load" hx-swap="outerHTML"></div>
+{% endblock %}
