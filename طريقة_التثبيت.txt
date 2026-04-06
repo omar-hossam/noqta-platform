@@ -1,0 +1,15 @@
+يجب توافر بايثون على النظام و يجب توفر انترنت في البداية حتي يتم تحميل المكتبات.
+
+ممكن تنسخ البرومبت الإحترافي ده ل ChatGPT او Deepseek و هو يرشد حضرتك تعمل ايه بكل سهولة:
+
+I am a non-technical person. Please give me step-by-step instructions in VERY SIMPLE ARABIC (with emojis) for the following:
+
+1. How to install Python (or reinstall it) on Windows (I use Windows 10, but if steps are same for Windows 7 please mention any difference)
+2. How to make sure Python is added to PATH during installation
+3. How to create a new virtual environment in my current folder (name it myenv)
+4. How to activate that virtual environment
+5. How to install modules from a requirements.txt file
+6. How to run python app.py inside the virtual environment
+7. How to deactivate the environment when done
+
+Please give me the exact commands to type, and tell me what I should see on screen to know each step worked. Assume I know nothing about programming. Use simple words and lots of emojis.

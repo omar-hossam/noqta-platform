@@ -227,7 +227,7 @@ def get_ranking():
     now = datetime.now()
     month = now.month
     
-    rows = db.execute("SELECT * FROM bills WHERE month = ? ORDER BY cost DESC", (month,)).fetchall()
+    rows = db.execute("SELECT * FROM bills WHERE month = ? ORDER BY cost ASC", (month,)).fetchall()
     list_of_rows = [dict(row) for row in rows]
     ordered_bills = list({frozenset(d.items()): d for d in list_of_rows}.values()) # from python docs*
     
