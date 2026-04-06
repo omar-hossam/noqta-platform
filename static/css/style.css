@@ -40,3 +40,9 @@ body { font-family: Zain; overflow-x: hidden; }
   border-bottom: 0!important;
   outline: 0!important;
 }
+
+@media only screen and (max-width: 675px) {
+  .hide-on-phone {
+    display: none;
+  }
+}

@@ -23,9 +23,69 @@
   font-family: var(--font-header);
 }
 
-.second-section article img, .second-section article .xp-text {
-  
+section #div {
+  display: grid; grid-template-columns: 8rem 1fr; gap:10px;
 }
+
+#profile-photo {
+  width: 8rem;
+}
+
+#left-and-right-div {
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
+}
+
+#city-street-div {
+  display: flex; 
+  gap: 5px; 
+  align-items: center
+}
+
+#right-div {
+  display: flex; 
+  gap: 30px;
+}
+
+#phone-city {
+  display: none;
+}
+
+@media only screen and (max-width: 675px) {
+  body > footer {
+    display: none;
+  }
+  section #div {
+    grid-template-columns: 1fr;
+  }
+  #profile-photo {
+    width: 6rem;
+    justify-self: center;
+  }
+  #left-and-right-div {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  #left-and-right-div > div {
+    display: flex; 
+    justify-content: space-between;
+  }
+  #right-div {
+    justify-content: space-between;
+    width: 100%!important;
+    padding: 0 5px;
+  }
+  #phone-city { 
+    display: grid; 
+    grid-template-columns: 1fr; 
+    grid-gap: 10px; 
+    text-align: center;
+  }
+  #city-street-div { display: none; }
+}
+
+
 
 </style>
 {% endblock %}
@@ -52,16 +112,14 @@
 <section class="container">
   
   
-  <div style="display: grid; grid-template-columns: 8rem 1fr; gap:10px;">
+  <div id="div">
+    <img src="{{ url_for('static', filename='icons/user-circle.svg') }}" alt="user icon" style="width: 8rem; " id="profile-photo">
     
-    
-    <img src="{{ url_for('static', filename='icons/user-circle.svg') }}" alt="user icon" style="width: 8rem; ">
-    
-    <div style="display: flex; justify-content: space-between; align-items: center;">
+    <div id="left-and-right-div">
       
       <!-- RIGHT -->
       <div style="height: 80%;">
-        <div style="display: flex; gap: 30px;">
+        <div id="right-div">
           <h1 class="font-header">{{ user['name'] }}</h1>
           <p style="color: {{ 'dodgerblue' if user['gender'] == 'male' else 'hotpink' }}; font-weight: bold; align-content: center;">
             {{ user['gender'] }}
@@ -73,7 +131,7 @@
           </p>
         </div>
         
-        <div style="display: flex; gap: 5px; align-items: center">
+        <div id="city-street-div" class="hide-on-phone">
           <div style="border: 0.2rem dotted var(--border-color); padding: 2px; border-radius: 5px">{{ user['city_arabic'] }} <img src="{{ url_for('static', filename='icons/city.svg') }}"></div>
           <div style="border: 0.2rem dotted var(--border-color); padding: 2px; border-radius: 5px;">{{ user['street'] }} <img src="{{ url_for('static', filename='icons/buildings.svg') }}"></div>
         </div>
@@ -82,11 +140,10 @@
       <!-- LEFT -->
       <div style="display: flex; flex-direction: column; justify-content: space-between; height: 80%;">
         
-        <button class="outline pico-background-slate-50" style="border: 0; padding: 10px 4px;" hx-get="/api/users/{{user['id']}}/friends" hx-target="#friends-list" hx-swap="innerHTML" onclick="setAttr('#friends', 'open', 'true')" >
-          <!--  {{ user['friends'] }} صديق  -->
-          0
-          <img src="{{ url_for('static', filename='icons/users.svg') }}">
-        </button>
+        <div id="phone-city">
+          <div style="border: 0.2rem dotted var(--border-color); padding: 2px; border-radius: 5px">{{ user['city_arabic'] }} <img src="{{ url_for('static', filename='icons/city.svg') }}"></div>
+          <div style="border: 0.2rem dotted var(--border-color); padding: 2px; border-radius: 5px;">{{ user['street'] }} <img src="{{ url_for('static', filename='icons/buildings.svg') }}"></div>
+        </div>
         
         <!-- SOCIAL LINKS -->
         <div style="display: flex; justify-content: flex-end; gap: 5px;">
@@ -110,7 +167,7 @@
   </div>
   
   {% if user['bio'] %}
-  <p class="bio font-header">{{ user['bio'] }}</p>
+  <p class="bio font-header" style="margin-top: 40px;">{{ user['bio'] }}</p>
   {% endif %}
   
 </section>

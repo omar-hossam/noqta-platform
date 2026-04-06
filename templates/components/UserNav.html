@@ -1,7 +1,12 @@
 {% macro user_nav(user_streak, user_xp) %}
+<style>
+  #streak-icon, .xp-text {
+    
+  }  
+</style>
 <nav id="nav">
   <ul>
-    <li data-tooltip="الملف الشخصي" data-placement="left">
+    <li data-tooltip="الملف الشخصي" data-placement="left" class="hide-on-phone">
       <a href="/profile" class="rounded"><img src="{{ url_for('static', filename='icons/user(1).svg') }}" id="profile-icon" alt="user icon"></a>
     </li>
     <li class="font-header" style="font-weight: 600">
@@ -10,16 +15,16 @@
   </ul>
 
   <ul class='right'>
-    <li data-tooltip="لوحة التحكم" data-placement="bottom">
+    <li data-tooltip="لوحة التحكم" data-placement="bottom" class="hide-on-phone">
       <a href="/dashboard" class="rounded"><img src="{{ url_for('static', filename='icons/house.svg') }}" id="dashboard-icon" alt="house icon"></a>
     </li>
-    <li data-tooltip="الأصدقاء" data-placement="bottom">
-      <a href="/friends" class="rounded"><img src="{{ url_for('static', filename='icons/users.svg') }}" id="friends-icon" alt="users icon"></a>
+    <li data-tooltip="إجتماعي" data-placement="bottom" class="hide-on-phone">
+      <a href="/social" class="rounded"><img src="{{ url_for('static', filename='icons/users.svg') }}" id="friends-icon" alt="users icon"></a>
     </li>
-    <li data-tooltip="لائحة الصدارة" data-placement="bottom">
+    <li data-tooltip="لائحة الصدارة" data-placement="bottom" class="hide-on-phone">
       <a href="/ranking" class="rounded"><img src="{{ url_for('static', filename='icons/ranking.svg') }}" id="leaderboard-icon" alt="ranking icon"></a>
     </li>
-    <li data-tooltip="الإعدادات" data-placement="bottom"><a href="/settings" class="rounded"><img src="{{ url_for('static', filename='icons/gear.svg') }}" alt="gear icon" id="gear-icon"></a></li>
+    <li data-tooltip="الإعدادات" data-placement="bottom" class="hide-on-phone"><a href="/settings" class="rounded"><img src="{{ url_for('static', filename='icons/gear.svg') }}" alt="gear icon" id="gear-icon"></a></li>
     
     <div>
       <li>
@@ -28,11 +33,30 @@
         <span class="num" id="xp">{{ user_xp or 0 }}</span>
       </li>
       <li>
-        <img style="width: 36px;" src="{{ url_for('static', filename='icons/fire(1).svg') }}" id="streak-icon" alt="fire icon">
+        <img id="streak-icon" src="{{ url_for('static', filename='icons/fire(1).svg') }}" id="streak-icon" alt="fire icon">
         <br />
         <span class="num" id="streak">{{ user_streak or 0 }}</span>
       </li>
     </div>
+  </ul>
+</nav>
+
+<!-- Bottom Nav for small screens -->
+<nav id="phone-nav" dir="rtl">
+  <ul>
+    <li>
+      <a href="/dashboard" style="{{ 'background-color: lightgreen;' if request.path[1:] == 'dashboard' }}"><img src="{{ url_for('static', filename='icons/house.svg') }}" id="dashboard-icon" alt="house icon"></a>
+    </li>
+    <li>
+      <a href="/social" style="{{ 'background-color: lightgreen;' if request.path[1:] == 'social' }}"><img src="{{ url_for('static', filename='icons/users.svg') }}" id="friends-icon" alt="users icon"></a>
+    </li>
+    <li>
+      <a href="/ranking" style="{{ 'background-color: lightgreen;' if request.path[1:] == 'ranking' }}"><img src="{{ url_for('static', filename='icons/ranking.svg') }}" id="leaderboard-icon" alt="ranking icon"></a>
+    </li>
+    <li><a href="/settings" style="{{ 'background-color: lightgreen;' if request.path[1:] == 'settings' }}"><img src="{{ url_for('static', filename='icons/gear.svg') }}" alt="gear icon" id="gear-icon"></a></li>
+    <li>
+      <a href="/profile" style="{{ 'background-color: lightgreen;' if request.path[1:] == 'profile' }}"><img src="{{ url_for('static', filename='icons/user(1).svg') }}" id="profile-icon" alt="user icon"></a>
+    </li>
   </ul>
 </nav>
 {% endmacro %}

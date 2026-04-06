@@ -4,6 +4,14 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/components/users_nav.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/users_home.css') }}">
 
+<style>
+  @media only screen and (max-width: 675px) {
+    body > footer {
+      display: none;
+    }
+  }
+</style>
+
 {% endblock %}
 
 {% block content %}
@@ -56,5 +64,5 @@
 
 {% endblock %}
 {% block script %}
-<script src="{{ url_for('static', filename='js/qalam.js') }}"></script>
+<script src="{{ url_for('static', filename='js/custom.js') }}"></script>
 {% endblock %}

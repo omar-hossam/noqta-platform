@@ -1,5 +1,15 @@
 {% extends 'base.html' %}
 
+{% block style %}
+<style>
+  @media only screen and (max-width: 675px) {
+    footer {
+      display: none;
+    }
+  }
+</style>
+{% endblock %}
+
 {% block content %}
 <section class="container" style="padding-top: 13px;">
   <h1 class="font-header" style="text-align: center;">الفواتير</h1>

@@ -18,7 +18,7 @@
     
     {% block style %}{% endblock %}
   </head>
-  <body>
+  <body style="display: grid; grid-template-rows: auto 1fr auto; min-height: 100vh;">
     {% from 'components/HomeNav.html' import home_nav %}
     {% from 'components/UserNav.html' import user_nav %}
 
@@ -34,10 +34,10 @@
       {% block content %}{% endblock %}
     </main>
     
-    <footer class="pico-background-slate-100" style="text-align: center;" dir="ltr">
+    <footer class="pico-background-slate-100" style="text-align: center; align-self: end;" dir="ltr">
       All rights reserved &copy;2026
       <br />
-      Omar Hossam
+      <a href="https://www.github.com/omar-hossam" target="_blank">Omar Hossam</a>
     </footer>
     {% block script %}{% endblock %}
   </body>

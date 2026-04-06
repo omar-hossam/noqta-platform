@@ -1,34 +1,75 @@
-nav {
+#nav {
   background-color: #f5f5f5;
   border-bottom: 0.15rem dotted #44362F;
 }
 
-nav ul.right {
+#nav ul.right {
   display: flex;
   gap: 12px;
 }
 
-nav ul li {
+#nav ul li {
   vertical-align: middle;
   text-align: center;
   font-weight: bold;
 }
 
-.num {
+#nav .num {
   font-size: 1.2rem;
 }
 
-.rounded {
+#nav .rounded {
   border-radius: 50%; 
   border: 0.15rem solid currentColor;
   text-decoration: none;
 }
 
-.rounded:hover {
+#nav .rounded:hover {
   background: linear-gradient(135deg, #44FFD4, #FF8844)
 }
 
 .xp-text {
   color: #592720;
   font-size: 23px;
+}
+
+#streak-icon {  width: 36px; }
+
+#phone-nav {
+background: #f2f2f2;
+  position: fixed; 
+  bottom: 0; 
+  width: 100vw; 
+  border-top: 2px solid #ddd;
+  left: 0;
+  display: none;
+  padding: 0;
+}
+#phone-nav ul {
+  width: 100%;
+  display: grid;
+  margin: 0;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+#phone-nav ul li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#phone-nav ul li a {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+@media only screen and (max-width: 675px) {
+  .xp-text {
+    color: #592720;
+    font-size: 19px;
+  }
+  #streak-icon { width: 32px }
+  #phone-nav { display: block; }
+  body {
+    padding-bottom: 80px;
+  }
 }
