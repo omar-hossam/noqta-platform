@@ -15,6 +15,30 @@
 
 {% block content %}
 
-<h1>HI!</h1>
+<section class="container">
+  <h1 class="font-header" style="text-align: center;">ابحث عن صديق</h1>
+  
+  <form>
+    <fieldset role="group" dir="ltr">
+      <input name="profile-id" type="text" placeholder="Friend profile code" />
+      <input type="submit" value="Search" />
+    </fieldset>
+  </form>
+</section>
+
+<section class="container">
+  <h2 class="font-header" style="text-align: center;">احدث عمليات البحث</h2>
+  
+  <a href="/profile" style="text-decoration: none;">
+    <article style="display: flex; flex-direction: column; justify-content: space-between;">
+      <p>احمد محسن</p>
+      <div style="align-self: flex-end">
+        <p class="pico-background-yellow-700" style="border-radius: 13px; padding: 10px;">الإسكندرية</p>
+      </div>
+    </article>
+  </a>  
+
+
+</section>
 
 {% endblock %}
