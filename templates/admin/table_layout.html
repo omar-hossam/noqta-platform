@@ -6,11 +6,18 @@
   table tr th {
     font-family: var(--font-header);
   }
-  @media only screen and (max-width: 675px) {
-    h1 {
-      padding-top: 50px;
-    }
+  
+  h1 {
+    padding-top: 32px;
   }
+  
+  .overflow-auto table {
+    width: 100%;
+    min-width: 800px; /* Adjust this value until the scrollbar appears */
+  }
+  
+  {% block table_css %}{% endblock %}
+  
 </style>
 
 {% endblock %}
@@ -28,10 +35,14 @@
   </a>
   <h1 class="font-header">{% block header %}{% endblock %}</h1>
   {% block dialog_open_btn %}{% endblock %}
+  <hr />
 </section>
 
-<section>
-  <table>
+{% endblock %}
+{% block outside_main %}
+
+<div class="overflow-auto" style="display: block; width: 100%;">
+  <table style="min-width: 800px;">
     <thead>
       <tr>
         {% block thead %}{% endblock %}
@@ -41,7 +52,9 @@
       {% block tbody %}{% endblock %}
     </tbody>
   </table>
-</section>
+</div>
+
+<div class="container pico-background-green-400" id="output"></div>
 
 {% endblock %}
 {% block script %}

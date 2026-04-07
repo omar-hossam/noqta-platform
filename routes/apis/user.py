@@ -144,10 +144,23 @@ def user_delete(user_id):
     db.execute("DELETE FROM users WHERE id = ?", (user_id,)).fetchone()
     db.commit()
     db.close()
-    session.pop('user_id', None)
-    redirect_url = url_for('front.home')
+    
+    try:
+        if session['user_id']:
+            session.pop('user_id', None)
+    except: 
+        print("")
+    
     response = make_response()
-    response.headers['HX-Redirect'] = redirect_url
+    
+    try:
+        if session['admin_id']:
+            response = make_response('تم حذف المستخدم بنجاح!')
+            response.headers['HX-Trigger'] = 'contentUpdated' 
+    except KeyError:
+        redirect_url = url_for('front.home')
+        response.headers['HX-Redirect'] = redirect_url
+        
     return response
 
 
@@ -290,13 +303,17 @@ def get_users():
     
     for x in users:
         html_code += f"""
-            <tr>
+            <tr class="user-row">
                 <th scope="row">{x['name']}</th>
                 <td>{x['gender']}</td>
-                <td>{x['city']}</td>
+                <td>{x['city_arabic']}</td>
                 <td>{x['street']}</td>
                 <td>{x['email']}</td>
-                <td>{x['profile_id']}</td>
+                <td><a href="/profile/{x['profile_id']}" target="_blank">{x['profile_id']}</a></td>
+                <td>{x['streak']}</td>
+                <td>{x['xp']}</td>
+                <td>{x['joined_at']}</td>
+                <td><button class="pico-background-red-600" style="border: 0;" hx-post="/api/user/{x['id']}/delete" hx-target="#output" hx-swap="textContent">حذف</button></td>
             </tr>
         """
     
