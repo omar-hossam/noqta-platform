@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block style %}
+<script src="{{ url_for('static', filename='js/chart.umd.js') }}"></script>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/components/users_nav.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
 <style>
@@ -20,6 +21,21 @@
     }
     #cover-photo { height: 32vh; }
   }
+  
+  /* Desktop default */
+.chart-container {
+    height: 400px;
+    width: 100%;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+    .chart-container {
+        height: 250px; /* Shorter for mobile screens */
+        width: 100%;
+    }
+}
+  
 </style>
 
 {% endblock %}
@@ -143,6 +159,14 @@
 
 {% endblock %}
 
+{% block outside_main %}
+
+<div class="chart-container" style="position: relative; height:40vh; width:80vw; margin: auto;">
+  <canvas id="myChart"></canvas>
+</div>
+
+{% endblock %}
+
 {% block script %}
   <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
   <script>
@@ -152,5 +176,75 @@
         .then(() => window.alert('تم نسخ كود الملف الشخصي بنجاح أرسله لزميلك و اخبره ان يكتبه في حقل البحث حتي يعثر عليك!'))
         .catch(err => window.alert('حدث خطأ في نسخ كود الملف الشخصي'))
     })
+  </script>
+  <script>
+  const fontBody = getComputedStyle(document.body).getPropertyValue('--font-body');
+  const fontHeader = getComputedStyle(document.body).getPropertyValue('--font-header');
+    
+  new Chart(document.getElementById('myChart'), {
+      type: 'bar',
+      data: {
+        labels: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو'],
+        datasets: [{
+          label: 'فاتورة المياة',
+          data: [50, 80, 120, 90, 140, 30],
+          backgroundColor: 'lightskyblue' 
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            reverse: true,
+            ticks: {
+              font: { 
+                size: 16, 
+                family: fontBody
+              }
+            }
+          },
+          y: {
+            min: 20,
+            max: 200,
+            ticks: { stepSize: 20 },
+            position: 'right',
+            ticks: {
+              font: { 
+                size: 16,
+                family: fontBody
+              }
+            }
+          }
+        },
+        plugins: {
+          legend: {
+            rtl: true,
+            textDirection: 'rtl', 
+            labels: {
+              font: { 
+                size: 18,
+                family: fontHeader
+              } 
+            }
+          },
+          tooltip: {
+            rtl: true,
+            titleFont: {
+              size: 17,
+              family: fontBody
+            },
+            bodyFont: {
+              size: 16,
+              family: fontHeader
+            },
+            footerFont: {
+              size: 16,
+              family: fontBody
+            }
+          }
+        }
+      },
+    });
   </script>
 {% endblock %}
