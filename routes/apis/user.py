@@ -348,3 +348,22 @@ def get_users():
     response = make_response(html_code)
     response.headers['HX-Trigger'] = 'contentUpdated'  # Trigger client event
     return response
+
+
+@user_bp.route('/api/user/session/xp')
+def get_session_xp():
+    db = get_db()
+    row = db.execute('SELECT xp FROM users WHERE id = ?', (session['user_id'],)).fetchone()
+    response = make_response(f"{row['xp']}")
+    response.headers['HX-Trigger'] = 'contentUpdated'  # Trigger client event
+    return response
+
+
+@user_bp.route('/api/user/session/streak')
+def get_session_streak():
+    db = get_db()
+    row = db.execute('SELECT streak FROM users WHERE id = ?', (session['user_id'],)).fetchone()
+    response = make_response(f"{row['streak']}")
+    response.headers['HX-Trigger'] = 'contentUpdated'  # Trigger client event
+    return response
+    

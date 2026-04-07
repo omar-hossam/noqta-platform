@@ -52,7 +52,7 @@ def dashboard():
             user = db.execute("SELECT * FROM users WHERE id = ?", (session['user_id'],)).fetchone()
             db.close()
             
-            return render_template('dashboard.html', show_user_nav=True, todos=todos, user_streak=user['streak'], user_xp=user['xp'], user_id=user['id'])
+            return render_template('dashboard.html', show_user_nav=True, todos=todos, user_id=user['id'])
     except KeyError:
         return redirect('/login')
 
@@ -77,7 +77,7 @@ def profile():
             user_id = session['user_id']
             user = db.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
 
-            return render_template('profile.html', show_user_nav=True, user=user, user_streak=user['streak'], user_xp=user['xp'])
+            return render_template('profile.html', show_user_nav=True, user=user)
     except KeyError:
         return redirect('/login')
 
@@ -90,7 +90,7 @@ def social():
 
             user = db.execute("SELECT * FROM users WHERE id = ?", (session['user_id'],)).fetchone()
 
-            return render_template('social.html', show_user_nav=True, user=user, user_streak=user['streak'], user_xp=user['xp'])
+            return render_template('social.html', show_user_nav=True, user=user)
     except KeyError:
         return redirect('/login')
 
@@ -104,7 +104,7 @@ def settings():
             user = db.execute("SELECT id, bio, whatsapp_number, facebook_link, streak, xp, profile_id, profile_photo, cover_photo FROM users WHERE id = ?", (user_id,)).fetchone()
             
             db.close()
-            return render_template('settings.html', show_user_nav=True, user=user, user_streak=user['streak'], user_xp=user['xp'])
+            return render_template('settings.html', show_user_nav=True, user=user)
     except KeyError:
         return redirect('/login')
 
@@ -120,8 +120,8 @@ def public_profile(profile_id):
             try:
                 user = db.execute("SELECT * FROM users WHERE profile_id = ?", (profile_id,)).fetchone()
                 db.close()
-                
-                return render_template('profile.html', show_user_nav=True, user=user, user_streak=user['streak'], user_xp=user['xp'])
+
+                return render_template('profile.html', show_user_nav=True, user=user)
                 
             except TypeError:   
                 db.close()

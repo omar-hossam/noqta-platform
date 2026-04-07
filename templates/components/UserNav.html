@@ -1,9 +1,4 @@
-{% macro user_nav(user_streak, user_xp) %}
-<style>
-  #streak-icon, .xp-text {
-    
-  }  
-</style>
+{% macro user_nav() %}
 <nav id="nav">
   <ul>
     <li data-tooltip="الملف الشخصي" data-placement="left" class="hide-on-phone">
@@ -30,12 +25,12 @@
       <li>
         <span class="xp-text">XP</span>
         <br />
-        <span class="num" id="xp">{{ user_xp or 0 }}</span>
+        <span class="num" id="xp" hx-get="/api/user/session/xp" hx-target="this" hx-swap="textContent" hx-trigger="load" ></span>
       </li>
       <li>
         <img id="streak-icon" src="{{ url_for('static', filename='icons/fire(1).svg') }}" id="streak-icon" alt="fire icon">
         <br />
-        <span class="num" id="streak">{{ user_streak or 0 }}</span>
+        <span class="num" id="streak" hx-get="/api/user/session/streak" hx-target="this" hx-swap="textContent" hx-trigger="load"></span>
       </li>
     </div>
   </ul>

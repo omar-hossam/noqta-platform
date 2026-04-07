@@ -45,13 +45,13 @@
 
 <section class="container" id="section-1" style="position: relative;">
   {% if user['cover_photo'] %}
-  <img src="{{ user['cover_photo'] }}" class="container" alt="user cover photo" id="cover-photo">
+  <img src="/{{ user['cover_photo'] }}" class="container" alt="user cover photo" id="cover-photo">
   {% endif %}
   
   <div id="div">
     {% if user['profile_photo'] %}
     
-    <img src="{{ user['profile_photo'] }}" alt="user profile photo" id="profile-photo">
+    <img src="/{{ user['profile_photo'] }}" alt="user profile photo" id="profile-photo">
     
     {% else %}
     <img src="{{ url_for('static', filename='icons/user-circle.svg') }}" alt="user icon" style="width: 8rem; " id="profile-photo">
@@ -88,7 +88,7 @@
         </div>
         
         <!-- SOCIAL LINKS -->
-        <div style="display: flex; justify-content: flex-end; gap: 5px;">
+        <div id="social-links" style="display: flex; justify-content: flex-end; gap: 5px;">
           {% if user['whatsapp_number'] %}
           <a href="https://wa.me/2{{ user['whatsapp_number'] }}" target="_blank"><img src="{{ url_for('static', filename='icons/whatsapp-logo.svg') }}" style="width: 3rem;"></a>
           {% endif %}
