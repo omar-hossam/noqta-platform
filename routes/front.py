@@ -113,12 +113,18 @@ def profile():
             user_id = session['user_id']
             user = db.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
             
-            query = 'SELECT month, cost FROM bills WHERE user_id = ? ORDER BY month ASC'
+            query = 'SELECT month FROM bills WHERE user_id = ? ORDER BY month DESC LIMIT 1'
             bills = db.execute(query, (user_id,)).fetchall()
             
-            last_month_num = bills[len(bills) - 1]['month']
+            
+            last_month_num = bills[0]['month']
             
             months_to_show = get_chart_months(last_month_num) # last month number*
+            
+            query = 'SELECT cost, month FROM bills WHERE user_id = ? AND month <= ? ORDER BY month DESC LIMIT 6 '
+            bills = db.execute(query, (user_id, last_month_num)).fetchall()
+            
+            # stopped here!
             
             db.close()
             return render_template('profile.html', show_user_nav=True, user=user, months_to_show=months_to_show)
