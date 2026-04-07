@@ -41,17 +41,19 @@ Delete Account Button (with confirmation modal)
 </dialog>
 
 <section class="container">
-  <form hx-post="/api/user/{{ user['id'] }}/update-settings" enctype="multipart/form-data">
+  <form hx-post="/api/user/{{ user['id'] }}/update-settings" enctype="multipart/form-data" hx-vals='js:{profileSpan: document.getElementById("mySpan1").textContent, coverSpan: document.getElementById("mySpan2").textContent }'>
     <fieldset>
       
-      <label for="profile-photo">
+      <label for="profile-photo" style="position: relative;">
         صورة الملف الشخصي
-        <input type="file" dir="ltr" id="profile-photo" name="profile-photo" accept="image/*">
+        <input type="file" dir="ltr" id="profile-photo" name="profile-photo" accept="image/*" value="{{ user['profile_photo'] }}" style="color: white;" />
+        <span id="mySpan1" class="pico-color-green-500" style="font-weight: bold; position: absolute; top: 50%; transform: translateY(-50deg); right: 0  ; z-index: 33">{{ user['profile_photo'].split('/')[1] }}</span>
       </label>
       
-      <label for="cover-photo">
+      <label for="cover-photo" style="position: relative;">
         صورة الغلاف
-        <input type="file" dir="ltr" id="cover-photo" name="cover-photo" accept="image/*">
+        <input type="file" dir="ltr" id="cover-photo" name="cover-photo" accept="image/*" value="{{ user['cover_photo'] }}" style="color: white;">
+        <span id="mySpan2" class="pico-color-green-500" style="font-weight: bold; position: absolute; top: 50%; transform: translateY(-50deg); right: 0  ; z-index: 33">{{ user['cover_photo'].split('/')[1] }}</span>
       </label>
       
       <label for="bio">

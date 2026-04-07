@@ -81,8 +81,20 @@ def update_settings(user_id):
     profile_photo = request.files.get('profile-photo')
     cover_photo = request.files.get('cover-photo')
     
+    profile_span = request.form.get('profileSpan')
+    cover_span = request.form.get('coverSpan')
+    
+    print(f"PROFILE: {profile_span}")
+    print(f"COVER: {cover_span}")
+    
     profile_photo_filename = ""
     cover_photo_filename = ""
+    
+    if profile_span:
+        profile_photo_filename = f'uploads/{profile_span}'
+    
+    if cover_span:
+        cover_photo_filename = f'uploads/{cover_span}'
     
     if profile_photo and profile_photo.filename:
         profile_photo.save(os.path.join('uploads', profile_photo.filename))

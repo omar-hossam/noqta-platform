@@ -101,7 +101,7 @@ def settings():
         if session['user_id']:    
             db = get_db()
             user_id = session['user_id']
-            user = db.execute("SELECT id, bio, whatsapp_number, facebook_link, streak, xp, profile_id FROM users WHERE id = ?", (user_id,)).fetchone()
+            user = db.execute("SELECT id, bio, whatsapp_number, facebook_link, streak, xp, profile_id, profile_photo, cover_photo FROM users WHERE id = ?", (user_id,)).fetchone()
             
             db.close()
             return render_template('settings.html', show_user_nav=True, user=user, user_streak=user['streak'], user_xp=user['xp'])

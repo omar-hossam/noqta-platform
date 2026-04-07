@@ -2,92 +2,26 @@
 
 {% block style %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/components/users_nav.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
 <style>
-:root {
-  --border-color: #4267b2;
-}
-.bio {
-  border: 0.2rem solid var(--border-color);
-  padding: 12px 10px;
-  margin: 10px 0;
-  border-radius: 4px;
-  background-color: #f5f5f5;
-  color: #000;
-}
-
-.second-section article {
-  text-align: center;
-}
-
-.second-section article h3 {
-  font-family: var(--font-header);
-}
-
-section #div {
-  display: grid; grid-template-columns: 8rem 1fr; gap:10px;
-}
-
-#profile-photo {
-  width: 8rem;
-}
-
-#left-and-right-div {
-  display: flex; 
-  justify-content: space-between; 
-  align-items: center;
-}
-
-#city-street-div {
-  display: flex; 
-  gap: 5px; 
-  align-items: center
-}
-
-#right-div {
-  display: flex; 
-  gap: 30px;
-}
-
-#phone-city {
-  display: none;
-}
-
-@media only screen and (max-width: 675px) {
-  body > footer {
-    display: none;
-  }
+  {% if user['profile_photo'] %}
   section #div {
-    grid-template-columns: 1fr;
+    display: grid; grid-template-columns: 18% 1fr; grid-gap:13px;
   }
-  #profile-photo {
-    width: 6rem;
-    justify-self: center;
+  {% else %}
+  section #div {
+    display: grid; grid-template-columns: auto 1fr; grid-gap:12px;
   }
-  #left-and-right-div {
-    flex-direction: column;
-    align-items: stretch;
+  {% endif %}
+  
+  @media only screen and (min-width: 1300px) {
+    section #div {
+     grid-template-columns: 15% 1fr; 
+    }
+    #cover-photo { height: 32vh; }
   }
-  #left-and-right-div > div {
-    display: flex; 
-    justify-content: space-between;
-  }
-  #right-div {
-    justify-content: space-between;
-    width: 100%!important;
-    padding: 0 5px;
-  }
-  #phone-city { 
-    display: grid; 
-    grid-template-columns: 1fr; 
-    grid-gap: 10px; 
-    text-align: center;
-  }
-  #city-street-div { display: none; }
-}
-
-
-
 </style>
+
 {% endblock %}
 
 {% block content %}
@@ -109,14 +43,16 @@ section #div {
   </article>
 </dialog>
 
-<section class="container">
-  
+<section class="container" id="section-1" style="position: relative;">
+  {% if user['cover_photo'] %}
+  <img src="{{ user['cover_photo'] }}" class="container" alt="user cover photo" id="cover-photo">
+  {% endif %}
   
   <div id="div">
     {% if user['profile_photo'] %}
-    <div style="display: flex; justify-content: center; align-items: center;">
-      <img src="{{ user['profile_photo'] }}" alt="user profile photo" style="width: 82%; height: 75%; border-radius: 50%; object-fit: cover; object-position: center;" id="profile-photo">
-    </div>
+    
+    <img src="{{ user['profile_photo'] }}" alt="user profile photo" id="profile-photo">
+    
     {% else %}
     <img src="{{ url_for('static', filename='icons/user-circle.svg') }}" alt="user icon" style="width: 8rem; " id="profile-photo">
     {% endif %}
