@@ -1,0 +1,22 @@
+{% extends 'admin/table_layout.html' %}
+
+{% block header %}المحصل {{ p['name'] }}{% endblock %}
+{% block p_after_h1 %}
+({{ p['city'] }} - {{ p['street'] }})
+{% endblock %}
+
+{% block div %}
+<div hx-get="/api/collector/{{ p['id'] }}/bills" hx-target="tbody" hx-trigger="load" hx-swap="outerHTML"></div>
+{% endblock %}
+
+{% block thead %}
+
+<th scope="col">كود المستخدم</th>
+<th scope="col">تاريخ الدفع</th>
+<th scope="col">الشهر</th>
+<th scope="col">السنة</th>
+<th scope="col">تكلفة الفاتورة</th>
+
+{% endblock %}
+
+

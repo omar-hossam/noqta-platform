@@ -182,5 +182,16 @@ def admin():
         return render_template('admin/admin.html', is_logged=False)
 
 
-
+@front_bp.route('/admin/table/collectors/<int:collector_id>')
+def collector_bills(collector_id):
+    try:
+        if session['admin_id']:
+            db = get_db()
+            p = db.execute('SELECT * FROM collectors WHERE id = ?', (collector_id,)).fetchone()
+            
+            db.close()
+            
+            return render_template('admin/collector.html', is_logged=True, p=p)
+    except KeyError:
+        return render_template('admin/admin.html', is_logged=False)
     
