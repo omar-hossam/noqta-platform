@@ -73,6 +73,7 @@ def init_db():
             month INTEGER NOT NULL,
             year INTEGER NOT NULL,
             cost INTEGER NOT NULL,
+            issued_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY(user_id) REFERENCES users(id),
             FOREIGN KEY(collector_id) REFERENCES collectors(id)
         )
