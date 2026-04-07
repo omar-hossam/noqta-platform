@@ -5,11 +5,18 @@ from routes.front import front_bp
 from routes.apis.shared import shared_bp
 from routes.apis.user import user_bp
 from routes.apis.collector import collector_bp
+import os
 
 init_db()
 make_fakes()
 
 app = Flask(__name__)
+
+# allow upload photos for cover, profile photos
+UPLOAD_FOLDER = 'uploads'
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+# allow secret key and CORS so HTMX can communicate with the backend seamisly
 app.secret_key = 'super-secret-ultra-safe-key'
 CORS(app, supports_credentials=True) 
 

@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, session, redirect
+from flask import Blueprint, render_template, session, redirect, send_from_directory
 from utils.db import get_db
 from utils.starter_todos import todos
 
@@ -16,6 +16,11 @@ def home():
         is_logged = False
     
     return render_template('index.html', show_home_nav=True, is_logged=is_logged)
+
+
+@front_bp.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory('uploads', filename)
 
 
 @front_bp.route('/website/pages')
@@ -88,6 +93,7 @@ def social():
             return render_template('social.html', show_user_nav=True, user=user, user_streak=user['streak'], user_xp=user['xp'])
     except KeyError:
         return redirect('/login')
+
 
 @front_bp.route('/settings')
 def settings():

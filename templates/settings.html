@@ -41,8 +41,19 @@ Delete Account Button (with confirmation modal)
 </dialog>
 
 <section class="container">
-  <form hx-post="/api/user/{{ user['id'] }}/update-settings">
+  <form hx-post="/api/user/{{ user['id'] }}/update-settings" enctype="multipart/form-data">
     <fieldset>
+      
+      <label for="profile-photo">
+        صورة الملف الشخصي
+        <input type="file" id="profile-photo" name="profile-photo" accept="image/*">
+      </label>
+      
+      <label for="cover-photo">
+        صورة الغلاف
+        <input type="file" id="cover-photo" name="cover-photo" accept="image/*">
+      </label>
+      
       <label for="bio">
         نبذه عنك
         <textarea id="bio" name="bio" placeholder="مثال…السلام عليكم انا البشمهندس احمد اعمل في مصنع لتصنيع السيارات في ..." autofocus>{{ user['bio'] }}</textarea>

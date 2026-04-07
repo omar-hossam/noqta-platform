@@ -50,7 +50,9 @@ def init_db():
             streak INTEGER,
             facebook_link TEXT,
             whatsapp_number TEXT,
-            bio TEXT
+            bio TEXT,
+            profile_photo TEXT,
+            cover_photo TEXT
         )
     ''')
     

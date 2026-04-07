@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request, redirect, url_for, make_response, session
 from utils.db import get_db, new_profile_id
 from werkzeug.security import generate_password_hash, check_password_hash
+import os
 
 
 user_bp = Blueprint('user', __name__)
@@ -77,8 +78,13 @@ def update_settings(user_id):
     bio = request.form.get('bio')
     wp_number = request.form.get('whatsapp-number')
     fb_link = request.form.get('facebook-link')
+    profile_photo = request.files['profile-photo']
+    cover_photo = request.files['cover-photo']
     
-    db.execute('UPDATE users SET bio = ?, whatsapp_number = ?, facebook_link = ? WHERE id = ?', (bio, wp_number, fb_link, user_id,))
+    profile_photo.save(os.path.join('uploads', profile_photo.filename))
+    cover_photo.save(os.path.join('uploads', cover_photo.filename))
+    
+    db.execute('UPDATE users SET bio = ?, whatsapp_number = ?, facebook_link = ?, profile_photo = ?, cover_photo = ? WHERE id = ?', (bio, wp_number, fb_link, user_id, f"/uploads/{profile_photo.filename}", f"/uploads/{cover_photo}",))
     
     db.commit()
     db.close()
