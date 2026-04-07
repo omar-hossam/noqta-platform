@@ -46,13 +46,13 @@ def init_db():
             city_arabic TEXT NOT NULL, 
             street TEXT NOT NULL,
             password_hash TEXT NOT NULL,
-            xp INTEGER, 
-            streak INTEGER,
-            facebook_link TEXT,
-            whatsapp_number TEXT,
-            bio TEXT,
-            profile_photo TEXT,
-            cover_photo TEXT
+            xp INTEGER DEFAULT 0, 
+            streak INTEGER DEFAULT 0,
+            facebook_link TEXT DEFAULT '',
+            whatsapp_number TEXT DEFAULT '',
+            bio TEXT DEFAULT '',
+            profile_photo TEXT DEFAULT '',
+            cover_photo TEXT DEFAULT ''
         )
     ''')
     

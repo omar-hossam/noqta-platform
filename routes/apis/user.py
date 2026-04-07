@@ -78,13 +78,21 @@ def update_settings(user_id):
     bio = request.form.get('bio')
     wp_number = request.form.get('whatsapp-number')
     fb_link = request.form.get('facebook-link')
-    profile_photo = request.files['profile-photo']
-    cover_photo = request.files['cover-photo']
+    profile_photo = request.files.get('profile-photo')
+    cover_photo = request.files.get('cover-photo')
     
-    profile_photo.save(os.path.join('uploads', profile_photo.filename))
-    cover_photo.save(os.path.join('uploads', cover_photo.filename))
+    profile_photo_filename = ""
+    cover_photo_filename = ""
     
-    db.execute('UPDATE users SET bio = ?, whatsapp_number = ?, facebook_link = ?, profile_photo = ?, cover_photo = ? WHERE id = ?', (bio, wp_number, fb_link, user_id, f"/uploads/{profile_photo.filename}", f"/uploads/{cover_photo}",))
+    if profile_photo and profile_photo.filename:
+        profile_photo.save(os.path.join('uploads', profile_photo.filename))
+        profile_photo_filename = os.path.join('uploads', profile_photo.filename)
+        
+    if cover_photo and cover_photo.filename:
+        cover_photo.save(os.path.join('uploads', cover_photo.filename))
+        cover_photo_filename = os.path.join('uploads', cover_photo.filename)
+    
+    db.execute('UPDATE users SET bio = ?, whatsapp_number = ?, facebook_link = ?, profile_photo = ?, cover_photo = ? WHERE id = ?', (bio, wp_number, fb_link, profile_photo_filename, cover_photo_filename, user_id,))
     
     db.commit()
     db.close()

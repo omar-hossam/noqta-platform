@@ -113,7 +113,13 @@ section #div {
   
   
   <div id="div">
+    {% if user['profile_photo'] %}
+    <div style="display: flex; justify-content: center; align-items: center;">
+      <img src="{{ user['profile_photo'] }}" alt="user profile photo" style="width: 82%; height: 75%; border-radius: 50%; object-fit: cover; object-position: center;" id="profile-photo">
+    </div>
+    {% else %}
     <img src="{{ url_for('static', filename='icons/user-circle.svg') }}" alt="user icon" style="width: 8rem; " id="profile-photo">
+    {% endif %}
     
     <div id="left-and-right-div">
       
