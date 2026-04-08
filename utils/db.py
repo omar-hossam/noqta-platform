@@ -76,8 +76,8 @@ def init_db():
             year INTEGER NOT NULL,
             cost INTEGER NOT NULL,
             issued_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY(user_id) REFERENCES users(id),
-            FOREIGN KEY(collector_id) REFERENCES collectors(id)
+            FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
+            FOREIGN KEY(collector_id) REFERENCES collectors(id) ON DELETE CASCADE
         )
     ''')
     
