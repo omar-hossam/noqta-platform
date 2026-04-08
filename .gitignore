@@ -10,9 +10,15 @@ myenv/
 
 .env
 .flaskenv
-uploads/
 
 .DS_Store
 .vscode/
 .idea/
 database.db
+
+
+
+uploads/*
+!uploads/IMAGE_LICENCE.txt
+!uploads/sean-oulashin-KMn4VEeEPR8-unsplash.jpg
+!uploads/omar.jpeg
