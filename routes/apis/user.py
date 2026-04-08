@@ -33,11 +33,7 @@ def user_register():
     
     db.execute('INSERT INTO users (profile_id, name, email, gender, city, street, password_hash, xp, streak, whatsapp_number, facebook_link, bio, city_arabic) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', (profile_id, name, email, gender, city, street, hashed, 0, 0, '', '', '', city_arabic))
     
-    print("before commit")
-    
     db.commit()
-    
-    print("done")
     
     user_id = db.execute('SELECT id FROM users WHERE email = ?', (email,)).fetchone()[0]
     
@@ -252,8 +248,6 @@ def last_bill(user_id):
     
     rows = db.execute("SELECT cost FROM bills WHERE user_id = ? ORDER BY month DESC", (user_id,)).fetchone()
     
-    print(f"COST: {rows['cost']}")
-    
     try:
         response = make_response(f"{rows['cost']}")
         response.headers['HX-Trigger'] = 'contentUpdated'  # Trigger client event
@@ -294,8 +288,6 @@ def get_ranking():
     rows = db.execute("SELECT * FROM bills WHERE month = ? ORDER BY cost ASC", (month,)).fetchall()
     list_of_rows = [dict(row) for row in rows]
     ordered_bills = list({frozenset(d.items()): d for d in list_of_rows}.values()) # from python docs*
-    
-    print(f"Ordered bills: {ordered_bills}")
     
     html_code = ""
     html_rows = 0
