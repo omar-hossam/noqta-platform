@@ -50,11 +50,15 @@ Delete Account Button (with confirmation modal)
         <span id="mySpan1" class="pico-color-green-500" style="font-weight: bold; position: absolute; top: 50%; transform: translateY(-50deg); right: 0  ; z-index: 33">{{ user['profile_photo'].split('/')[1] }}</span>
       </label>
       
+      <button class="pico-background-red-600" style="border: 0; display: block; margin: 0 auto 10px auto;" hx-post="/api/user/{{ session['user_id'] }}/remove-profile-photo">حذف صورة الملف</button>
+      
       <label for="cover-photo" style="position: relative;">
         صورة الغلاف
         <input type="file" dir="ltr" id="cover-photo" name="cover-photo" accept="image/*" value="{{ user['cover_photo'] }}" style="color: white;">
         <span id="mySpan2" class="pico-color-green-500" style="font-weight: bold; position: absolute; top: 50%; transform: translateY(-50deg); right: 0  ; z-index: 33">{{ user['cover_photo'].split('/')[1] }}</span>
       </label>
+      
+      <button class="pico-background-red-600" style="border: 0; display: block; margin: 0 auto 10px auto;" hx-post="/api/user/{{ session['user_id'] }}/remove-cover-photo">حذف صورة الغلاف</button>
       
       <label for="bio">
         نبذه عنك
@@ -94,4 +98,27 @@ Delete Account Button (with confirmation modal)
 
 {% block script %}
 <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+<script>
+const coverPhotoInput = document.getElementById('cover-photo');
+const profilePhotoInput = document.getElementById('profile-photo');
+const span1 = document.getElementById('mySpan1');
+const span2 = document.getElementById('mySpan2');
+
+profilePhotoInput.addEventListener('change', () => {
+  let val = profilePhotoInput.value;
+  val = val.split('\\')
+  val = val[val.length - 1]
+  
+  span1.textContent = val
+})
+
+coverPhotoInput.addEventListener('change', () => {
+  let val = profilePhotoInput.value;
+  val = val.split('\\')
+  val = val[val.length - 1]
+  
+  span2.textContent = val
+})
+
+</script>
 {% endblock %}

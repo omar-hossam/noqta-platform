@@ -72,6 +72,32 @@ def user_login():
         return response
 
 
+@user_bp.route('/api/user/<int:user_id>/remove-profile-photo', endpoint="remove_profile_photo", methods=['POST'])
+def remove_profile_photo(user_id):
+    db = get_db()
+    db.execute("UPDATE users SET profile_photo = '' WHERE id = ?", (user_id,))
+    
+    db.commit()
+    db.close()
+    redirect_url = url_for('front.profile')
+    response = make_response()
+    response.headers['HX-Redirect'] = redirect_url
+    return response
+    
+
+@user_bp.route('/api/user/<int:user_id>/remove-cover-photo', endpoint="remove_cover_photo", methods=['POST'])
+def remove_cover_photo(user_id):
+    db = get_db()
+    db.execute("UPDATE users SET cover_photo = '' WHERE id = ?", (user_id,))
+    
+    db.commit()
+    db.close()
+    redirect_url = url_for('front.profile')
+    response = make_response()
+    response.headers['HX-Redirect'] = redirect_url
+    return response
+
+
 @user_bp.route('/api/user/<int:user_id>/update-settings', methods=['POST'])
 def update_settings(user_id):
     db = get_db()
