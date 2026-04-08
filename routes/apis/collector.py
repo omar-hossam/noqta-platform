@@ -99,14 +99,27 @@ def new_bill():
     
     db = get_db()
 
-    rows = db.execute('SELECT id, name FROM users WHERE profile_id = ?', (profile_id,)).fetchone()
+    user = db.execute('SELECT id, name FROM users WHERE profile_id = ?', (profile_id,)).fetchone()
 
-    db.execute('INSERT INTO bills (user_id, collector_id, cost, month, year) VALUES (?, ?, ?, ?, ?)', (rows['id'], collector_id, bill_cost, month, year))
+    html_code = ""
+
+    # first check if bill of that month is already issued or not
+    rows = db.execute('SELECT month FROM bills WHERE user_id = ? AND month = ?', (user['id'], month)).fetchall()
+
+    # if the user didn't pay the bill that month yet
+    if not rows:
+        db.execute('INSERT INTO bills (user_id, collector_id, cost, month, year) VALUES (?, ?, ?, ?, ?)', (user['id'], collector_id, bill_cost, month, year))
+        html_code = f"<article class='pico-background-green-500'>تم إضافة الفاتورة إلي {user['name']} بنجاح!</article>"
+    else:
+        db.execute('UPDATE bills SET cost = ? WHERE user_id = ? AND month = ?', (bill_cost, user['id'], month))
+        html_code = f"""
+            <article class='pico-background-green-500'>
+                تم تعديل فاتورة {user['name']} بنجاح!
+            </article>
+        """
 
     db.commit()
     db.close()
-
-    html_code = f"<article class='pico-background-green-500'>تم إضافة الفاتورة إلي {rows['name']} بنجاح!</article>"
 
     response = make_response(html_code)
     response.headers['HX-Trigger'] = 'contentUpdated'  # Trigger client event
