@@ -21,13 +21,20 @@
   <body style="display: grid; grid-template-rows: auto 1fr auto; min-height: 100vh;">
     {% from 'components/HomeNav.html' import home_nav %}
     {% from 'components/UserNav.html' import user_nav %}
+    {% from 'components/AdminNav.html' import admin_nav %}
+    {% from 'components/CollectorNav.html' import collector_nav %}
 
     {% if show_home_nav %}
       {{ home_nav(is_logged) }}
-    {% endif %}
     
-    {% if show_user_nav %}
+    {% elif show_user_nav %}
       {{ user_nav() }}
+    
+    {% elif show_admin_nav %}
+      {{ admin_nav() }}
+    
+    {% elif show_collector_nav %}
+      {{ collector_nav() }}
     {% endif %}
     
     <main>

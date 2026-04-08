@@ -1,0 +1,11 @@
+{% macro admin_nav() %}
+
+<nav dir="ltr" style="border-bottom: 0.15rem solid #f2f2f2">
+  <ul>
+    <li><a href="/admin" dir="rtl" style="padding-left: 12px">
+      صفحة المسئول
+    <img src="{{ url_for('static', filename='icons/arrow-left.svg') }}">
+  </a></li>
+  </ul>
+</nav>
+{% endmacro %}

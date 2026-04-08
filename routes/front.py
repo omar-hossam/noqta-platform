@@ -138,27 +138,35 @@ def settings():
 
 @front_bp.route('/profile/<int:profile_id>', endpoint="public_profile")
 def public_profile(profile_id):
-    try:
-        if session['user_id'] or session['collector_id'] or session['admin_id']:
-            db = get_db()
+    if len(session.keys()) > 0:
+        db = get_db()
 
-            try:
-                user = db.execute("SELECT * FROM users WHERE profile_id = ?", (profile_id,)).fetchone()
-                
-                data = get_chart_data(db, user['id'])
-                
-                db.close()
-
-                return render_template('profile.html', show_user_nav=True, user=user, data=data)
-                
-            except TypeError:   
-                db.close()
-                return render_template('404.html')
+        try:
+            user = db.execute("SELECT * FROM users WHERE profile_id = ?", (profile_id,)).fetchone()
             
-    except KeyError:
+            data = get_chart_data(db, user['id'])
+            
+            db.close()
+            
+            SHOW_USER_NAV = False
+            SHOW_ADMIN_NAV = False
+            SHOW_COLLECTOR_NAV = False
+            
+            if 'user_id' in session:
+                SHOW_USER_NAV = True
+            elif 'collector_id' in session:
+                SHOW_COLLECTOR_NAV = True
+            elif 'admin_id' in session:
+                SHOW_ADMIN_NAV = True
+            
+            return render_template('profile.html', show_user_nav=SHOW_USER_NAV, user=user, data=data, show_admin_nav=SHOW_ADMIN_NAV, show_collector_nav=SHOW_COLLECTOR_NAV)
+            
+        except TypeError:   
+            db.close()
+            return render_template('404.html')
+    else:
         return redirect('/')
-
-
+        
 """
 ++++++++++++++++++++
 ====================
