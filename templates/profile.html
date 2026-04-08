@@ -22,19 +22,34 @@
     #cover-photo { height: 32vh; }
   }
   
-  /* Desktop default */
-.chart-container {
-    height: 400px;
-    width: 100%;
-}
+  .chart-container {
+      height: 400px;
+      width: 100%;
+  }
 
-/* Mobile adjustments */
-@media (max-width: 600px) {
-    .chart-container {
-        height: 250px; /* Shorter for mobile screens */
-        width: 100%;
+
+  @media (max-width: 600px) {
+      .chart-container {
+          height: 250px; 
+          width: 100%;
+      }
+  }
+  
+  @media only screen and (max-width: 675px) {
+    {% if user['cover_photo'] %}
+    #profile-photo {
+      position: absolute;
+      top: 95px;
     }
-}
+    #cover-photo { 
+      height: 160px; 
+      border-radius: 18px;
+      margin-bottom: 35px; 
+    }
+    {% else %}
+    main { margin-top: 0;}
+    {% endif %}
+  }
   
 </style>
 
@@ -70,7 +85,7 @@
     <img src="/{{ user['profile_photo'] }}" alt="user profile photo" id="profile-photo">
     
     {% else %}
-    <img src="{{ url_for('static', filename='icons/user-circle.svg') }}" alt="user icon" style="width: 8rem; " id="profile-photo">
+    <img src="{{ url_for('static', filename='icons/user-circle.svg') }}" alt="user icon" id="profile-photo">
     {% endif %}
     
     <div id="left-and-right-div">

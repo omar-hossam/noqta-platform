@@ -96,11 +96,5 @@
     text-align: center;
   }
   #city-street-div { display: none; }
-  #cover-photo { height: 160px; 
-    border-radius: 18px;
-    margin-bottom: 35px; }
-  #profile-photo {
-    position: absolute;
-    top: 95px;
-  }
+  
 }

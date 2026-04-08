@@ -84,16 +84,15 @@ def update_settings(user_id):
     profile_span = request.form.get('profileSpan')
     cover_span = request.form.get('coverSpan')
     
-    print(f"PROFILE: {profile_span}")
-    print(f"COVER: {cover_span}")
-    
     profile_photo_filename = ""
     cover_photo_filename = ""
     
-    if profile_span:
+    import os
+    
+    if profile_span and os.path.exists(f"uploads/{profile_span}"):
         profile_photo_filename = f'uploads/{profile_span}'
     
-    if cover_span:
+    if cover_span and os.path.exists(f"uploads/{cover_span}"):
         cover_photo_filename = f'uploads/{cover_span}'
     
     if profile_photo and profile_photo.filename:
