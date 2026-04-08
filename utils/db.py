@@ -124,8 +124,10 @@ def make_fakes():
         pass_hash3 = generate_password_hash('fake_pass')
         fake_profile = new_profile_id()
         fake_bio = "السلام عليكم 👋 انا عمر حسام مبرمج و مطور مواقع عمري 16 سنة من الإسكندرية!"
+        profile_photo = 'uploads/omar.jpeg'
+        cover_photo = 'uploads/sean-oulashin-KMn4VEeEPR8-unsplash.jpg'
         
-        conn.execute("INSERT INTO users (name, email, gender, city, street, city_arabic, xp, streak, password_hash, profile_id, bio, whatsapp_number, facebook_link) VALUES ('عمر حسام','omar@example.com', 'male', 'alexandria', 'محرم بك','الإسكندرية',125,4,?,?,?,'01146641222','https://www.facebook.com/omarhossam160')", (pass_hash3, fake_profile, fake_bio))
+        conn.execute("INSERT INTO users (name, email, gender, city, street, city_arabic, xp, streak, password_hash, profile_id, bio, whatsapp_number, facebook_link, profile_photo, cover_photo) VALUES ('عمر حسام','omar@example.com', 'male', 'alexandria', 'محرم بك','الإسكندرية',125,4,?,?,?,'01146641222','https://www.facebook.com/omarhossam160', ?, ?)", (pass_hash3, fake_profile, fake_bio, profile_photo, cover_photo))
         
     # Adding fake bill
     
@@ -134,6 +136,7 @@ def make_fakes():
     
     if num_b == 0:
         conn.execute("INSERT INTO bills (user_id, collector_id, month, year, cost) VALUES (1, 1, 4, 2026, 120)")
+        conn.execute("INSERT INTO bills (user_id, collector_id, month, year, cost) VALUES (1, 1, 7, 2026, 98)")
     
     conn.commit()
     conn.close()
