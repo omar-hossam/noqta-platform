@@ -93,14 +93,13 @@ def new_bill():
     profile_id = request.form.get('profile-id').strip()
     bill_cost = request.form.get('bill-cost').strip()
     collector_id = session['collector_id'] 
-     
+    month = request.form.get('month').strip()
+    year = request.form.get('year').strip()
+    
+    
     db = get_db()
 
     rows = db.execute('SELECT id, name FROM users WHERE profile_id = ?', (profile_id,)).fetchone()
-
-    now = datetime.now() 
-    month = now.month
-    year = now.year
 
     db.execute('INSERT INTO bills (user_id, collector_id, cost, month, year) VALUES (?, ?, ?, ?, ?)', (rows['id'], collector_id, bill_cost, month, year))
 

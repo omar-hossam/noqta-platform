@@ -180,8 +180,9 @@
   <script>
   const fontBody = getComputedStyle(document.body).getPropertyValue('--font-body');
   const fontHeader = getComputedStyle(document.body).getPropertyValue('--font-header');
-  const monthsToShow = {{ months_to_show  | tojson }};
-  const maxNum = 300
+  const monthsToShow = ['ابريل', 'مايو', 'يونيو', 'يوليو', 'اغسطس', 'سبتمبر'];
+  const maxNum = 400
+  const data = {{ data | tojson }}
     
   new Chart(document.getElementById('myChart'), {
       type: 'bar',
@@ -189,7 +190,7 @@
         labels: monthsToShow,
         datasets: [{
           label: 'فاتورة المياة',
-          data: [48, 200, 56, 78, 65, 150],
+          data: data,
           backgroundColor: 'lightskyblue' 
         }]
       },
@@ -207,9 +208,9 @@
             }
           },
           y: {
-            min: 30,
+            min: 20,
             max: maxNum,
-            ticks: { stepSize: 30 },
+            ticks: { stepSize: 20 },
             position: 'right',
             ticks: {
               font: { 

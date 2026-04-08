@@ -68,40 +68,27 @@ def ranking():
         return redirect('/login')
 
 
-def get_chart_months(m):
-    months = {
-        '1': 'يناير',
-        '2': 'فبراير',
-        '3': 'مارس',
-        '4': 'أبريل',
-        '5': 'مايو',
-        '6': 'يونيو',
-        '7': 'يوليو',
-        '8': 'أغسطس',
-        '9': 'سبتمبر',
-        '10': 'أكتوبر',
-        '11': 'نوفمبر',
-        '12': 'ديسمبر'
-    }
+def get_chart_data(db, user_id):
+    query = 'SELECT cost, month FROM bills WHERE user_id = ? ORDER BY month ASC LIMIT 6'
+    bills = db.execute(query, (user_id,)).fetchall()
     
-    months_to_show = []
+    data = [0, 0, 0, 0, 0, 0]
     
-    if m <= 5:
-        months_to_show = ['1', '2', '3', '4', '5', '6']
-    elif m >= 9:
-        months_to_show = ['7', '8', '9', '10', '11', '12']
-    elif m >= 8:
-        months_to_show = ['6', '7', '8', '9', '10', '11']
-    elif m >= 7:
-        months_to_show = ['3', '4', '5', '6', '7', '8']
-    
-    
-    arabic_months_to_show = []
-    for month_num in months_to_show:
-        arabic_name = months[month_num]
-        arabic_months_to_show.append(arabic_name)
-    
-    return arabic_months_to_show
+    # April -> September
+    for bill in bills:
+        if bill['month'] == 4:
+            data[0] = bill['cost']
+        elif bill['month'] == 5:
+            data[1] = bill['cost']
+        elif bill['month'] == 6:
+            data[2] = bill['cost']
+        elif bill['month'] == 7:
+            data[3] = bill['cost']
+        elif bill['month'] == 8:
+            data[4] = bill['cost']
+        elif bill['month'] == 9:
+            data[5] = bill['cost']
+    return data
 
 
 @front_bp.route('/profile', methods=['GET'])
@@ -113,21 +100,11 @@ def profile():
             user_id = session['user_id']
             user = db.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
             
-            query = 'SELECT month FROM bills WHERE user_id = ? ORDER BY month DESC LIMIT 1'
-            bills = db.execute(query, (user_id,)).fetchall()
-            
-            
-            last_month_num = bills[0]['month']
-            
-            months_to_show = get_chart_months(last_month_num) # last month number*
-            
-            query = 'SELECT cost, month FROM bills WHERE user_id = ? AND month <= ? ORDER BY month DESC LIMIT 6 '
-            bills = db.execute(query, (user_id, last_month_num)).fetchall()
-            
-            # stopped here!
+            data = get_chart_data(db, user_id)
+                    
             
             db.close()
-            return render_template('profile.html', show_user_nav=True, user=user, months_to_show=months_to_show)
+            return render_template('profile.html', show_user_nav=True, user=user, data=data)
     except KeyError:
         return redirect('/login')
 
@@ -164,14 +141,15 @@ def public_profile(profile_id):
     try:
         if session['user_id'] or session['collector_id'] or session['admin_id']:
             db = get_db()
-            
-            print(f'PROFILE ID: {profile_id}')
 
             try:
                 user = db.execute("SELECT * FROM users WHERE profile_id = ?", (profile_id,)).fetchone()
+                
+                data = get_chart_data(db, user['id'])
+                
                 db.close()
 
-                return render_template('profile.html', show_user_nav=True, user=user)
+                return render_template('profile.html', show_user_nav=True, user=user, data=data)
                 
             except TypeError:   
                 db.close()
